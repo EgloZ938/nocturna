@@ -39,13 +39,8 @@
                 <input type="range" id="volume-effect" name="volume-effect" min="0" max="10" steps="1">
             </div>
         </div>
-        <div class="flex menu-md">
-            <div class="md bg flex align-items justify-content left" id="retour-audio">
-                <h1>Retour</h1>
-            </div>
-            <div class="md bg flex align-items justify-content right disabled" id="apply-audio">
-                <h1>Appliquer</h1>
-            </div>
+        <div class="lg bg flex align-items justify-content" id="retour-audio">
+            <h1>Retour</h1>
         </div>
     </div>
 </div>
@@ -58,9 +53,16 @@
     window.addEventListener("load", () => {
         let param = "none";
         audioMusique(param);
-
+        let storageMusique = localStorage.getItem('volume-musique');
+        let storageEffet = localStorage.getItem('volume-effet');
+        if(storageMusique == null){
+            localStorage.setItem("volume-musique","1");
+        }
+        if(storageEffet == null){
+            localStorage.setItem("volume-effet", "1");
+        }
+        volumeStorage();
     });
-
 
     let elem = document.getElementsByClassName("bg");
     let length = elem.length;
@@ -100,6 +102,17 @@
         }
     }
 
+    function volumeStorage(){
+        let storageMusique = localStorage.getItem('volume-musique');
+        let storageEffet = localStorage.getItem('volume-effet');
+
+        music.volume = storageMusique;
+        effet.volume = storageEffet;
+
+        document.getElementById("volume-music").value = storageMusique*10;
+        document.getElementById("volume-effect").value = storageEffet*10;
+    }
+
     document.getElementById("option-button").addEventListener("click", () =>{
         let elemOption = document.getElementById("options-menu");
         let elemMenu = document.getElementById("main-menu");
@@ -131,11 +144,13 @@
     document.getElementById("volume-music").addEventListener("input", (e) =>{
         let param = e.target.value;
         audioMusique(param);
+        localStorage.setItem("volume-musique", param/10);
     })
 
     document.getElementById("volume-effect").addEventListener("input", (e) =>{
         let param = e.target.value;
         audioEffet(param);
+        localStorage.setItem("volume-effet", param/10);
     })
 
 </script>
