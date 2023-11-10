@@ -1,0 +1,39 @@
+<div class="container menu">
+    <div class="lg bg flex align-items justify-content">
+        <h1>Continuer</h1>
+    </div>
+    <div class="lg bg flex align-items justify-content">
+        <h1>Nouvelle partie</h1>
+    </div>
+    <div class="flex menu-md">
+        <div class="md bg flex align-items justify-content left">
+            <h1>Options</h1>
+        </div>
+        <div class="md bg flex align-items justify-content right">
+            <h1>Quitter</h1>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    window.addEventListener("load", () => {
+        let music = new Audio('https://evarthel.com/mp3/medieval-fantasy-142837.mp3');
+        music.play();
+    });
+
+
+    let elem = document.getElementsByClassName("bg");
+    let length = elem.length;
+    for(let i = 0; i < length; i++){
+        elem[i].addEventListener("mouseenter", (e) =>{
+            mouseover(e);
+        })
+    }
+    
+    function mouseover(e){
+        let audio = new Audio('https://evarthel.com/mp3/click-button-140881.mp3');
+        audio.play();
+    }
+
+</script>

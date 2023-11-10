@@ -1,0 +1,77 @@
+// Place all the styles related to the Accueil controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background: url('bg_accueil.jpg');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    font-family: 'MedievalSharp', cursive;
+    letter-spacing: 1px;
+}
+
+.container {
+    width: 650px;
+    margin: 0 auto;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-content {
+    justify-content: center;
+}
+
+.align-items {
+    align-items: center;
+}
+
+.lg {
+    width: 648px;
+    height: 50px;
+    text-align: center;
+    cursor: pointer;
+    margin: 1rem 0;
+}
+
+.md {
+    width: 326px;
+    height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.lg h1,
+.md h1 {
+    margin: 0;
+    color: white;
+}
+
+.menu-md{
+    margin: 0 0 1rem 0;
+}
+
+.bg {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.left{
+    margin-right: 0.5rem;
+}
+
+.right{
+    margin-left: 0.5rem;
+}
+
+.bg:hover{
+    background-color: rgba(255, 255, 255, 0.4);
+}

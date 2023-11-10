@@ -1,5 +1,7 @@
 {
   "name": "Nocturna",
   "private": true,
-  "dependencies": {}
+  "devDependencies": {
+    "coffeescript": "^2.7.0"
+  }
 }
