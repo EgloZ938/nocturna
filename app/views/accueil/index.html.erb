@@ -1,25 +1,64 @@
 <div class="container menu">
-    <div class="lg bg flex align-items justify-content">
-        <h1>Continuer</h1>
-    </div>
-    <div class="lg bg flex align-items justify-content">
-        <h1>Nouvelle partie</h1>
-    </div>
-    <div class="flex menu-md">
-        <div class="md bg flex align-items justify-content left">
-            <h1>Options</h1>
+    <div id="main-menu">
+        <div class="lg bg flex align-items justify-content">
+            <h1>Continuer</h1>
         </div>
-        <div class="md bg flex align-items justify-content right">
-            <h1>Quitter</h1>
+        <div class="lg bg flex align-items justify-content">
+            <h1>Nouvelle partie</h1>
+        </div>
+        <div class="flex menu-md">
+            <div class="md bg flex align-items justify-content left" id="option-button">
+                <h1>Options</h1>
+            </div>
+            <div class="md bg flex align-items justify-content right">
+                <h1>Quitter</h1>
+            </div>
+        </div>
+    </div>
+    <div id="options-menu">
+        <div class="flex menu-md">
+            <div class="md bg flex align-items justify-content left" id="audio-button">
+                <h1>Audio</h1>
+            </div>
+            <div class="md bg flex align-items justify-content right">
+                <h1>Profil</h1>
+            </div>
+        </div>
+        <div class="lg bg flex align-items justify-content" id="retour-option">
+            <h1>Retour</h1>
+        </div>
+    </div>
+    <div id="audio-menu">
+        <div class="flex menu-md">
+            <div class="md bg flex align-items justify-content left">
+                <label for="volume-music">Musique</label>
+                <input type="range" id="volume-music" name="volume-music" min="0" max="10" steps="1">
+            </div>
+            <div class="md bg flex align-items justify-content right">
+                <label for="volume-effect">Effet</label>
+                <input type="range" id="volume-effect" name="volume-effect" min="0" max="10" steps="1">
+            </div>
+        </div>
+        <div class="flex menu-md">
+            <div class="md bg flex align-items justify-content left" id="retour-audio">
+                <h1>Retour</h1>
+            </div>
+            <div class="md bg flex align-items justify-content right disabled" id="apply-audio">
+                <h1>Appliquer</h1>
+            </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
 
+    let music = new Audio('https://evarthel.com/mp3/medieval-fantasy-142837.mp3');
+    let effet = new Audio('https://evarthel.com/mp3/click-button-140881-%5bAudioTrimmer.com%5d(1).mp3');
+
     window.addEventListener("load", () => {
-        let music = new Audio('https://evarthel.com/mp3/medieval-fantasy-142837.mp3');
-        music.play();
+        let param = "none";
+        audioMusique(param);
+
     });
 
 
@@ -32,8 +71,71 @@
     }
     
     function mouseover(e){
-        let audio = new Audio('https://evarthel.com/mp3/click-button-140881.mp3');
-        audio.play();
+        audioEffet("none");
     }
+
+    function audioMusique(param){
+        if(param == "none"){
+            music.play();
+        }
+        else{
+            let value = param/10;
+            music.volume = value;
+        }
+        
+        music.addEventListener('ended', function() {
+            music.currentTime = 0;
+            music.play();
+        }, false);
+
+    }
+
+    function audioEffet(param){
+        if(param == "none"){
+            effet.play();
+        }
+        else{
+            let value = param/10;
+            effet.volume = value;
+        }
+    }
+
+    document.getElementById("option-button").addEventListener("click", () =>{
+        let elemOption = document.getElementById("options-menu");
+        let elemMenu = document.getElementById("main-menu");
+        elemOption.style.display = "block";
+        elemMenu.style.display = "none";
+    })
+
+    document.getElementById("retour-option").addEventListener("click", () =>{
+        let elemOption = document.getElementById("options-menu");
+        let elemMenu = document.getElementById("main-menu");
+        elemOption.style.display = "none";
+        elemMenu.style.display = "block";
+    })
+
+    document.getElementById("audio-button").addEventListener("click", () =>{
+        let elemAudio = document.getElementById("audio-menu");
+        let elemOption = document.getElementById("options-menu");
+        elemAudio.style.display = "block";
+        elemOption.style.display = "none";
+    })
+
+    document.getElementById("retour-audio").addEventListener("click", () =>{
+        let elemAudio = document.getElementById("audio-menu");
+        let elemOption = document.getElementById("options-menu");
+        elemAudio.style.display = "none";
+        elemOption.style.display = "block";
+    })
+
+    document.getElementById("volume-music").addEventListener("input", (e) =>{
+        let param = e.target.value;
+        audioMusique(param);
+    })
+
+    document.getElementById("volume-effect").addEventListener("input", (e) =>{
+        let param = e.target.value;
+        audioEffet(param);
+    })
 
 </script>

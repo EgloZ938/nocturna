@@ -54,7 +54,7 @@ body {
     color: white;
 }
 
-.menu-md{
+.menu-md {
     margin: 0 0 1rem 0;
 }
 
@@ -64,14 +64,37 @@ body {
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 
-.left{
+.left {
     margin-right: 0.5rem;
 }
 
-.right{
+.right {
     margin-left: 0.5rem;
 }
 
-.bg:hover{
+.bg:hover {
     background-color: rgba(255, 255, 255, 0.4);
+}
+
+#options-menu {
+    display: none;
+}
+
+#audio-menu {
+    display: none;
+}
+
+.invisible {
+    opacity: 0;
+}
+
+label {
+    color: white;
+    margin-right: 1rem;
+    font-size: 22px;
+}
+
+.disabled {
+    opacity: 0.7;
+    pointer-events: none;
 }
