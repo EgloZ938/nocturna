@@ -1,3 +1,34 @@
 // Place all the styles related to the Register controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background: url('bg_register.png');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    font-family: 'MedievalSharp', cursive;
+    letter-spacing: 1px;
+}
+
+.container {
+    width: 650px;
+    margin: 0 auto;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-content {
+    justify-content: center;
+}
+
+.align-items {
+    align-items: center;
+}
