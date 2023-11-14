@@ -1,6 +1,8 @@
 <%= stylesheet_link_tag('accueil') %>
 
+
 <div class="container menu">
+    <img id="status-volume" src="https://evarthel.com/mp3/volume_on.png" class="volume_icon">
     <div id="main-menu">
         <div class="lg bg flex align-items justify-content">
             <h1>Continuer</h1>
@@ -31,6 +33,17 @@
         </div>
     </div>
     <div id="audio-menu">
+        <div class="lg bg msg flex align-items justify-content column">
+            <h1>Utilisez Firefox pour ne pas avoir à réactiver le son à chaque fois</h1>
+            <div class="flex align-items justify-content space-between w-100 container_volume_icon">
+                <img src="https://evarthel.com/mp3/volume_on.png" class="volume_icon">
+                <h1>Son activé</h1>
+            </div>
+            <div class="flex align-items justify-content space-between w-100 container_volume_icon">
+                <img src="https://evarthel.com/mp3/volume_off.png" class="volume_icon">
+                <h1>Son desactivé</h1>
+            </div>
+        </div>
         <div class="flex menu-md">
             <div class="md bg flex align-items justify-content left">
                 <label for="volume-music">Musique</label>
