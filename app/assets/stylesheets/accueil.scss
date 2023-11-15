@@ -43,11 +43,18 @@ body {
 
 .volume_icon {
     width: 96px;
-    padding-top: 15px;
+    height: 96px;
+    margin-top: 15px;
+    border-radius: 50%;
 }
 
-#status-volume{
+.status-volume{
     position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 15px;
+    cursor: pointer;
+    display: none;
 }
 
 .lg {

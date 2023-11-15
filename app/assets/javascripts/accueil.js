@@ -3,18 +3,27 @@ let effet = new Audio('https://evarthel.com/mp3/click-button-140881-%5bAudioTrim
 
 let storageMusique = localStorage.getItem('volume-musique');
 let storageEffet = localStorage.getItem('volume-effet');
+let storageStatus = localStorage.getItem("volume-status");
 
 let userAgent = navigator.userAgent;
 let resultat = userAgent.includes("Firefox");
 
-if(resultat == true){
-    let status = true;
+if (resultat == true) {
     let param = "none";
     audioMusique(param);
+    if(storageStatus == "false"){
+        music.volume = 0;
+        effet.volume = 0;
+        document.getElementById("status-volume-off").style.display = "block";
+    }
+    else{
+        document.getElementById("status-volume-on").style.display = "block";
+    }
 }
-else{
-    let status = false;
+else {
+    document.getElementById("status-volume-off").style.display = "block";
 }
+
 
 window.addEventListener("load", () => {
     if (storageMusique == null) {
@@ -23,8 +32,47 @@ window.addEventListener("load", () => {
     if (storageEffet == null) {
         localStorage.setItem("volume-effet", "1");
     }
+    if (storageStatus == null) {
+        if (resultat == true) {
+            localStorage.setItem("volume-status", true);
+        }
+    }
     volumeStorage();
+    let statusVolumeId = document.getElementById("status-volume-off");
+    let display = window.getComputedStyle(statusVolumeId, null).display;
+    if (display != "none") {
+        music.volume = 0;
+        effet.volume = 0;
+    }
 });
+
+let statusVolume = document.getElementsByClassName("status-volume");
+let lengthV = statusVolume.length;
+for (let i = 0; i < lengthV; i++) {
+    statusVolume[i].addEventListener("click", (e) => {
+        let storageMusique = localStorage.getItem('volume-musique');
+        let storageEffet = localStorage.getItem('volume-effet');
+
+        let id = e.target.getAttribute("id");
+        if (resultat == false) {
+            music.play();
+        }
+        if (id == "status-volume-on") {
+            e.target.style.display = "none";
+            document.getElementById("status-volume-off").style.display = "block";
+            music.volume = 0;
+            effet.volume = 0;
+            localStorage.setItem("volume-status", false);
+        }
+        else {
+            e.target.style.display = "none";
+            document.getElementById("status-volume-on").style.display = "block";
+            music.volume = storageMusique;
+            effet.volume = storageEffet;
+            localStorage.setItem("volume-status", true);
+        }
+    })
+}
 
 let elem = document.getElementsByClassName("bg");
 let length = elem.length;
