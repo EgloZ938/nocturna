@@ -1,17 +1,24 @@
 <%= stylesheet_link_tag('register') %>
 
 <div class="container menu">
+
+    <img id="status-volume-on" src="https://evarthel.com/mp3/volume_on.png" class="volume_icon status-volume">
+    <img id="status-volume-off" src="https://evarthel.com/mp3/volume_off.png" class="volume_icon status-volume">
+
     <%= form_with model: @user, url: register_create_path do |form| %>
         <div class="form-container">
             <label for="user_name">Pseudo</label>
-            <input id="user_name" type="text" name="user[name]" class="input">
+            <input id="user_name" type="text" name="user[name]" class="input focus">
         </div>
         <div class="form-container">
             <label for="user_password">Mot de passe</label>
-            <input id="user_password" type="password" name="user[password]" class="input">
+            <input id="user_password" type="password" name="user[password]" class="input focus">
         </div>
         <div class="flex justify-content">
-            <%= form.submit "Créer son compte" %>
+            <input type="submit" name="commit" value="Créer son compte" data-disable-with="Créer son compte" id="hover">
         </div>
     <% end %>
 </div>
+
+<script type="text/javascript" src="https://evarthel.com/mp3/register.js">
+</script>

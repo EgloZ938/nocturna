@@ -11,12 +11,12 @@ let resultat = userAgent.includes("Firefox");
 if (resultat == true) {
     let param = "none";
     audioMusique(param);
-    if(storageStatus == "false"){
+    if (storageStatus == "false") {
         music.volume = 0;
         effet.volume = 0;
         document.getElementById("status-volume-off").style.display = "block";
     }
-    else{
+    else {
         document.getElementById("status-volume-on").style.display = "block";
     }
 }
@@ -99,7 +99,7 @@ function audioMusique(param) {
         music.currentTime = 0;
         music.play();
     }, false);
-
+    
 }
 
 function audioEffet(param) {
