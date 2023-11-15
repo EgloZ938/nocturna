@@ -1,12 +1,17 @@
 <%= stylesheet_link_tag('register') %>
 
-
-<%= form_with model: @user, url: register_create_path do |form| %>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
- 
-    <%= form.label :password %>
-    <%= form.password_field :password %>
- 
-    <%= form.submit "Sign Up" %>
- <% end %>
+<div class="container menu">
+    <%= form_with model: @user, url: register_create_path do |form| %>
+        <div class="form-container">
+            <label for="user_name">Pseudo</label>
+            <input id="user_name" type="text" name="user[name]" class="input">
+        </div>
+        <div class="form-container">
+            <label for="user_password">Mot de passe</label>
+            <input id="user_password" type="password" name="user[password]" class="input">
+        </div>
+        <div class="flex justify-content">
+            <%= form.submit "Créer son compte" %>
+        </div>
+    <% end %>
+</div>
