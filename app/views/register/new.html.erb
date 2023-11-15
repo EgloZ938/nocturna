@@ -1,8 +1,12 @@
 <%= stylesheet_link_tag('register') %>
 
 
-<div class="container menu">
-    <div class="">
-        
-    </div>
-</div>
+<%= form_with model: @user, url: register_create_path do |form| %>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+ 
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+ 
+    <%= form.submit "Sign Up" %>
+ <% end %>

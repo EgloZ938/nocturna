@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'accueil/index'
   get 'register/new'
+  
+  post 'register/create'
 
   root 'accueil#index'
   
