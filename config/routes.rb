@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   get 'accueil/index'
   get 'register/new'
+  get 'register/connexion'
   
   post 'register/create'
+  post 'register/connexion'
+
+  delete 'register/destroy'
 
   root 'accueil#index'
   

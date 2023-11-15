@@ -2,6 +2,11 @@
 
 
 <div class="container menu">
+<% if @user %>
+ logged as: <%= @user.name %>
+<%= button_to "logout", register_destroy_path, method: :delete %>
+<% end %> 
+
     <img id="status-volume-on" src="https://evarthel.com/mp3/volume_on.png" class="volume_icon status-volume">
     <img id="status-volume-off" src="https://evarthel.com/mp3/volume_off.png" class="volume_icon status-volume">
     <div id="main-menu">

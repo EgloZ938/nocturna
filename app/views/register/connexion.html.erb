@@ -1,0 +1,12 @@
+<%= stylesheet_link_tag('register') %>
+
+
+<%= form_with model: @user, url: register_connexion_path do |form| %>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+ 
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+ 
+    <%= form.submit "Sign in" %>
+ <% end %>
