@@ -184,4 +184,8 @@ else {
         elemOption.style.display = "block";
     })
 
+    document.getElementById("nouvelle-partie").addEventListener("click", () =>{
+        location.href = "/personnage/new";
+    })
+
 }

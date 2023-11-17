@@ -1,0 +1,27 @@
+<%= stylesheet_link_tag('personnage') %>
+
+<div class="container menu">
+
+    <div class="flex space-between" id="images-menu">
+        <img src="/images/1.jpg" class="avatar">
+        <img src="/images/3.jpg" class="avatar">
+        <img src="/images/5.jpg" class="avatar">
+        <img src="/images/7.jpg" class="avatar">
+    </div>
+
+
+    <%= form_with url: personnage_new_path do |form| %>
+        <div>
+            <%= form.label :avatar %><br>
+            <%= form.text_field :avatar %>
+        </div>
+        <div>
+            <%= form.label :classe %><br>
+            <%= form.password_field :classe %>
+        </div>
+        <p>
+            <%= form.submit %>
+        </p>
+    <% end %>
+</div>
+
