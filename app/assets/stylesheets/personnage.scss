@@ -14,6 +14,7 @@ body {
     letter-spacing: 1px;
     display: flex;
     align-items: center;
+    color: white;
 }
 
 .container {
@@ -41,12 +42,48 @@ body {
     flex-direction: column;
 }
 
-.avatar{
+.avatar {
     width: 400px;
     height: 400px;
     border-radius: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    position: relative;
+    cursor: pointer;
 }
 
-form{
+.avatar h1{
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-bottom: 15px;
+}
+
+#avatar-1 {
+    background: url('1.jpg');
+    background-size: cover;
+}
+
+#avatar-3 {
+    background: url('3.jpg');
+    background-size: cover;
+}
+
+#avatar-5 {
+    background: url('5.jpg');
+    background-size: cover;
+}
+
+#avatar-7 {
+    background: url('7.jpg');
+    background-size: cover;
+}
+
+.avatar:hover {
+    scale: 1.1;
+}
+
+form {
     display: none;
 }
