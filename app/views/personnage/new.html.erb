@@ -2,6 +2,13 @@
 
 <div class="container menu">
 
+    <img id="status-volume-on" src="https://evarthel.com/mp3/volume_on.png" class="volume_icon status-volume">
+    <img id="status-volume-off" src="https://evarthel.com/mp3/volume_off.png" class="volume_icon status-volume">
+
+    <div id="retourPrincipal">
+        Retour
+    </div>
+
     <h1>Choisissez votre classe</h1>
 
     <div class="flex space-between" id="images-menu">
@@ -21,17 +28,20 @@
 
 
     <%= form_with url: personnage_new_path do |form| %>
-        <div>
+        <div class="hidden">
             <%= form.label :avatar %><br>
             <%= form.text_field :avatar %>
         </div>
-        <div>
+        <div class="hidden">
             <%= form.label :classe %><br>
             <%= form.password_field :classe %>
         </div>
-        <p>
-            <%= form.submit %>
-        </p>
+        <div class="flex justify-content">
+            <input type="submit" name="commit" value="Commencer votre aventure" data-disable-with="Commencer votre aventure" id="submit">
+        </div>
     <% end %>
 </div>
+
+<script src="/javascript/personnage.js">
+</script>
 
