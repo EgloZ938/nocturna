@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_14_144833) do
+ActiveRecord::Schema.define(version: 2023_11_16_160154) do
+
+  create_table "personnages", force: :cascade do |t|
+    t.text "password_digest"
+    t.text "avatar"
+    t.text "avatar_unlock"
+    t.text "force"
+    t.text "experience"
+    t.text "classe"
+    t.text "inventaire"
+    t.text "sac_a_dos"
+    t.text "argent"
+    t.text "pv"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_personnages_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.text "name"

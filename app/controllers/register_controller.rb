@@ -21,9 +21,10 @@ class RegisterController < ApplicationController
       session[:user_id] = nil
       redirect_to register_connexion_path, notice: "logged out"
     end
+
    def connexion
-     user = User.find_by(name: params[:name])
-     if user.present? && user.authenticate(params[:password])
+     user = User.find_by(name: params[:name], password: params[:password])
+     if user.present?
       session[:user_id] = user.id
       redirect_to root_path
      else

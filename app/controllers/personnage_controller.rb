@@ -1,0 +1,2 @@
+class PersonnageController < ApplicationController
+end

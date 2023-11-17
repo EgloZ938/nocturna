@@ -2,13 +2,9 @@
 
 
 <div class="container menu">
+<img id="status-volume-on" src="https://evarthel.com/mp3/volume_on.png" class="volume_icon status-volume">
+<img id="status-volume-off" src="https://evarthel.com/mp3/volume_off.png" class="volume_icon status-volume">
 <% if @user %>
- logged as: <%= @user.name %>
-<%= button_to "logout", register_destroy_path, method: :delete %>
-<% end %> 
-
-    <img id="status-volume-on" src="https://evarthel.com/mp3/volume_on.png" class="volume_icon status-volume">
-    <img id="status-volume-off" src="https://evarthel.com/mp3/volume_off.png" class="volume_icon status-volume">
     <div id="main-menu">
         <div class="lg bg flex align-items justify-content">
             <h1>Continuer</h1>
@@ -20,9 +16,11 @@
             <div class="md bg flex align-items justify-content left" id="option-button">
                 <h1>Options</h1>
             </div>
-            <div class="md bg flex align-items justify-content right">
-                <h1>Quitter</h1>
-            </div>
+            <form class="button_to md bg flex align-items justify-content right" method="post" action="/register/destroy">
+                <input type="hidden" name="_method" value="delete">
+                <input type="submit" value="Se déconnecter" id="submit">
+                <input type="hidden" name="authenticity_token" value="brKcXums0HZAfJMR2EixDH0T3igZiHrenv88yNeqMiPzhOsZlIqdFM1+/Aw8ddw+kib2sw3HaE3btX+iUDCIKg==">
+            </form>
         </div>
     </div>
     <div id="options-menu">
@@ -30,7 +28,7 @@
             <div class="md bg flex align-items justify-content left" id="audio-button">
                 <h1>Audio</h1>
             </div>
-            <div class="md bg flex align-items justify-content right">
+            <div class="md bg flex align-items justify-content right" id="profil-button">
                 <h1>Profil</h1>
             </div>
         </div>
@@ -64,7 +62,21 @@
             <h1>Retour</h1>
         </div>
     </div>
+    <div id="profil-menu">
+        <div id="profil">
+            <div class="flex align-items space-between">
+                <img src="/images/no_avatar.jpg" id="avatar-profil">
+                <h1><%= @user.name %></h1>
+            </div>
+        </div>
+        <div class="lg bg flex align-items justify-content" id="retour-profil">
+            <h1>Retour</h1>
+        </div>
+    </div>
+<% end %>
+
+
 </div>
 
-<script type="text/javascript" src="https://evarthel.com/mp3/accueil.js">
+<script type="text/javascript" src="/javascript/accueil.js">
 </script>

@@ -3,5 +3,13 @@
   "private": true,
   "devDependencies": {
     "coffeescript": "^2.7.0"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:theoevon/Nocturna.git",
+  "author": "EgloZ938 <theo.evon@epitech.eu>",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^3.7.1"
   }
 }

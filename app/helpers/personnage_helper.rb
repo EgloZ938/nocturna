@@ -1,0 +1,2 @@
+module PersonnageHelper
+end

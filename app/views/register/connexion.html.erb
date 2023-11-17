@@ -1,12 +1,29 @@
 <%= stylesheet_link_tag('register') %>
 
+<div class="container menu">
+    <img id="status-volume-on" src="https://evarthel.com/mp3/volume_on.png" class="volume_icon status-volume">
+    <img id="status-volume-off" src="https://evarthel.com/mp3/volume_off.png" class="volume_icon status-volume">
 
-<%= form_with model: @user, url: register_connexion_path do |form| %>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
- 
-    <%= form.label :password %>
-    <%= form.password_field :password %>
- 
-    <%= form.submit "Sign in" %>
- <% end %>
+    <%= form_with url: register_connexion_path do |form| %>
+
+        <div class="form-container">
+            <label for="name">Pseudo</label>
+            <input type="text" name="name" id="name" class="input focus" required>
+        </div>
+
+        <div class="form-container">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" id="password" class="input focus">
+        </div>
+
+        <div class="flex justify-content">
+            <input type="submit" name="commit" value="Se connecter" data-disable-with="Se connecter" id="hover">
+        </div>
+     <% end %>
+     <div class="flex justify-content">
+        <a href="/register/new">Créer un compte</a>
+    </div>
+</div>
+
+<script type="text/javascript" src="/javascript/register.js">
+</script>
