@@ -27,8 +27,8 @@ class RegisterController < ApplicationController
      user = User.find_by(name: params[:name], password: params[:password])
      if user.present?
       session[:user_id] = user.id
+      @personnage = Personnage.find_by(user_id: session[:user_id])
       if @personnage
-        @personnage = Personnage.find_by(user_id: session[:user_id])
         session[:personnage_id] = @personnage.id;
       end
       redirect_to root_path
