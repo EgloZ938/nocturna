@@ -19,6 +19,7 @@ class RegisterController < ApplicationController
    end
    def destroy
       session[:user_id] = nil
+      session[:personnage_id] = nil
       redirect_to register_connexion_path, notice: "logged out"
     end
 
@@ -26,6 +27,10 @@ class RegisterController < ApplicationController
      user = User.find_by(name: params[:name], password: params[:password])
      if user.present?
       session[:user_id] = user.id
+      if @personnage
+        @personnage = Personnage.find_by(user_id: session[:user_id])
+        session[:personnage_id] = @personnage.id;
+      end
       redirect_to root_path
      else
       render :connexion
