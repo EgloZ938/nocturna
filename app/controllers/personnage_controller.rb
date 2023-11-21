@@ -1,26 +1,22 @@
 class PersonnageController < ApplicationController
     def new
         @personnage = Personnage.new
+        @test = session[:user_id]
     end
 
     def create
         @personnage = Personnage.new(personnage_params)
-        session[:user_id] = @personnage.user_id
-        if @personnage.classe == "chevalier"
-
-        
-        elsif @personnage.classe == "mage"
-            
-
-        elsif @personnage.classe = "assassin"
-            
+        if @personnage.save
+            session[:personnage_id] = @personnage.id
+                flash[:notice] = "succesfully created personnage"
 
         else
-
-
+            flash[:alert] = "User not created"
+            render :new
         end
+
     end
     def personnage_params
-        params.require(:personnage).permit(:avatar, :force, :experiece, :classe, :pv, :user_id)
+        params.require(:personnage).permit(:avatar, :avatar_unlock, :force, :exp_joueur, :classe, :inventaire, :sac_a_dos, :argent, :pv, :user_id);
     end
 end

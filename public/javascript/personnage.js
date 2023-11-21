@@ -69,12 +69,26 @@ function startMusic() {
 let classe = document.getElementsByClassName("avatar");
 let length = classe.length;
 
+let id = document.getElementsByClassName("hidden")[0].innerHTML;
+document.getElementById("personnage_user_id").value = id;
+
 for(let i = 0; i < length; i++){
     classe[i].addEventListener("click", (e) =>{
         effet.play();
         let id = e.target.getAttribute("id");
-        let inputAvatar = document.getElementById("avatar");
-        let inputClasse = document.getElementById("classe");
+        let inputAvatar = document.getElementById("personnage_avatar");
+        let inputClasse = document.getElementById("personnage_classe");
+        let inputAvatarUnlock = document.getElementById("personnage_avatar_unlock");
+        let inputForce = document.getElementById("personnage_force");
+        let inputExp = document.getElementById("personnage_exp_joueur");
+        inputExp.value = "0";
+        let inputInventaire = document.getElementById("personnage_inventaire");
+        inputInventaire.value = "empty";
+        let inputSacADos = document.getElementById("personnage_sac_a_dos");
+        inputSacADos.value = "15";
+        let inputArgent = document.getElementById("personnage_argent");
+        inputArgent.value = "0";
+        let inputPv = document.getElementById("personnage_pv");
         removeScale();
         e.target.classList.add("scale");
         if(id == "avatar-1"){
@@ -82,24 +96,36 @@ for(let i = 0; i < length; i++){
             let cheminAvatar = "/images/1.jpg";
             inputAvatar.value = cheminAvatar;
             inputClasse.value = classeJoueur;
+            inputAvatarUnlock.value = "1";
+            inputForce.value = "300";
+            inputPv.value = "1000";
         }
         else if(id == "avatar-3"){
             let classeJoueur = "assassin";
             let cheminAvatar = "/images/3.jpg";
             inputAvatar.value = cheminAvatar;
             inputClasse.value = classeJoueur;
+            inputAvatarUnlock.value = "3";
+            inputForce.value = "400";
+            inputPv.value = "900";
         }
         else if(id == "avatar-5"){
             let classeJoueur = "chevalier";
             let cheminAvatar = "/images/5.jpg";
             inputAvatar.value = cheminAvatar;
             inputClasse.value = classeJoueur;
+            inputAvatarUnlock.value = "5";
+            inputForce.value = "300";
+            inputPv.value = "1200";
         }
         else{
             let classeJoueur = "mage";
             let cheminAvatar = "/images/7.jpg";
             inputAvatar.value = cheminAvatar;
             inputClasse.value = classeJoueur;
+            inputAvatarUnlock.value = "7";
+            inputForce.value = "400";
+            inputPv.value = "1000";
         }
     })
 }
@@ -112,4 +138,8 @@ function removeScale(){
 
 document.getElementById("retourPrincipal").addEventListener("click", () =>{
     location.href = "/";
+})
+
+document.getElementById("submit").addEventListener("mouseenter", () =>{
+    effet.play();
 })

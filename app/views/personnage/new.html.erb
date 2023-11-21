@@ -8,8 +8,9 @@
     <div id="retourPrincipal">
         Retour
     </div>
-
     <h1>Choisissez votre classe</h1>
+
+    <div class="hidden" id="user_id"><%= @test %></div>
 
     <div class="flex space-between" id="images-menu">
         <div class="avatar" id="avatar-1">
@@ -27,15 +28,21 @@
     </div>
 
 
-    <%= form_with url: personnage_new_path do |form| %>
+    <%= form_with model: @personnage, url: personnage_create_path do |form| %>
         <div class="hidden">
-            <%= form.label :avatar %><br>
             <%= form.text_field :avatar %>
+            <%= form.text_field :avatar_unlock %>
+            <%= form.text_field :force %>
+            <%= form.text_field :exp_joueur %>
+            <%= form.text_field :classe %>
+            <%= form.text_field :inventaire %>
+            <%= form.text_field :sac_a_dos %>
+            <%= form.text_field :argent %>
+            <%= form.text_field :pv %>
+            <%= form.text_field :user_id %>
         </div>
-        <div class="hidden">
-            <%= form.label :classe %><br>
-            <%= form.password_field :classe %>
-        </div>
+        
+
         <div class="flex justify-content">
             <input type="submit" name="commit" value="Commencer votre aventure" data-disable-with="Commencer votre aventure" id="submit">
         </div>

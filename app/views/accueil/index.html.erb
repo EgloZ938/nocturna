@@ -65,7 +65,11 @@
     <div id="profil-menu">
         <div id="profil">
             <div class="flex align-items space-between">
-                <img src="/images/no_avatar.jpg" id="avatar-profil">
+                <% if @personnage %>
+                    <img src="<%= @personnage.avatar %>" id="avatar-profil">
+                <% else %>
+                    <img src="/images/no_avatar.jpg" id="avatar-profil">
+                <% end %>
                 <h1><%= @user.name %></h1>
             </div>
         </div>
