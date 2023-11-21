@@ -66,12 +66,34 @@
         <div id="profil">
             <div class="flex align-items space-between">
                 <% if @personnage %>
-                    <img src="<%= @personnage.avatar %>" id="avatar-profil">
+                    <img src=<%= @personnage.avatar %> id="avatar-profil">
                 <% else %>
                     <img src="/images/no_avatar.jpg" id="avatar-profil">
                 <% end %>
-                <h1><%= @user.name %></h1>
+                <h1 class="color"><%= @user.name %></h1>
             </div>
+            <% if @personnage %>
+                <div class="flex align-items">
+                    <h1>Niveau : </h1>
+                    <h1 class="color info"><%= @personnage.exp_joueur %></h1>
+                </div>
+                <div class="flex align-items">
+                    <h1>Classe : </h1>
+                    <h1 class="color info classe"><%= @personnage.classe %></h1>
+                </div>
+                <div class="flex align-items">
+                    <h1>Point de vie : </h1>
+                    <h1 class="color info"><%= @personnage.pv %></h1>
+                </div>
+                <div class="flex align-items">
+                    <h1>Force : </h1>
+                    <h1 class="color info"><%= @personnage.force %></h1>
+                </div>
+                <div class="flex align-items">
+                    <h1>Argent : </h1>
+                    <h1 class="color info"><%= @personnage.argent %> écus</h1>
+                </div>
+            <% end %>
         </div>
         <div class="lg bg flex align-items justify-content" id="retour-profil">
             <h1>Retour</h1>
