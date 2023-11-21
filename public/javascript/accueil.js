@@ -1,3 +1,8 @@
+let unconnected = document.getElementById("unconnected");
+if(unconnected !== null){
+    location.href = "/register/connexion";
+}
+
 let connected = localStorage.getItem("token");
 if (connected == "0") {
     localStorage.setItem("token", "1");
