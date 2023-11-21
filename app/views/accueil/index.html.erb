@@ -6,9 +6,11 @@
 <img id="status-volume-off" src="https://evarthel.com/mp3/volume_off.png" class="volume_icon status-volume">
 <% if @user %>
     <div id="main-menu">
-        <div class="lg bg flex align-items justify-content">
-            <h1>Continuer</h1>
-        </div>
+        <% if @personnage %>
+            <div class="lg bg flex align-items justify-content">
+                <h1>Continuer</h1>
+            </div>
+        <% end %>
         <div class="lg bg flex align-items justify-content" id="nouvelle-partie">
             <h1>Nouvelle partie</h1>
         </div>
