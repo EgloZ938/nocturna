@@ -1,19 +1,8 @@
-let music = new Audio('https://evarthel.com/mp3/cloud-of-sorrow-13984.mp3');
-let effet = new Audio('https://evarthel.com/mp3/click-button-140881-%5bAudioTrimmer.com%5d(1).mp3');
+let music = new Audio('/mp3/register.mp3');
+let effet = new Audio('/mp3/effet_click.mp3');
 
 let elem = document.getElementsByClassName("focus");
 let lengthElem = elem.length;
-
-let userAgent = navigator.userAgent;
-let resultat = userAgent.includes("Firefox");
-
-if (resultat == true) {
-    document.getElementById("status-volume-on").style.display = "block";
-    startMusic();
-}
-else {
-    document.getElementById("status-volume-off").style.display = "block";
-}
 
 for (let i = 0; i < lengthElem; i++) {
     elem[i].addEventListener("focus", () => {
@@ -21,9 +10,32 @@ for (let i = 0; i < lengthElem; i++) {
     })
 }
 
-document.getElementById("hover").addEventListener("mouseenter", () => {
-    effet.play();
-})
+let storageMusique = localStorage.getItem('volume-musique');
+let storageEffet = localStorage.getItem('volume-effet');
+let storageStatus = localStorage.getItem("volume-status");
+
+let userAgent = navigator.userAgent;
+let resultat = userAgent.includes("Firefox");
+
+
+if (resultat == true) {
+    if(storageStatus == "false"){
+        music.volume = 0;
+        effet.volume = 0;
+        document.getElementById("status-volume-off").style.display = "block";
+        startMusic();
+    }
+    else{
+        document.getElementById("status-volume-on").style.display = "block";
+        music.volume = storageMusique;
+        effet.volume = storageEffet;
+        startMusic();
+    }
+}
+else {
+    document.getElementById("status-volume-off").style.display = "block";
+}
+
 
 let statusVolume = document.getElementsByClassName("status-volume");
 let lengthV = statusVolume.length;
@@ -39,15 +51,19 @@ for (let i = 0; i < lengthV; i++) {
             document.getElementById("status-volume-off").style.display = "block";
             music.volume = 0;
             effet.volume = 0;
+            localStorage.setItem("volume-status", "false");
         }
         else {
             e.target.style.display = "none";
             document.getElementById("status-volume-on").style.display = "block";
-            music.volume = 1;
-            effet.volume = 1;
+            music.volume = storageMusique;
+            effet.volume = storageEffet;
+            localStorage.setItem("volume-status", "true");
         }
     })
 }
+
+
 
 function startMusic() {
     music.play();
@@ -56,6 +72,20 @@ function startMusic() {
         music.currentTime = 0;
         music.play();
     }, false);
+}
+
+
+let redirect = document.getElementById("redirect-register");
+if(redirect == null){
+    let redirect = document.getElementById("redirect-login");
+    redirect.addEventListener("click", () =>{
+        window.location.href = "/register/connexion";
+    })
+}
+else{
+    redirect.addEventListener("click", () =>{
+        window.location.href = "/register/new";
+    })
 }
 
 document.getElementsByTagName("form")[0].addEventListener("submit", () =>{

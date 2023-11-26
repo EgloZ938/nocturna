@@ -10,8 +10,8 @@ if (connected == "0") {
 }
 else {
 
-    let music = new Audio('https://evarthel.com/mp3/medieval-fantasy-142837.mp3');
-    let effet = new Audio('https://evarthel.com/mp3/click-button-140881-%5bAudioTrimmer.com%5d(1).mp3');
+    let music = new Audio('/mp3/accueil.mp3');
+    let effet = new Audio('/mp3/effet_click.mp3');
 
     let storageMusique = localStorage.getItem('volume-musique');
     let storageEffet = localStorage.getItem('volume-effet');
@@ -193,4 +193,7 @@ else {
         location.href = "/personnage/new";
     })
 
+    document.getElementById("gamemaster-button").addEventListener("click", () =>{
+        location.href = "/gamemaster/index";
+    })
 }

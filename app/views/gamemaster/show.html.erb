@@ -1,0 +1,39 @@
+<%= stylesheet_link_tag('gamemaster') %>
+<div class="container">
+
+    <table>
+        <tr>
+            <th></th>
+            <th>Pseudo</th>
+            <% if @personnage %>
+                <th>Niveau</th>
+                <th>Classe</th>
+                <th>Argent</th>
+                <th>Pv</th>
+                <th>Force</th>
+                <th>Vitesse</th>
+                <th>Inventaire</th>
+                <th>Sac à dos</th>
+            <% end %>
+        </tr>
+    
+        <tr>
+            <% if @personnage %>
+                <td><img src="<%= @personnage.avatar %>"></td>
+            <% else %>
+                <td><img src="/images/no_avatar.jpg"></td>
+            <% end %>
+            <td><%= @user.name %></td>
+            <% if @personnage %>
+                <td><%= @personnage.exp_joueur %></td>
+                <td class="classe"><%= @personnage.classe %></td>
+                <td><%= @personnage.argent %></td>
+                <td><%= @personnage.pv %></td>
+                <td><%= @personnage.force %></td>
+                <td><%= @personnage.vitesse %></td>
+                <td><%= @personnage.inventaire %></td>
+                <td><%= @personnage.sac_a_dos %></td>
+            <% end %>
+        </tr>
+    </table>
+</div>

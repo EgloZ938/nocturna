@@ -92,8 +92,10 @@ input[type="submit"]:hover{
     display: none;
 }
 
-a{
+.redirect{
     font-size: 34px;
     color: white;
     margin-top: 15px;
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -15,7 +15,6 @@ class RegisterController < ApplicationController
         render :new
 
     end 
-    
    end
    def destroy
       session[:user_id] = nil

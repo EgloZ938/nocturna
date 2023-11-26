@@ -1,0 +1,88 @@
+// Place all the styles related to the Gamemaster controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: rgb(230, 230, 230);
+    background: url('bg_personnage.jpg');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'MedievalSharp', cursive;
+    letter-spacing: 1px;
+    color: white;
+    font-size: 34px;
+}
+
+.container {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-content {
+    justify-content: center;
+}
+
+.align-items {
+    align-items: center;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.column {
+    flex-direction: column;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table td,
+table th {
+    padding: 8px;
+}
+
+table tr{
+    background: rgba(255, 255, 255, 0.25);
+}
+
+table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+table tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+img{
+    width: 96px;
+    height: 96px;
+    border-radius: 15px;
+}
+
+.classe:first-letter {
+    text-transform: uppercase;
+}
+
+a{
+    color: white;
+}

@@ -2,8 +2,8 @@
 
 
 <div class="container menu">
-<img id="status-volume-on" src="https://evarthel.com/mp3/volume_on.png" class="volume_icon status-volume">
-<img id="status-volume-off" src="https://evarthel.com/mp3/volume_off.png" class="volume_icon status-volume">
+<img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
+<img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
 <% if @user %>
     <div id="main-menu">
         <% if @personnage %>
@@ -24,6 +24,11 @@
                 <input type="hidden" name="authenticity_token" value="brKcXums0HZAfJMR2EixDH0T3igZiHrenv88yNeqMiPzhOsZlIqdFM1+/Aw8ddw+kib2sw3HaE3btX+iUDCIKg==">
             </form>
         </div>
+        <% if @gamemaster %>
+            <div class="lg bg flex align-items justify-content" id="gamemaster-button">
+                <h1 class="color">Gamemaster</h1>
+            </div>
+        <% end %>
     </div>
     <div id="options-menu">
         <div class="flex menu-md">
@@ -42,11 +47,11 @@
         <div class="lg bg msg flex align-items justify-content column">
             <h1>Utilisez Firefox pour ne pas avoir à réactiver le son à chaque fois</h1>
             <div class="flex align-items justify-content space-between w-100 container_volume_icon">
-                <img src="https://evarthel.com/mp3/volume_on.png" class="volume_icon">
+                <img src="/images/volume_on.png" class="volume_icon">
                 <h1>Son activé</h1>
             </div>
             <div class="flex align-items justify-content space-between w-100 container_volume_icon">
-                <img src="https://evarthel.com/mp3/volume_off.png" class="volume_icon">
+                <img src="/images/volume_off.png" class="volume_icon">
                 <h1>Son desactivé</h1>
             </div>
         </div>
@@ -72,16 +77,20 @@
                 <% else %>
                     <img src="/images/no_avatar.jpg" id="avatar-profil">
                 <% end %>
-                <h1 class="color"><%= @user.name %></h1>
+                <h1 class="color username"><%= @user.name %></h1>
             </div>
             <% if @personnage %>
+                <div class="flex align-items">
+                    <h1>Classe : </h1>
+                    <h1 class="color info classe"><%= @personnage.classe %></h1>
+                </div>
                 <div class="flex align-items">
                     <h1>Niveau : </h1>
                     <h1 class="color info"><%= @personnage.exp_joueur %></h1>
                 </div>
                 <div class="flex align-items">
-                    <h1>Classe : </h1>
-                    <h1 class="color info classe"><%= @personnage.classe %></h1>
+                    <h1>Argent : </h1>
+                    <h1 class="color info"><%= @personnage.argent %> écus</h1>
                 </div>
                 <div class="flex align-items">
                     <h1>Point de vie : </h1>
@@ -92,8 +101,8 @@
                     <h1 class="color info"><%= @personnage.force %></h1>
                 </div>
                 <div class="flex align-items">
-                    <h1>Argent : </h1>
-                    <h1 class="color info"><%= @personnage.argent %> écus</h1>
+                    <h1>Vitesse : </h1>
+                    <h1 class="color info"><%= @personnage.vitesse %></h1>
                 </div>
             <% end %>
         </div>

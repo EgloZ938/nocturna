@@ -15,6 +15,6 @@ class PersonnageController < ApplicationController
         end
     end
     def personnage_params
-        params.require(:personnage).permit(:avatar, :avatar_unlock, :force, :exp_joueur, :classe, :inventaire, :sac_a_dos, :argent, :pv, :user_id);
+        params.require(:personnage).permit(:avatar, :avatar_unlock, :force, :exp_joueur, :classe, :inventaire, :sac_a_dos, :argent, :pv, :vitesse, :user_id);
     end
 end

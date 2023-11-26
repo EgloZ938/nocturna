@@ -1,8 +1,8 @@
 <%= stylesheet_link_tag('register') %>
 
 <div class="container menu">
-    <img id="status-volume-on" src="https://evarthel.com/mp3/volume_on.png" class="volume_icon status-volume">
-    <img id="status-volume-off" src="https://evarthel.com/mp3/volume_off.png" class="volume_icon status-volume">
+    <img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
+    <img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
 
     <%= form_with url: register_connexion_path do |form| %>
 
@@ -21,7 +21,7 @@
         </div>
      <% end %>
      <div class="flex justify-content">
-        <a href="/register/new">Créer un compte</a>
+        <h1 id="redirect-register" class="redirect">Créer un compte</h1>
     </div>
 </div>
 

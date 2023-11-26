@@ -4,13 +4,24 @@ Rails.application.routes.draw do
   get 'register/connexion'
   get 'personnage/new'
   get 'personnage/create'
+  get 'gamemaster/new'
+  get 'gamemaster/create'
+  get 'gamemaster/index'
+  get 'gamemaster/connexion'
+  get 'gamemaster/deconnexion'
+  get '/gamemaster/afficher/:id', to: 'gamemaster#show', as: 'gamemaster'
+
 
   post 'register/create'
   post 'register/connexion'
   post 'personnage/new'
   post 'personnage/create'
+  post 'gamemaster/new'
+  post 'gamemaster/create'
+  post 'gamemaster/connexion'
 
   delete 'register/destroy'
+  delete 'gamemaster/deconnexion'
 
   root 'accueil#index'
 

@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_21_133329) do
+ActiveRecord::Schema.define(version: 2023_11_23_143926) do
+
+  create_table "gamemasters", force: :cascade do |t|
+    t.text "name"
+    t.text "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "personnages", force: :cascade do |t|
     t.string "avatar"
@@ -22,6 +29,7 @@ ActiveRecord::Schema.define(version: 2023_11_21_133329) do
     t.string "sac_a_dos"
     t.string "argent"
     t.string "pv"
+    t.string "vitesse"
     t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

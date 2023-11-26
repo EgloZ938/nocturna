@@ -1,0 +1,28 @@
+<%= stylesheet_link_tag('gamemaster') %>
+
+
+<div class="container">
+<table>
+        <tr>
+            <th>ID</th>
+            <th>Pseudo</th>
+            <th colspan="2">Interaction</th>
+        </tr>
+        
+        <% @users.each do |user| %>
+        <tr>
+            <td><%= user.id %></td>
+            <td><%= user.name %></td>
+            <td><%= link_to 'Afficher +', gamemaster_path(user.id) %></td>
+            <td><%= link_to 'Supprimer', gamemaster_path(user.id),
+                    method: :delete,
+                    data: { confirm: 'En faisant ça vous allez supprimer l\'utilisateur et le personnage lié avec. Êtes vous sûr ?' } %></td>
+        </tr>
+        <% end %>
+    </table>
+    <form class="button_to" method="post" action="/gamemaster/deconnexion">
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" value="logout">
+        <input type="hidden" name="authenticity_token" value="ljV9DpIaT1CbMWxsvPivIYC38F2SWcWOf9JFxaXWsFcLAwpJ7zwCMhYzA3FYxcITb4LYxoYW1x06mAavIkwKXg==">
+    </form>
+</div>
