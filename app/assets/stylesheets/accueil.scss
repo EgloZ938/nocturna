@@ -12,13 +12,26 @@ body {
     display: flex;
     align-items: center;
     height: 100vh;
+    width: 100%;
+    position: relative;
     font-family: 'MedievalSharp', cursive;
     letter-spacing: 1px;
+}
+
+#logo {
+    position: absolute;
+    width: 512px;
+    top: 0;
+    left: 0;
+    margin-left: 50%;
+    margin-top: 50px;
+    transform: translateX(-50%);
 }
 
 .container {
     width: 650px;
     margin: 0 auto;
+    margin-top: 150px;
 }
 
 .flex {

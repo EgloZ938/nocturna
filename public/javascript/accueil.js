@@ -138,15 +138,23 @@ else {
     document.getElementById("option-button").addEventListener("click", () => {
         let elemOption = document.getElementById("options-menu");
         let elemMenu = document.getElementById("main-menu");
+        let logo = document.getElementById("logo");
+        let container = document.getElementsByClassName("container")[0];
         elemOption.style.display = "block";
         elemMenu.style.display = "none";
+        logo.style.display = "none";
+        container.style.marginTop = "0px";
     })
 
     document.getElementById("retour-option").addEventListener("click", () => {
         let elemOption = document.getElementById("options-menu");
         let elemMenu = document.getElementById("main-menu");
+        let logo = document.getElementById("logo");
+        let container = document.getElementsByClassName("container")[0];
         elemOption.style.display = "none";
         elemMenu.style.display = "block";
+        logo.style.display = "block";
+        container.style.marginTop = "150px";
     })
 
     document.getElementById("audio-button").addEventListener("click", () => {
