@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_23_143926) do
+ActiveRecord::Schema.define(version: 2023_11_26_213040) do
 
   create_table "gamemasters", force: :cascade do |t|
     t.text "name"

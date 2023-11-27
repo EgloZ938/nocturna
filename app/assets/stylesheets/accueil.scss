@@ -153,7 +153,7 @@ label {
     cursor: pointer;
 }
 
-#profil{
+#profil {
     background: rgba(255, 255, 255, 0.25);
     border: 1px solid black;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
@@ -161,27 +161,64 @@ label {
     color: white;
 }
 
-#profil-menu{
+#profil-menu {
     display: none;
 }
 
-#avatar-profil{
+#avatar-profil {
     width: 128px;
     border-radius: 15px;
 }
 
-.info{
+.info {
     margin-left: 13px;
 }
 
-.color{
-    color :#e4aa52 !important;
+.color {
+    color: #e4aa52 !important;
 }
 
 .classe:first-letter {
     text-transform: uppercase;
 }
 
-.username{
+.username {
     font-size: 42px;
+}
+
+#alert {
+    text-align: center;
+    color: white;
+    position: absolute;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    display: none;
+}
+
+.attention {
+    color: #ff3333;
+}
+
+.button button {
+    padding: 15px;
+    font-family: 'MedievalSharp', cursive;
+    background: none;
+    border-radius: 15px;
+    font-size: 34px;
+    margin-bottom: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.20);
+}
+
+.button button:hover{
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.button-container {
+    width: 98%;
 }

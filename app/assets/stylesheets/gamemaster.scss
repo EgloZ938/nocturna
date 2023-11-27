@@ -47,6 +47,7 @@ body {
 table {
     border-collapse: collapse;
     width: 100%;
+    margin-bottom: 30px;
 }
 
 table td,
@@ -85,4 +86,20 @@ img{
 
 a{
     color: white;
+}
+
+input[type="submit"]{
+    text-align: center;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 15px;
+    font-size: 28px;
+    cursor: pointer;
+    margin-top: 45px;
+}
+
+input[type="submit"]:hover{
+    background-color: rgba(255, 255, 255, 0.4);
 }

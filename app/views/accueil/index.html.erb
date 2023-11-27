@@ -1,9 +1,9 @@
 <%= stylesheet_link_tag('accueil') %>
 
-
-<div class="container menu">
 <img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
 <img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
+
+<div class="container menu" id="menu">
 <% if @user %>
     <div id="main-menu">
         <% if @personnage %>
@@ -11,9 +11,15 @@
                 <h1>Continuer</h1>
             </div>
         <% end %>
-        <div class="lg bg flex align-items justify-content" id="nouvelle-partie">
-            <h1>Nouvelle partie</h1>
-        </div>
+        <% if @personnage %>
+            <div class="lg bg flex align-items justify-content" id="partie-existante">
+                <h1>Nouvelle partie</h1>
+            </div>
+        <% else %>
+            <div class="lg bg flex align-items justify-content" id="nouvelle-partie">
+                <h1>Nouvelle partie</h1>
+            </div>
+        <% end %>
         <div class="flex menu-md">
             <div class="md bg flex align-items justify-content left" id="option-button">
                 <h1>Options</h1>
@@ -110,12 +116,48 @@
             <h1>Retour</h1>
         </div>
     </div>
+</div>
+<% if @personnage %>
+    <div id="alert" class="flex justify-content align-items column">
+        <h1 class="attention">Attention !</h1>
+        <h1>Si vous commencez une nouvelle partie vous perdrez toute progression</h1>
+        <div class="flex align-items">
+            <h1>Classe : </h1>
+            <h1 class="color info classe"><%= @personnage.classe %></h1>
+        </div>
+        <div class="flex align-items">
+            <h1>Niveau : </h1>
+            <h1 class="color info"><%= @personnage.exp_joueur %></h1>
+        </div>
+        <div class="flex align-items">
+            <h1>Argent : </h1>
+            <h1 class="color info"><%= @personnage.argent %> écus</h1>
+        </div>
+        <div class="flex align-items">
+            <h1>Point de vie : </h1>
+            <h1 class="color info"><%= @personnage.pv %></h1>
+        </div>
+        <div class="flex align-items">
+            <h1>Force : </h1>
+            <h1 class="color info"><%= @personnage.force %></h1>
+        </div>
+        <div class="flex align-items">
+            <h1>Vitesse : </h1>
+            <h1 class="color info"><%= @personnage.vitesse %></h1>
+        </div>
+        <div class="flex space-between button-container">
+            <div class="button">
+                <button id="button-annuler">Annuler</button>
+            </div>
+            <div class="button">
+                <button id="button-continuer">Continuer</button>
+            </div>
+        </div>
+    </div>
+<% end %>
 <% else %>
     <div id="unconnected"></div>
 <% end %>
-
-
-</div>
 
 <script type="text/javascript" src="/javascript/accueil.js">
 </script>

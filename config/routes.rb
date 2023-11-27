@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   post 'gamemaster/connexion'
 
   delete 'register/destroy'
+  delete 'gamemaster/afficher/:id', to: 'gamemaster#destroy', as: 'delete'
   delete 'gamemaster/deconnexion'
 
   root 'accueil#index'

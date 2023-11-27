@@ -189,9 +189,24 @@ else {
         elemOption.style.display = "block";
     })
 
-    document.getElementById("nouvelle-partie").addEventListener("click", () =>{
-        location.href = "/personnage/new";
-    })
+    if(document.getElementById("nouvelle-partie") !== null){
+        document.getElementById("nouvelle-partie").addEventListener("click", () =>{
+            location.href = "/personnage/new";
+        })
+    }
+    else{
+        document.getElementById("partie-existante").addEventListener("click", () =>{
+            document.getElementById("alert").style.display = "flex";
+            document.getElementById("menu").style.display = "none";
+        })
+        document.getElementById("button-annuler").addEventListener("click", () =>{
+            document.getElementById("menu").style.display = "block";
+            document.getElementById("alert").style.display = "none";
+        })
+        document.getElementById("button-continuer").addEventListener("click", () =>{
+            location.href = "/personnage/new";
+        })
+    }
 
     document.getElementById("gamemaster-button").addEventListener("click", () =>{
         location.href = "/gamemaster/index";
