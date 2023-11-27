@@ -5,6 +5,13 @@ class PersonnageController < ApplicationController
     end
 
     def create
+
+        @personnage = Personnage.find_by(user_id: session[:user_id])
+        if @personnage
+            @personnage.destroy
+            session[:personnage_id] = nil
+        end
+
         @personnage = Personnage.new(personnage_params)
         if @personnage.save
             session[:personnage_id] = @personnage.id

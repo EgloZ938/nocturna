@@ -6,7 +6,6 @@ class GamemasterController < ApplicationController
     end
 
     def connexion
-
         gamemaster = Gamemaster.find_by(name: params[:name], password: params[:password])
         if gamemaster.present?
         session[:id_gamemaster] = gamemaster.id
@@ -25,8 +24,9 @@ class GamemasterController < ApplicationController
     def create
         @gamemaster = Gamemaster.new(gamemaster_params)
         if @gamemaster.save
-            session[:id_gamemaster] = @gamemaster.id
-                flash[:notice] = "succesfully created personnage"
+            flash[:notice] = "succesfully created gamemaster user"
+
+            redirect_to gamemaster_index_path
         else
             flash[:alert] = "User not created"
             render :new
@@ -35,6 +35,9 @@ class GamemasterController < ApplicationController
 
     def index
         @users = User.all
+        if session[:id_gamemaster]
+            @gamemaster = Gamemaster.find_by(id: session[:id_gamemaster])
+        end
     end
 
     def show
