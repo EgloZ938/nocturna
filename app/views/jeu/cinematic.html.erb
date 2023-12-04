@@ -1,3 +1,13 @@
 <%= stylesheet_link_tag('jeu') %>
 
-<h1>Test</h1>
+<div id="main">
+    <img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
+    <img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
+    <div class="container flex justify-content main">
+        <div class="flex justify-content contenu">
+            <h1>Bienvenue dans Nocturna <%= @user.name %></h1>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/javascript/jeu.js"></script>

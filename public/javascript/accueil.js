@@ -219,8 +219,9 @@ else {
     document.getElementById("gamemaster-button").addEventListener("click", () =>{
         location.href = "/gamemaster/index";
     })
-
-    document.getElementById("continuer-partie").addEventListener("click", () =>{
-        location.href = "/jeu/cinematic";
-    })
+    if(document.getElementById("continuer-partie") !== null){
+        document.getElementById("continuer-partie").addEventListener("click", () =>{
+            location.href = "/jeu/cinematic";
+        })
+    }
 }
