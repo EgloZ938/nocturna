@@ -1,5 +1,5 @@
 let unconnected = document.getElementById("unconnected");
-if(unconnected !== null){
+if (unconnected !== null) {
     location.href = "/register/connexion";
 }
 
@@ -183,44 +183,45 @@ else {
         localStorage.setItem("volume-effet", param / 10);
     })
 
-    document.getElementById("profil-button").addEventListener("click", () =>{
+    document.getElementById("profil-button").addEventListener("click", () => {
         let elemProfil = document.getElementById("profil-menu");
         let elemOption = document.getElementById("options-menu");
         elemProfil.style.display = "block";
         elemOption.style.display = "none";
     })
 
-    document.getElementById("retour-profil").addEventListener("click", () =>{
+    document.getElementById("retour-profil").addEventListener("click", () => {
         let elemProfil = document.getElementById("profil-menu");
         let elemOption = document.getElementById("options-menu");
         elemProfil.style.display = "none";
         elemOption.style.display = "block";
     })
 
-    if(document.getElementById("nouvelle-partie") !== null){
-        document.getElementById("nouvelle-partie").addEventListener("click", () =>{
+    if (document.getElementById("nouvelle-partie") !== null) {
+        document.getElementById("nouvelle-partie").addEventListener("click", () => {
             location.href = "/personnage/new";
         })
     }
-    else{
-        document.getElementById("partie-existante").addEventListener("click", () =>{
+    else {
+        document.getElementById("partie-existante").addEventListener("click", () => {
             document.getElementById("alert").style.display = "flex";
             document.getElementById("menu").style.display = "none";
         })
-        document.getElementById("button-annuler").addEventListener("click", () =>{
+        document.getElementById("button-annuler").addEventListener("click", () => {
             document.getElementById("menu").style.display = "block";
             document.getElementById("alert").style.display = "none";
         })
-        document.getElementById("button-continuer").addEventListener("click", () =>{
+        document.getElementById("button-continuer").addEventListener("click", () => {
             location.href = "/personnage/new";
         })
     }
-
-    document.getElementById("gamemaster-button").addEventListener("click", () =>{
-        location.href = "/gamemaster/index";
-    })
-    if(document.getElementById("continuer-partie") !== null){
-        document.getElementById("continuer-partie").addEventListener("click", () =>{
+    if (document.getElementById("gamemaster-button") !== null) [
+        document.getElementById("gamemaster-button").addEventListener("click", () => {
+            location.href = "/gamemaster/index";
+        })
+    ]
+    if (document.getElementById("continuer-partie") !== null) {
+        document.getElementById("continuer-partie").addEventListener("click", () => {
             location.href = "/jeu/cinematic";
         })
     }

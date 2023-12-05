@@ -22,17 +22,24 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
 
     .contenu {
-        animation: fadeIn 10s;
-        -webkit-animation: fadeIn 10s;
-        -moz-animation: fadeIn 10s;
-        -o-animation: fadeIn 10s;
-        -ms-animation: fadeIn 10s;
-        color: white;
+        animation: fadeIn 5s;
+        -webkit-animation: fadeIn 5s;
+        -moz-animation: fadeIn 5s;
+        -o-animation: fadeIn 5s;
+        -ms-animation: fadeIn 5s;
     }
 }
 
+.fadeout{
+    animation: fadeOut 5s;
+    -webkit-animation: fadeOut 5s;
+    -moz-animation: fadeOut 5s;
+    -o-animation: fadeOut 5s;
+    -ms-animation: fadeOut 5s;
+}
 
 #main:before {
     content: ' ';
@@ -100,6 +107,57 @@ body {
     }
 }
 
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-o-keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-ms-keyframes fadeOut {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
 .main {
     position: relative;
 
@@ -133,6 +191,14 @@ body {
     flex-direction: column;
 }
 
+.text-align{
+    text-align: center;
+}
+
+#logo{
+    width: 700px;
+}
+
 .volume_icon {
     width: 96px;
     height: 96px;
@@ -158,7 +224,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.75);
     display: none;
 }
 

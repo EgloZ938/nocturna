@@ -5,6 +5,15 @@ if (token == "0") {
 }
 else {
 
+    setTimeout(function() {
+        document.getElementById("contenu").classList.remove("contenu");
+        document.getElementById("contenu").classList.add("fadeout");
+    }, 5000);
+
+    setTimeout(function() {
+        document.getElementById("contenu").style.opacity = "0";
+    }, 10000);
+
     let music = new Audio('/mp3/jeu.mp3');
     let effet = new Audio('/mp3/effet_click.mp3');
 
