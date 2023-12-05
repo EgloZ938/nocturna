@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyText
+  classe: MyText
+  avatar: MyText
+  pv: MyText
+  vitesse: MyText
+  force: MyText
+  earn_xp: MyText
+  request: one
+
+two:
+  name: MyText
+  classe: MyText
+  avatar: MyText
+  pv: MyText
+  vitesse: MyText
+  force: MyText
+  earn_xp: MyText
+  request: two

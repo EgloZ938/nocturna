@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'gamemaster/deconnexion'
   get '/gamemaster/afficher/:id', to: 'gamemaster#show', as: 'gamemaster'
   get '/jeu/cinematic'
+  get '/jeu/play'
 
 
   post 'register/create'
