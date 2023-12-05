@@ -148,3 +148,7 @@ document.getElementById("retourPrincipal").addEventListener("click", () =>{
 document.getElementById("submit").addEventListener("mouseenter", () =>{
     effet.play();
 })
+
+document.getElementById("submit").addEventListener("click", () =>{
+    localStorage.setItem("token","0");
+})
