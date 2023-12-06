@@ -11,6 +11,11 @@ class PersonnageController < ApplicationController
             @personnageExistant.destroy
         end
 
+        @cinematicExistant = Cinematic.find_by(user_id: session[:user_id])
+        if @cinematicExistant
+            @cinematicExistant.destroy
+        end
+
         personnage = Personnage.new(personnage_params)
         if personnage.save
             session[:personnage_id] = personnage.id

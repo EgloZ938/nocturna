@@ -1,0 +1,2 @@
+class Cinematic < ApplicationRecord
+end

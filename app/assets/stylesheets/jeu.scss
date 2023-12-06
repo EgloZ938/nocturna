@@ -12,28 +12,47 @@ body {
 
 #main {
     position: relative;
-    animation: fadeIn 5s;
-    -webkit-animation: fadeIn 5s;
-    -moz-animation: fadeIn 5s;
-    -o-animation: fadeIn 5s;
-    -ms-animation: fadeIn 5s;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
-
-    .contenu {
-        animation: fadeIn 5s;
-        -webkit-animation: fadeIn 5s;
-        -moz-animation: fadeIn 5s;
-        -o-animation: fadeIn 5s;
-        -ms-animation: fadeIn 5s;
-    }
 }
 
-.fadeout{
+#contenu-2 {
+    display: none;
+}
+
+#contenu-3 {
+    display: none;
+}
+
+#submit {
+    opacity: 0;
+    color: #e4aa52;
+    text-decoration: underline;
+    font-family: 'MedievalSharp', cursive;
+    cursor: pointer;
+}
+
+.contenu {
+    animation: fadeIn 5s;
+    -webkit-animation: fadeIn 5s;
+    -moz-animation: fadeIn 5s;
+    -o-animation: fadeIn 5s;
+    -ms-animation: fadeIn 5s;
+}
+
+.fadeout {
+    animation: fadeOut 3s;
+    -webkit-animation: fadeOut 3s;
+    -moz-animation: fadeOut 3s;
+    -o-animation: fadeOut 3s;
+    -ms-animation: fadeOut 3s;
+}
+
+.anim-finale {
     animation: fadeOut 5s;
     -webkit-animation: fadeOut 5s;
     -moz-animation: fadeOut 5s;
@@ -167,7 +186,7 @@ body {
 }
 
 .container {
-    width: 650px;
+    width: 750px;
     margin: 0 auto;
 }
 
@@ -191,11 +210,11 @@ body {
     flex-direction: column;
 }
 
-.text-align{
+.text-align {
     text-align: center;
 }
 
-#logo{
+#logo {
     width: 700px;
 }
 
@@ -228,7 +247,7 @@ body {
     display: none;
 }
 
-#profil-menu{
+#profil-menu {
     display: none;
 }
 
@@ -298,20 +317,13 @@ label {
     font-size: 22px;
 }
 
+.hidden {
+    display: none;
+}
+
 .disabled {
     opacity: 0.7;
     pointer-events: none;
-}
-
-#submit {
-    width: 100%;
-    height: 100%;
-    background: none;
-    border: none;
-    font-size: 34px;
-    color: white;
-    font-family: 'MedievalSharp', cursive;
-    cursor: pointer;
 }
 
 #profil {

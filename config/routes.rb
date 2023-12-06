@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   get 'gamemaster/connexion'
   get 'gamemaster/deconnexion'
   get '/gamemaster/afficher/:id', to: 'gamemaster#show', as: 'gamemaster'
-  get '/jeu/cinematic'
+  get 'jeu/cinematic'
+  get 'jeu/create'
+  get 'jeu/play'
 
 
   post 'register/create'
@@ -20,7 +22,8 @@ Rails.application.routes.draw do
   post 'gamemaster/new'
   post 'gamemaster/create'
   post 'gamemaster/connexion'
-
+  post 'jeu/cinematic'
+  post 'jeu/create'
   delete 'register/destroy'
   delete 'gamemaster/afficher/:id', to: 'gamemaster#destroy', as: 'delete'
   delete 'gamemaster/deconnexion'

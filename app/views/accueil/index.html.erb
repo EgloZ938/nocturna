@@ -8,9 +8,15 @@
 <% if @user %>
     <div id="main-menu">
         <% if @personnage %>
-            <div class="lg bg flex align-items justify-content" id="continuer-partie">
-                <h1>Continuer</h1>
-            </div>
+            <% if @cinematic %>
+                <div class="lg bg flex align-items justify-content" id="continuer-partie-normale">
+                    <h1>Continuer</h1>
+                </div>
+            <% else %>
+                <div class="lg bg flex align-items justify-content" id="continuer-partie">
+                    <h1>Continuer</h1>
+                </div>
+            <% end %>
         <% end %>
         <% if @personnage %>
             <div class="lg bg flex align-items justify-content" id="partie-existante">

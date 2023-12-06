@@ -225,4 +225,9 @@ else {
             location.href = "/jeu/cinematic";
         })
     }
+    if(document.getElementById("continuer-partie-normale") !== null){
+        document.getElementById("continuer-partie-normale").addEventListener("click", () =>{
+            location.href = "/jeu/play";
+        })
+    }
 }

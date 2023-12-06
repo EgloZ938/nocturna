@@ -11,5 +11,7 @@ class AccueilController < ApplicationController
     if session[:id_gamemaster]
       @gamemaster = Gamemaster.find_by(id: session[:id_gamemaster])
     end
+
+    @cinematic = Cinematic.find_by(user_id: session[:user_id])
   end
 end
