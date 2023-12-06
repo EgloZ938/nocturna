@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2023_12_06_085833) do
 
   create_table "cinematics", force: :cascade do |t|
@@ -18,6 +19,9 @@ ActiveRecord::Schema.define(version: 2023_12_06_085833) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+=======
+ActiveRecord::Schema.define(version: 2023_12_05_092415) do
+>>>>>>> bed6e0f0256702c7e3ad1f0cbd437635cbd3ae04
 
   create_table "gamemasters", force: :cascade do |t|
     t.text "name"
@@ -43,6 +47,31 @@ ActiveRecord::Schema.define(version: 2023_12_06_085833) do
     t.string "pv"
     t.string "vitesse"
     t.string "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pnjs", force: :cascade do |t|
+    t.text "name"
+    t.text "classe"
+    t.text "avatar"
+    t.text "pv"
+    t.text "vitesse"
+    t.text "force"
+    t.text "earn_xp"
+    t.integer "request_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["request_id"], name: "index_pnjs_on_request_id"
+  end
+
+  create_table "requests", force: :cascade do |t|
+    t.text "question"
+    t.text "reponse1"
+    t.text "reponse2"
+    t.text "reponse3"
+    t.text "reponse4"
+    t.text "bonne_reponse"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
