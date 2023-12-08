@@ -1,0 +1,36 @@
+<%= stylesheet_link_tag('gamemaster') %>
+
+<h1>tkt</h1>
+<%= form_with model: @pnj, url: gamemaster_createPnj_path do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.label :classe %><br>
+    <%= form.text_field :classe %>
+  </div>
+  <div>
+    <%= form.label :avatar %><br>
+    <%= form.text_field :avatar %>
+  </div>
+  <div>
+    <%= form.label :pv %><br>
+    <%= form.text_field :pv %>
+  </div>
+  <div>
+  <div>
+    <%= form.label :vitesse %><br>
+    <%= form.text_field :vitesse %>
+  </div>
+    <%= form.label :force %><br>
+    <%= form.text_field :force %>
+  </div>
+  <div>
+    <%= form.label :earn_xp %><br>
+    <%= form.text_field :earn_xp %>
+  </div>
+  <p>
+    <%= form.submit "submit" %>
+  </p>
+<% end %>

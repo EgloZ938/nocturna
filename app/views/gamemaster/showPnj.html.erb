@@ -1,0 +1,34 @@
+<%= stylesheet_link_tag('gamemaster') %>
+
+<div class="container">
+
+    <table>
+        <tr>
+            <th></th>
+            <th>Pseudo</th>
+            <% if @pnj %>
+                <th>Niveau</th>
+                <th>Classe</th>
+                <th>Pv</th>
+                <th>Force</th>
+                <th>Vitesse</th>
+            <% end %>
+        </tr>
+
+        <tr>
+            <% if @pnj %>
+                <td><img src="<%= @pnj.avatar %>"></td>
+            <% else %>
+                <td><img src="/images/no_avatar.jpg"></td>
+            <% end %>
+            <td><%= @pnj.name %></td>
+            <% if @pnj %>
+                <td><%= @pnj.earn_xp %></td>
+                <td class="classe"><%= @pnj.classe %></td>
+                <td><%= @pnj.pv %></td>
+                <td><%= @pnj.force %></td>
+                <td><%= @pnj.vitesse %></td>
+            <% end %>
+        </tr>
+    </table>
+    </div>

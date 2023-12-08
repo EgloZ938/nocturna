@@ -1,4 +1,5 @@
 <%= stylesheet_link_tag('personnage') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
 <div class="container menu">
 
@@ -13,9 +14,6 @@
     <div class="hidden" id="user_id"><%= @test %></div>
 
     <div class="flex space-between" id="images-menu">
-        <div class="avatar" id="avatar-1">
-            <h1>Archer</h1>
-        </div>
         <div class="avatar" id="avatar-3">
             <h1>Assassin</h1>
         </div>
@@ -35,7 +33,6 @@
             <%= form.text_field :force %>
             <%= form.text_field :exp_joueur %>
             <%= form.text_field :classe %>
-            <%= form.text_field :inventaire %>
             <%= form.text_field :sac_a_dos %>
             <%= form.text_field :argent %>
             <%= form.text_field :pv %>

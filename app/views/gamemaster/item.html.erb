@@ -1,0 +1,24 @@
+<%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
+
+<div class="container">
+    <%= form_with model: @objet, url: gamemaster_createItem_path do |form| %>
+        <%= form.label :image %>
+        <%= form.text_field :image %><br>
+        <%= form.label :nom %>
+        <%= form.text_field :nom %><br>
+        <%= form.label :rarete %>
+        <%= form.text_field :rarete %><br>
+        <%= form.label :description %>
+        <%= form.text_field :description %><br>
+        <%= form.label :caracteristique %>
+        <%= form.text_field :caracteristique %><br>
+        <%= form.label :stack %>
+        <%= form.text_field :stack %><br>
+        <%= form.label :data %>
+        <%= form.text_field :data %><br>
+        <%= form.submit "submit" %>
+    <% end %>
+<div>
+<script src="/javascript/gamemaster.js">
+</script>

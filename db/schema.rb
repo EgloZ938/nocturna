@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2023_12_06_085833) do
+ActiveRecord::Schema.define(version: 2023_12_08_145340) do
 
   create_table "cinematics", force: :cascade do |t|
     t.string "token"
@@ -19,9 +18,6 @@ ActiveRecord::Schema.define(version: 2023_12_06_085833) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-=======
-ActiveRecord::Schema.define(version: 2023_12_05_092415) do
->>>>>>> bed6e0f0256702c7e3ad1f0cbd437635cbd3ae04
 
   create_table "gamemasters", force: :cascade do |t|
     t.text "name"
@@ -30,7 +26,26 @@ ActiveRecord::Schema.define(version: 2023_12_05_092415) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "inventaires", force: :cascade do |t|
+    t.string "objet_id"
+    t.string "personnage_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "jeus", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "objets", force: :cascade do |t|
+    t.text "image"
+    t.text "nom"
+    t.text "rarete"
+    t.text "description"
+    t.text "caracteristique"
+    t.text "stack"
+    t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -41,7 +56,6 @@ ActiveRecord::Schema.define(version: 2023_12_05_092415) do
     t.string "force"
     t.string "exp_joueur"
     t.string "classe"
-    t.string "inventaire"
     t.string "sac_a_dos"
     t.string "argent"
     t.string "pv"
@@ -59,10 +73,8 @@ ActiveRecord::Schema.define(version: 2023_12_05_092415) do
     t.text "vitesse"
     t.text "force"
     t.text "earn_xp"
-    t.integer "request_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["request_id"], name: "index_pnjs_on_request_id"
   end
 
   create_table "requests", force: :cascade do |t|
@@ -72,6 +84,7 @@ ActiveRecord::Schema.define(version: 2023_12_05_092415) do
     t.text "reponse3"
     t.text "reponse4"
     t.text "bonne_reponse"
+    t.text "pnj_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

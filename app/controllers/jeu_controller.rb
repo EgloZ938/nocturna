@@ -21,5 +21,11 @@ class JeuController < ApplicationController
     def play
         @user = User.find_by(id: session[:user_id])
         @personnage = Personnage.find_by(id: session[:personnage_id])
+        @rangee = @personnage.sac_a_dos.to_i / 5
+
+        @inventaire = Inventaire.find_by(personnage_id: session[:personnage_id])
+
+        @objet = Objet.find_by(id: @inventaire.objet_id)
+
     end
 end

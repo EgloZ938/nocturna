@@ -82,8 +82,6 @@ for(let i = 0; i < length; i++){
         let inputForce = document.getElementById("personnage_force");
         let inputExp = document.getElementById("personnage_exp_joueur");
         inputExp.value = "0";
-        let inputInventaire = document.getElementById("personnage_inventaire");
-        inputInventaire.value = "vide";
         let inputSacADos = document.getElementById("personnage_sac_a_dos");
         inputSacADos.value = "15";
         let inputArgent = document.getElementById("personnage_argent");
@@ -92,17 +90,7 @@ for(let i = 0; i < length; i++){
         let inputVitesse = document.getElementById("personnage_vitesse");
         removeScale();
         e.target.classList.add("scale");
-        if(id == "avatar-1"){
-            let classeJoueur = "archer";
-            let cheminAvatar = "/images/1.jpg";
-            inputAvatar.value = cheminAvatar;
-            inputClasse.value = classeJoueur;
-            inputAvatarUnlock.value = "1";
-            inputForce.value = "300";
-            inputPv.value = "1000";
-            inputVitesse.value = "350";
-        }
-        else if(id == "avatar-3"){
+        if(id == "avatar-3"){
             let classeJoueur = "assassin";
             let cheminAvatar = "/images/3.jpg";
             inputAvatar.value = cheminAvatar;

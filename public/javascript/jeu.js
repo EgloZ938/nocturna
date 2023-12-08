@@ -5,52 +5,6 @@ if (token == "0") {
 }
 else {
 
-    document.getElementById("cinematic_token").value = "1";
-    document.getElementById("cinematic_user_id").value = document.getElementById("id").innerHTML;
-
-
-    setTimeout(function() {
-        document.getElementById("contenu-1").classList.remove("contenu");
-        document.getElementById("contenu-1").classList.add("fadeout");
-    }, 5000);
-
-    setTimeout(function() {
-        document.getElementById("contenu-1").style.display = "none";
-        document.getElementById("contenu-2").classList.add("contenu");
-        document.getElementById("contenu-2").style.display = "block";
-    }, 8000);
-
-    setTimeout(function() {
-        document.getElementById("contenu-2").classList.remove("contenu");
-        document.getElementById("contenu-2").classList.add("fadeout");
-    }, 13000);
-
-    setTimeout(function() {
-        document.getElementById("contenu-2").style.display = "none";
-        document.getElementById("contenu-3").classList.add("contenu");
-        document.getElementById("contenu-3").style.display = "block";
-    }, 16000);
-
-    setTimeout(function() {
-        document.getElementById("submit").classList.add("contenu");
-    }, 20000);
-
-    setTimeout(() => {
-        document.getElementById("submit").style.opacity = "1";
-    }, 25000);
-
-    document.getElementById("submit").addEventListener("click", () =>{
-        document.getElementById("contenu-3").classList.remove("contenu");
-        document.getElementById("contenu-3").classList.add("anim-finale");
-        document.getElementById("main").classList.add("anim-finale");
-
-        setTimeout(function() {
-            document.getElementById("contenu-3").style.display = "none";
-            document.getElementById("main").style.display = "none";
-            document.getElementsByTagName("form")[0].submit();
-        }, 5000);
-    })
-
     let music = new Audio('/mp3/jeu.mp3');
     let effet = new Audio('/mp3/effet_click.mp3');
 
@@ -81,6 +35,9 @@ else {
         document.getElementById("status-volume-off").style.display = "block";
     }
 
+    document.getElementById("sac-a-dos").addEventListener("click", () =>{
+        effet.play();
+    })
 
     let statusVolume = document.getElementsByClassName("status-volume");
     let lengthV = statusVolume.length;

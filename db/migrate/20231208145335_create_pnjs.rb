@@ -8,7 +8,6 @@ class CreatePnjs < ActiveRecord::Migration[5.2]
       t.text :vitesse
       t.text :force
       t.text :earn_xp
-      t.references :request, foreign_key: true
 
       t.timestamps
     end

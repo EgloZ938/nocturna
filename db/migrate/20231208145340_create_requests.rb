@@ -7,6 +7,7 @@ class CreateRequests < ActiveRecord::Migration[5.2]
       t.text :reponse3
       t.text :reponse4
       t.text :bonne_reponse
+      t.text :pnj_id
 
       t.timestamps
     end

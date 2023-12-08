@@ -20,7 +20,11 @@ class PersonnageController < ApplicationController
         if personnage.save
             session[:personnage_id] = personnage.id
                 flash[:notice] = "succesfully created personnage"
-                redirect_to jeu_cinematic_path
+
+                inventaire = Inventaire.new(objet_id: "1", personnage_id: session[:personnage_id])
+                if inventaire.save
+                    redirect_to jeu_cinematic_path
+                end
         else
             flash[:alert] = "User not created"
             render :new
@@ -29,6 +33,6 @@ class PersonnageController < ApplicationController
 
     end
     def personnage_params
-        params.require(:personnage).permit(:avatar, :avatar_unlock, :force, :exp_joueur, :classe, :inventaire, :sac_a_dos, :argent, :pv, :vitesse, :user_id);
+        params.require(:personnage).permit(:avatar, :avatar_unlock, :force, :exp_joueur, :classe, :sac_a_dos, :argent, :pv, :vitesse, :user_id);
     end
 end

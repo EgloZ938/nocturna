@@ -57,8 +57,62 @@ class GamemasterController < ApplicationController
         redirect_to gamemaster_index_path
     end
 
+    def item
+        @objet = Objet.new
+    end
+
+    def createItem
+        @objet = Objet.new(item_params)
+        if @objet.save
+            redirect_to gamemaster_index_path
+        end
+    end
+
+
+    def newPnj
+        @pnj = Pnj.new
+    end
+  
+    def pnj
+        @pnjs = Pnj.all
+    end
+  
+    def showPnj
+        @pnj = Pnj.find(params[:id])
+    end
+  
+  
+    def createPnj
+        @pnj = Pnj.new(pnj_params)
+        if @pnj.save
+            flash[:notice] = "succesfully created pnj"
+
+            redirect_to gamemaster_pnj_path
+        else
+            flash[:alert] = "pnj not created"
+            render :new
+        end
+    end
+   
+    def destroyPnj
+  
+      @pnj = Pnj.find(params[:id])
+      if @pnj
+          @pnj.destroy
+      end
+  
+      redirect_to gamemaster_pnj_path
+  end
+   
+    def pnj_params
+      params.require(:pnj).permit(:name, :classe, :avatar, :pv, :vitesse, :force, :earn_xp)
+    end
+
+    def item_params
+        params.require(:objet).permit(:image, :nom, :rarete, :description, :caracteristique, :stack, :data)
+    end
 
     def gamemaster_params
-        params.require(:gamemaster).permit(:name, :password);
+        params.require(:gamemaster).permit(:name, :password)
     end
 end

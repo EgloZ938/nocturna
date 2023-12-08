@@ -1,4 +1,6 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
+
 <div class="container">
 
     <table>
@@ -12,7 +14,6 @@
                 <th>Pv</th>
                 <th>Force</th>
                 <th>Vitesse</th>
-                <th>Inventaire</th>
                 <th>Sac à dos</th>
             <% end %>
         </tr>
@@ -31,7 +32,6 @@
                 <td><%= @personnage.pv %></td>
                 <td><%= @personnage.force %></td>
                 <td><%= @personnage.vitesse %></td>
-                <td><%= @personnage.inventaire %></td>
                 <td><%= @personnage.sac_a_dos %></td>
             <% end %>
         </tr>

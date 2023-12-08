@@ -10,14 +10,15 @@ Rails.application.routes.draw do
   get 'gamemaster/connexion'
   get 'gamemaster/deconnexion'
   get '/gamemaster/afficher/:id', to: 'gamemaster#show', as: 'gamemaster'
-<<<<<<< HEAD
-  get 'jeu/cinematic'
-  get 'jeu/create'
-  get 'jeu/play'
-=======
   get '/jeu/cinematic'
+  get '/jeu/create'
   get '/jeu/play'
->>>>>>> bed6e0f0256702c7e3ad1f0cbd437635cbd3ae04
+  get 'gamemaster/item'
+  get 'gamemaster/createItem'
+  get 'gamemaster/pnj'
+  get 'gamemaster/createPnj'
+  get 'gamemaster/newPnj'
+  get 'gamemaster/showPnj'
 
 
   post 'register/create'
@@ -29,10 +30,19 @@ Rails.application.routes.draw do
   post 'gamemaster/connexion'
   post 'jeu/cinematic'
   post 'jeu/create'
+  post 'gamemaster/item'
+  post 'gamemaster/createItem'
+  post 'gamemaster/createPnj'
+  post 'gamemaster/newPnj'
+
+
+  
+  
   delete 'register/destroy'
   delete 'gamemaster/afficher/:id', to: 'gamemaster#destroy', as: 'delete'
   delete 'gamemaster/deconnexion'
-
+  delete 'gamemaster/destroyPnj'
+  
   root 'accueil#index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

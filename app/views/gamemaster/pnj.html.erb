@@ -1,0 +1,24 @@
+<%= stylesheet_link_tag('gamemaster') %>
+
+<div class="container">
+        <h1>Gestion utilisateur</h1>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Pseudo</th>
+                <th colspan="2">Interaction</th>
+            </tr>
+
+            <% @pnjs.each do |pnj| %>
+                <tr>
+                    <td><%= pnj.id %></td>
+                    <td><%= pnj.name %></td>
+                    <td><%= link_to 'Afficher +', gamemaster_showPnj_path(id: pnj.id) %></td>
+                    <td><%= link_to 'Supprimer', gamemaster_destroyPnj_path(id: pnj.id),
+                            method: :delete,
+                            data: { confirm: "En faisant ça vous allez supprimer l'utilisateur et le pnj lié avec. Êtes vous sûr ?" } %></td>
+                </tr>
+            <% end %>
+        </table>
+        <%= link_to 'Créer un nouveau PNJ', gamemaster_newPnj_path %>
+    </div>
