@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_08_145340) do
+ActiveRecord::Schema.define(version: 2023_12_11_150449) do
 
   create_table "cinematics", force: :cascade do |t|
     t.string "token"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2023_12_08_145340) do
 
   create_table "inventaires", force: :cascade do |t|
     t.string "objet_id"
-    t.string "personnage_id"
+    t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

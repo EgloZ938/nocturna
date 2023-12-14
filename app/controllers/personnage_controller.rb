@@ -9,6 +9,10 @@ class PersonnageController < ApplicationController
         @personnageExistant = Personnage.find_by(user_id: session[:user_id])
         if @personnageExistant
             @personnageExistant.destroy
+            @objets = Inventaire.where(user_id: session[:user_id])
+            for i in 0..@objets.length - 1 do
+                @objets[i].destroy
+            end
         end
 
         @cinematicExistant = Cinematic.find_by(user_id: session[:user_id])
@@ -20,11 +24,7 @@ class PersonnageController < ApplicationController
         if personnage.save
             session[:personnage_id] = personnage.id
                 flash[:notice] = "succesfully created personnage"
-
-                inventaire = Inventaire.new(objet_id: "1", personnage_id: session[:personnage_id])
-                if inventaire.save
-                    redirect_to jeu_cinematic_path
-                end
+                redirect_to jeu_cinematic_path
         else
             flash[:alert] = "User not created"
             render :new
@@ -33,6 +33,6 @@ class PersonnageController < ApplicationController
 
     end
     def personnage_params
-        params.require(:personnage).permit(:avatar, :avatar_unlock, :force, :exp_joueur, :classe, :sac_a_dos, :argent, :pv, :vitesse, :user_id);
+        params.require(:personnage).permit(:avatar, :avatar_unlock, :force, :exp_joueur, :classe, :sac_a_dos, :argent, :pv, :vitesse, :user_id)
     end
 end

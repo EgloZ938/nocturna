@@ -1,24 +1,29 @@
 <%= stylesheet_link_tag('gamemaster') %>
-<%= favicon_link_tag asset_path('zyro-image.png') %>
 
 <div class="container">
-    <%= form_with model: @objet, url: gamemaster_createItem_path do |form| %>
-        <%= form.label :image %>
-        <%= form.text_field :image %><br>
-        <%= form.label :nom %>
-        <%= form.text_field :nom %><br>
-        <%= form.label :rarete %>
-        <%= form.text_field :rarete %><br>
-        <%= form.label :description %>
-        <%= form.text_field :description %><br>
-        <%= form.label :caracteristique %>
-        <%= form.text_field :caracteristique %><br>
-        <%= form.label :stack %>
-        <%= form.text_field :stack %><br>
-        <%= form.label :data %>
-        <%= form.text_field :data %><br>
-        <%= form.submit "submit" %>
-    <% end %>
-<div>
-<script src="/javascript/gamemaster.js">
-</script>
+        <h1>Gestion des objets</h1>
+        <table>
+            <tr>
+                <th></th>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Rareté</th>
+                <th colspan="3">Interaction</th>
+            </tr>
+
+            <% @objets.each do |objet| %>
+                <tr>
+                    <td><img src=<%= objet.image %>></td>
+                    <td><%= objet.id %></td>
+                    <td><%= objet.nom %></td>
+                    <td><%= objet.rarete %></td>
+                    <td><%= link_to 'Afficher +', gamemaster_showItem_path(id: objet.id) %></td>
+                    <td><%= link_to 'Modifier', gamemaster_editItem_path(id: objet.id) %></td>
+                    <td><%= link_to 'Supprimer', gamemaster_destroyItem_path(id: objet.id),
+                            method: :delete,
+                            data: { confirm: "En faisant ça vous allez supprimer l'utilisateur et le pnj lié avec. Êtes vous sûr ?" } %></td>
+                </tr>
+            <% end %>
+        </table>
+        <%= link_to 'Créer un nouvel ITEM', gamemaster_newItem_path %>
+    </div>

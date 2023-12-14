@@ -10,6 +10,7 @@ body {
     background-color: rgb(230, 230, 230);
     background: url('bg_personnage.jpg');
     background-size: cover;
+    background-attachment: fixed;
     display: flex;
     align-items: center;
     min-height: 100vh;

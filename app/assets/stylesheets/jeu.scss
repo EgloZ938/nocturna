@@ -7,7 +7,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'MedievalSharp', cursive;
+    font-family: 'MedievalSharp', cursive !important;
     background-image: url('bg-cinematic.jpg');
     background-size: cover;
 }
@@ -58,7 +58,7 @@ body {
     display: none;
 }
 
-#sac-a-dos{
+#sac-a-dos {
     width: 96px;
     height: 96px;
     border-radius: 50%;
@@ -71,7 +71,7 @@ body {
     margin-top: 15px;
 }
 
-#inventaire{
+#inventaire {
     position: absolute;
     z-index: 1000;
     width: 100%;
@@ -82,14 +82,14 @@ body {
     background: rgba(0, 0, 0, 0.75);
 }
 
-#contenu-inventaire{
+#contenu-inventaire {
     background: rgba(255, 255, 255, 0.25);
     border: 1px solid black;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
     padding: 15px;
 }
 
-#header-inventaire img{
+#header-inventaire img {
     width: 256px;
     height: 256px;
     border: 1px solid black;
@@ -97,11 +97,11 @@ body {
     margin: 5px;
 }
 
-#header-inventaire div{
+#header-inventaire div {
     margin-left: 10px;
 }
 
-.case{
+.case {
     width: 64px;
     height: 64px;
     background: rgba(255, 255, 255, 0.25);
@@ -109,9 +109,10 @@ body {
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
     margin: 5px;
     background-size: cover;
+    position: relative;
 }
 
-.main-case{
+.main-case {
     margin-top: 15px;
 }
 
@@ -252,4 +253,86 @@ label {
 
 .container_volume_icon h1 {
     margin-right: 15px !important;
+}
+
+.maj:first-letter {
+    text-transform: uppercase;
+}
+
+.title {
+    font-family: 'MedievalSharp', cursive;
+    color: #d3d3d3;
+
+    h5 {
+        margin: 0;
+    }
+
+    h6 {
+        margin: 0;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .rarete {
+        margin: 5px 0;
+    }
+
+    .data {
+        margin-top: 5px;
+    }
+
+    .commun {
+        color: #fff;
+    }
+
+    .atypique {
+        color: #1eff00;
+    }
+
+    .rare {
+        color: #0070dd;
+    }
+
+    .épique {
+        color: #a335ee;
+    }
+
+    .légendaire {
+        color: #ff8000;
+    }
+
+    .pv {
+        color: #1eff00;
+    }
+
+    .force {
+        color: #ff3c00;
+    }
+
+    .exp{
+        color: rgb(175, 241, 100);
+    }
+
+    .vitesse{
+        color: #e4c952;
+    }
+
+    .valeur{
+        color: rgb(82, 228, 155);
+    }
+
+    .none{
+        color: #d3d3d3;
+    }
+}
+.infoData{
+    color: white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+    margin-right: 2.5px;
+    cursor: default;
 }

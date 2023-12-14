@@ -1,6 +1,17 @@
 <%= stylesheet_link_tag('jeu') %>
 <%= favicon_link_tag asset_path('zyro-image.png') %>
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+
 <img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
 <img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
 
@@ -11,9 +22,9 @@
         <div id="header-inventaire" class="flex align-items space-between">
             <img src=<%= @personnage.avatar %>>
             <div class="flex column">
-                <div class="case" style="background-image: url('/images/casque-legendaire.jpg');"></div>
-                <div class="case" style="background-image: url('/images/armure-legendaire.jpg');"></div>
-                <div class="case" style="background-image: url('/images/assassin-lame-legendaire.jpg');"></div>
+                <div class="case"></div>
+                <div class="case"></div>
+                <div class="case"></div>
             </div>
         </div>
         <div class="main-case">
@@ -21,8 +32,33 @@
             <% for i in 1..@rangee do %>
             <div class="flex">
                 <% for a in 1..5 do %>
+                    <% if @structured_inventaire[number] %>
+                        <% 
+                            chaineData = @structured_inventaire[number][0].data
+                            data = chaineData.split(":")
+                            if data[0] == "Point de vie"
+                                classeData = "pv"
+                            elsif data[0] == "Point d'attaque"
+                                classeData = "force"
+                            elsif data[0] == "Point d'exp"
+                                classeData = "exp"
+                            elsif data[0] == "Vitesse"
+                                classeData = "vitesse"
+                            elsif data[0] == "Valeur"
+                                classeData = "valeur"
+                            else 
+                                classeData = "none"
+                            end
+                        %>
+                        <div class="case maj" id=<%= number %> style="background-image: url(<%= @structured_inventaire[number][0].image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h6 class='maj'><%= @structured_inventaire[number][0].nom %></h6><h5 class='<%= @structured_inventaire[number][0].rarete %> rarete maj'><%= @structured_inventaire[number][0].rarete %></h5><p class='maj'><%= @structured_inventaire[number][0].description %></p><h6 class='<%= classeData %> data'><%= @structured_inventaire[number][0].data %></h6></div>">
+                            <% if @structured_inventaire[number][1] != 1 %>
+                                <h4 class="infoData"><%= @structured_inventaire[number][1] %></h4>
+                            <% end %>
+                        </div>
+                    <% else %>
+                        <div class="case" id=<%= number %>></div>
+                    <% end %>
                     <% number += 1 %>
-                    <div class="case" id=<%= number %> style="background-image: url(<%= @objet.image %>);"><%= @objet.rarete %></div>
                 <% end %>
             </div>
             <% end %>

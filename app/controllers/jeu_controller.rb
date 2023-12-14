@@ -23,9 +23,19 @@ class JeuController < ApplicationController
         @personnage = Personnage.find_by(id: session[:personnage_id])
         @rangee = @personnage.sac_a_dos.to_i / 5
 
-        @inventaire = Inventaire.find_by(personnage_id: session[:personnage_id])
+        @inventaire = Inventaire.where(user_id: session[:user_id])
+        objet_ids = @inventaire.pluck(:objet_id).uniq
+        objets = Objet.where(id: objet_ids).sort_by(&:nom)
 
-        @objet = Objet.find_by(id: @inventaire.objet_id)
+        @structured_inventaire = []
 
+        objets.each do |objet|
+            total_count = @inventaire.where(objet_id: objet.id).count
+            while total_count > 0
+                stack_count = [objet.stack.to_i, total_count].min
+                @structured_inventaire << [objet, stack_count, objet.stack]
+                total_count -= stack_count
+            end
+        end
     end
 end

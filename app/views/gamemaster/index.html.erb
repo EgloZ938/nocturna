@@ -8,7 +8,7 @@
             <tr>
                 <th>ID</th>
                 <th>Pseudo</th>
-                <th colspan="2">Interaction</th>
+                <th colspan="3">Interaction</th>
             </tr>
             
             <% @users.each do |user| %>
@@ -16,6 +16,7 @@
                 <td><%= user.id %></td>
                 <td><%= user.name %></td>
                 <td><%= link_to 'Afficher +', gamemaster_path(user.id) %></td>
+                <td><%= link_to 'Give objet', gamemaster_giveItem_path(id: user.id) %></td>
                 <td><%= link_to 'Supprimer', gamemaster_path(user.id),
                         method: :delete,
                         data: { confirm: 'En faisant ça vous allez supprimer l\'utilisateur et le personnage lié avec. Êtes vous sûr ?' } %></td>

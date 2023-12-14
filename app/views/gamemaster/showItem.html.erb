@@ -1,0 +1,29 @@
+<%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
+
+<div class="container">
+
+    <table>
+        <tr>
+            <th></th>
+            <th>Nom</th>
+            <th>Rareté</th>
+            <th>Description</th>
+            <th>Caractéristique</th>
+            <th>Stack</th>
+            <th>Data</th>
+        </tr>
+    
+        <tr>
+            <td><img src="<%= @objet.image %>"></td>
+            <td class="classe"><%= @objet.nom %></td>
+            <td class="classe"><%= @objet.rarete %></td>
+            <td class="classe"><%= @objet.description %></td>
+            <td class="classe"><%= @objet.caracteristique %></td>
+            <td><%= @objet.stack %></td>
+            <td><%= @objet.data %></td>
+        </tr>
+    </table>
+
+    <%= link_to 'Retour', gamemaster_item_path %>
+    </div>
