@@ -49,6 +49,11 @@ class GamemasterController < ApplicationController
         @user = User.find(params[:id])
         @user.destroy
 
+        @objets = Inventaire.where(user_id: params[:id])
+        for i in 0..@objets.length - 1 do
+            @objets[i].destroy
+        end
+
         @personnage = Personnage.find_by(user_id: params[:id])
         if @personnage
             @personnage.destroy
@@ -92,10 +97,58 @@ class GamemasterController < ApplicationController
     end
 
     def giveItemUser
-        inventaire = Inventaire.new(objet_id: params[:objet_id], user_id: params[:user_id])
-        if inventaire.save
-            redirect_to gamemaster_index_path
+        @personnage = Personnage.find_by(user_id: params[:user_id])
+        capacite_sac_a_dos = @personnage.sac_a_dos.to_i
+
+        objet_a_ajouter = Objet.find(params[:objet_id])
+
+        # Recréer la structure de l'inventaire comme vous l'avez fait précédemment
+        # ...
+
+        # Vérifier si l'objet peut être ajouté
+        if peut_ajouter_objet?(objet_a_ajouter, capacite_sac_a_dos)
+            inventaire = Inventaire.new(objet_id: params[:objet_id], user_id: params[:user_id])
+            if inventaire.save
+                redirect_to gamemaster_index_path
+            else
+            # Gérer l'échec de la sauvegarde
+            end
+        else
+            redirect_to gamemaster_erreurGiveItem_path
         end
+    end
+
+    private
+
+    def peut_ajouter_objet?(objet, capacite_sac_a_dos)
+        total_stacks = 0
+
+        @inventaire = Inventaire.where(user_id: params[:user_id])
+        objet_ids = @inventaire.pluck(:objet_id).uniq
+        objets = Objet.where(id: objet_ids).sort_by(&:nom)
+
+        @structured_inventaire = []
+
+        objets.each do |objet|
+            total_count = @inventaire.where(objet_id: objet.id).count
+            while total_count > 0
+                stack_count = [objet.stack.to_i, total_count].min
+                @structured_inventaire << [objet, stack_count, objet.stack]
+                total_count -= stack_count
+            end
+        end
+
+        # Compter le nombre total de stacks dans l'inventaire
+        @structured_inventaire.each do |item|
+          total_stacks += 1 if item[0].id != objet.id || item[1] == objet.stack.to_i
+        end
+      
+        # Si l'objet existe déjà et peut être stacké, vérifier si un stack n'est pas plein
+        objet_existant = @structured_inventaire.find { |item| item[0].id == objet.id && item[1] < objet.stack.to_i }
+        return true if objet_existant
+      
+        # Vérifier la capacité totale du sac à dos
+        total_stacks < capacite_sac_a_dos
     end
 
     def editItem

@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get 'gamemaster/createPnj'
   get 'gamemaster/newPnj'
   get 'gamemaster/showPnj'
+  get 'gamemaster/erreurGiveItem'
 
 
   post 'register/create'

@@ -37,6 +37,7 @@ else {
 
     document.getElementById("sac-a-dos").addEventListener("click", () =>{
         effet.play();
+        document.getElementById("inventaire").style.display = "flex";
     })
 
     let statusVolume = document.getElementsByClassName("status-volume");
@@ -81,16 +82,22 @@ else {
     function keyCode(e) {
         var x = e.keyCode;
         if (x == 27) {
-            let optionsElem = document.getElementById("options");
-            if (window.getComputedStyle(optionsElem, null).display == "none") {
-                optionsElem.style.display = "flex";
+            let inventaireElem = document.getElementById("inventaire");
+            if(window.getComputedStyle(inventaireElem, null).display == "flex"){
+                inventaireElem.style.display = "none";
             }
-            else {
-                optionsElem.style.display = "none";
-                document.getElementById("main-menu").style.display = "block";
-                document.getElementById("options-menu").style.display = "none";
-                document.getElementById("audio-menu").style.display = "none";
-                document.getElementById("profil-menu").style.display = "none";
+            else{
+                let optionsElem = document.getElementById("options");
+                if (window.getComputedStyle(optionsElem, null).display == "none") {
+                    optionsElem.style.display = "flex";
+                }
+                else {
+                    optionsElem.style.display = "none";
+                    document.getElementById("main-menu").style.display = "block";
+                    document.getElementById("options-menu").style.display = "none";
+                    document.getElementById("audio-menu").style.display = "none";
+                    document.getElementById("profil-menu").style.display = "none";
+                }
             }
         }
     }
