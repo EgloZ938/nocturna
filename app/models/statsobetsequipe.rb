@@ -1,0 +1,2 @@
+class Statsobetsequipe < ApplicationRecord
+end

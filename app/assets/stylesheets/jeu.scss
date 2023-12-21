@@ -46,7 +46,7 @@ body {
     height: 96px;
     margin-top: 15px;
     border-radius: 50%;
-    z-index: 1;
+    z-index: 1000;
 }
 
 .status-volume {
@@ -71,6 +71,56 @@ body {
     margin-top: 15px;
 }
 
+#pnj {
+    z-index: 900;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    position: relative;
+
+    h2, h4{
+        margin: 0;
+        margin: 5px;
+    }
+
+    #dialogue2, #dialogue3, #dialogue4, #dialogue5{
+        display: none;
+    }
+
+    #continue-indicator {
+        position: absolute;
+        bottom: -20px;
+        right: 0px;
+        font-size: 50px;
+        color: #333;
+        display: none;
+        cursor: pointer;
+    }
+}
+
+.text {
+    width: calc(100% - 400px - 3rem);
+    background: #fff;
+    min-height: 140px;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    border-radius: 5px;
+    border: 3px solid #e4aa52;
+}
+
+#pnj-narratif {
+    width: 400px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    border: 3px solid #e4aa52;
+}
+
 #inventaire {
     position: absolute;
     z-index: 1000;
@@ -80,6 +130,8 @@ body {
     justify-content: center;
     align-items: center;
     background: rgba(0, 0, 0, 0.75);
+    top: 0;
+    left: 0;
 }
 
 #contenu-inventaire {
@@ -126,6 +178,8 @@ body {
     align-items: center;
     background: rgba(0, 0, 0, 0.75);
     display: none;
+    top: 0;
+    left: 0;
 }
 
 #profil-menu {
@@ -282,52 +336,53 @@ label {
     .data {
         margin-top: 5px;
     }
-
-    .commun {
-        color: #fff;
-    }
-
-    .atypique {
-        color: #1eff00;
-    }
-
-    .rare {
-        color: #0070dd;
-    }
-
-    .épique {
-        color: #a335ee;
-    }
-
-    .légendaire {
-        color: #ff8000;
-    }
-
-    .pv {
-        color: #1eff00;
-    }
-
-    .force {
-        color: #ff3c00;
-    }
-
-    .exp{
-        color: rgb(175, 241, 100);
-    }
-
-    .vitesse{
-        color: #e4c952;
-    }
-
-    .valeur{
-        color: rgb(82, 228, 155);
-    }
-
-    .none{
-        color: #d3d3d3;
-    }
 }
-.infoData{
+
+.commun {
+    color: #fff;
+}
+
+.atypique {
+    color: #1eff00;
+}
+
+.rare {
+    color: #0070dd;
+}
+
+.épique {
+    color: #a335ee;
+}
+
+.légendaire {
+    color: #ff8000;
+}
+
+.pv {
+    color: #1eff00;
+}
+
+.force {
+    color: #ff3c00;
+}
+
+.exp {
+    color: rgb(175, 241, 100);
+}
+
+.vitesse {
+    color: #e4c952;
+}
+
+.valeur {
+    color: rgb(82, 228, 155);
+}
+
+.none {
+    color: #d3d3d3;
+}
+
+.infoData {
     color: white;
     position: absolute;
     bottom: 0;
@@ -337,6 +392,52 @@ label {
     cursor: default;
 }
 
-#inventaire{
+#inventaire {
     display: none;
+}
+
+h1 {
+    font-size: 34px !important;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+}
+
+.menuContextuel {
+    background-color: black !important;
+    color: white !important;
+    max-width: 200px !important;
+
+    div {
+        padding: 1rem;
+    }
+
+    a {
+        color: white;
+    }
+
+    a:hover {
+        color: white;
+    }
+
+    input[type="submit"] {
+        background: none;
+        color: white;
+        border: none;
+    }
+
+    input[type="submit"]:hover {
+        text-decoration: underline;
+    }
+
+    input[type="number"] {
+        width: 40%;
+    }
+
+    input:focus {
+        outline: none;
+    }
 }

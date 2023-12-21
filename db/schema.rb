@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_11_150449) do
+ActiveRecord::Schema.define(version: 2023_12_19_162727) do
 
   create_table "cinematics", force: :cascade do |t|
     t.string "token"
@@ -29,11 +29,19 @@ ActiveRecord::Schema.define(version: 2023_12_11_150449) do
   create_table "inventaires", force: :cascade do |t|
     t.string "objet_id"
     t.string "user_id"
+    t.string "unique_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "jeus", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "objetequipes", force: :cascade do |t|
+    t.text "objet_id"
+    t.text "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -85,6 +93,16 @@ ActiveRecord::Schema.define(version: 2023_12_11_150449) do
     t.text "reponse4"
     t.text "bonne_reponse"
     t.text "pnj_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "statsobetsequipes", force: :cascade do |t|
+    t.string "pv"
+    t.string "force"
+    t.string "vitesse"
+    t.string "exp_joueur"
+    t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

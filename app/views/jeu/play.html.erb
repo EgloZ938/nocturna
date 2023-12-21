@@ -12,19 +12,62 @@
     })
 </script>
 
+<body data-username="<%= @user.name %>">
+
 <img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
 <img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
 
 <img id="sac-a-dos" src="/images/sac_a_dos.jpg">
+
+
+<div id="pnj">
+    <div class="flex">
+        <div class="text">
+            <h2>Eldrin :</h2>
+            <h4 id="dialogue">Ah, te voilà enfin, <%= @user.name %> ! Nous t'attendions avec impatience. Je suis Eldrin, le gardien de la sagesse de Highgard. Ton arrivée en ces temps sombres n'est pas un hasard.</h4>
+            <!-- Ajoutez un conteneur pour l'indicateur ici -->
+            <div id="continue-indicator">&#x25BC;</div> <!-- Exemple avec un triangle -->
+        </div>
+        <img id="pnj-narratif" src="/images/pnj-narratif.jpg">
+    </div>
+</div>
+
+
 
 <div id="inventaire">
     <div id="contenu-inventaire">
         <div id="header-inventaire" class="flex align-items space-between">
             <img src=<%= @personnage.avatar %>>
             <div class="flex column">
-                <div class="case"></div>
-                <div class="case"></div>
-                <div class="case"></div>
+                <% for i in 0..2 do %>
+                    <% if @equipe_triee[i] != nil %>
+                        <% 
+                            chaineData = @equipe_triee[i].data
+                            data = chaineData.split(":")
+                            if data[0] == "Point de vie"
+                                classeData = "pv"
+                            elsif data[0] == "Point d'attaque"
+                                classeData = "force"
+                            elsif data[0] == "Point d'exp"
+                                classeData = "exp"
+                            elsif data[0] == "Vitesse"
+                                classeData = "vitesse"
+                            elsif data[0] == "Valeur"
+                                classeData = "valeur"
+                            else 
+                                classeData = "none"
+                            end
+                        %>
+                        <div class="case maj caseUtilisé" id=<%= @equipe_triee[i].id %> style="background-image: url(<%= @equipe_triee[i].image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h6 class='maj'><%= @equipe_triee[i].nom %></h6><h5 class='<%= @equipe_triee[i].rarete %> rarete maj'><%= @equipe_triee[i].rarete %></h5><p class='maj'><%= @equipe_triee[i].description %></p><h6 class='<%= classeData %> data'><%= @equipe_triee[i].data %></h6></div>"></div>
+                        <div class="menuContextuel dropdown-menu" data-id=<%= @equipe_triee[i].id %>>
+                            <div>
+                                <%= link_to "Déséquiper", jeu_objetDesequipe_path(objet_id: @equipe_triee[i].id, user_id: session[:user_id]), class: "desequipe-link" %>
+                            </div>
+                        </div>
+                    <% else %>
+                        <div class="case"></div>
+                    <% end %>
+                <% end %>
             </div>
         </div>
         <div class="main-case">
@@ -50,9 +93,33 @@
                                 classeData = "none"
                             end
                         %>
-                        <div class="case maj" id=<%= number %> style="background-image: url(<%= @structured_inventaire[number][0].image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h6 class='maj'><%= @structured_inventaire[number][0].nom %></h6><h5 class='<%= @structured_inventaire[number][0].rarete %> rarete maj'><%= @structured_inventaire[number][0].rarete %></h5><p class='maj'><%= @structured_inventaire[number][0].description %></p><h6 class='<%= classeData %> data'><%= @structured_inventaire[number][0].data %></h6></div>">
+                        <div class="case maj caseUtilisé" id="<%= number %>inventaire<%= @structured_inventaire[number][0].id %>" style="background-image: url(<%= @structured_inventaire[number][0].image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h6 class='maj'><%= @structured_inventaire[number][0].nom %></h6><h5 class='<%= @structured_inventaire[number][0].rarete %> rarete maj'><%= @structured_inventaire[number][0].rarete %></h5><p class='maj'><%= @structured_inventaire[number][0].description %></p><h6 class='<%= classeData %> data'><%= @structured_inventaire[number][0].data %></h6></div>">
                             <% if @structured_inventaire[number][1] != 1 %>
                                 <h4 class="infoData"><%= @structured_inventaire[number][1] %></h4>
+                            <% end %>
+                        </div>
+                        <div class="menuContextuel dropdown-menu" data-id="<%= number %>inventaire<%= @structured_inventaire[number][0].id %>">
+                            <% if @structured_inventaire[number][0].caracteristique == "équipable" %>
+                                <div>
+                                    <%= link_to "Équiper", jeu_objetEquipe_path(objet_id: @structured_inventaire[number][0].id, user_id: session[:user_id]), class: "equip-link" %>
+                                </div>
+                            <% end %>
+                            <% if @structured_inventaire[number][1] > 1 %>
+                                <div>
+                                    <%= form_with url: jeu_objetSupprQuantite_path, method: :post do |form| %>
+                                        <%= form.number_field :quantite, min: 1, max: @structured_inventaire[number][1], value: 1 %>
+                                        <%= form.hidden_field :objet_id, value: @structured_inventaire[number][0].id %>
+                                        <%= form.hidden_field :user_id, value: session[:user_id] %>
+                                        <%= form.submit "Jeter", class: "your-custom-class" %>
+                                    <% end %>
+                                    </div>
+                                <div>
+                                    <%= link_to "Jeter la pile", jeu_objetSupprQuantite_path(objet_id: @structured_inventaire[number][0].id, user_id: session[:user_id], quantite: @structured_inventaire[number][1]) %>
+                                </div>
+                            <% else %>
+                                <div>
+                                    <%= link_to "Jeter", jeu_objetSuppr_path(objet_id: @structured_inventaire[number][0].id, user_id: session[:user_id]) %>
+                                </div>
                             <% end %>
                         </div>
                     <% else %>
@@ -131,7 +198,12 @@
             </div>
             <div class="flex align-items">
                 <h1>Niveau : </h1>
-                <h1 class="color info"><%= @personnage.exp_joueur %></h1>
+                <h1 class="color info">
+                    <%= @personnage.exp_joueur %>
+                    <% if @stats.exp_joueur != "0" %>
+                        <span class="commun">(</span><span class="exp">Bonus d'exp : +<%= @stats.exp_joueur %>%</span><span class="commun">)</span>
+                    <% end %>
+                </h1>
             </div>
             <div class="flex align-items">
                 <h1>Argent : </h1>
@@ -139,15 +211,30 @@
             </div>
             <div class="flex align-items">
                 <h1>Point de vie : </h1>
-                <h1 class="color info"><%= @personnage.pv %></h1>
+                <h1 class="color info">
+                    <%= @personnage.pv %>
+                    <% if @stats.pv !="0" %>
+                        <span class="commun">+</span> <span class="pv"><%= @stats.pv %></span>
+                    <% end %>
+                </h1>
             </div>
             <div class="flex align-items">
                 <h1>Force : </h1>
-                <h1 class="color info"><%= @personnage.force %></h1>
+                <h1 class="color info">
+                    <%= @personnage.force %>
+                    <% if @stats.force != "0" %>
+                        <span class="commun">+</span> <span class="force"><%= @stats.force %></span>
+                    <% end %>
+                </h1>
             </div>
             <div class="flex align-items">
                 <h1>Vitesse : </h1>
-                <h1 class="color info"><%= @personnage.vitesse %></h1>
+                <h1 class="color info">
+                    <%= @personnage.vitesse %>
+                    <% if @stats.vitesse != "0" %>
+                        <span class="commun">+</span> <span class="vitesse"><%= @stats.vitesse %></span>
+                    <% end %>
+                </h1>
             </div>
         </div>
         <div class="lg bg flex align-items justify-content" id="retour-profil">
@@ -158,3 +245,40 @@
 
 <script type="text/javascript" src="/javascript/jeu.js">
 </script>
+<script>
+    $(document).ready(function() {
+        $('.caseUtilisé').on('contextmenu', function(event) {
+            event.preventDefault(); 
+
+            localStorage.setItem("token", "0");
+            localStorage.setItem("autoReload", "true");
+
+            var idElement = $(this).attr('id');
+            var $menuContextuel = $('.menuContextuel[data-id="' + idElement + '"]');
+
+            $(this).tooltip('hide');
+            $('.caseUtilisé').tooltip('disable');
+
+            // Positionner et afficher le menu contextuel
+            $menuContextuel.css({
+                display: 'block',
+                left: event.pageX + 'px',
+                top: event.pageY + 'px'
+            });
+
+            // Fermer les autres menus contextuels
+            $('.menuContextuel').not($menuContextuel).hide();
+        });
+
+        // Modification ici
+        $(document).on('click', function(event) {
+            var $target = $(event.target);
+            if (!$target.closest('.menuContextuel').length) {
+                $('.menuContextuel').hide();
+                $('.caseUtilisé').tooltip('enable');
+            }
+        });
+    });
+</script>
+
+</body>

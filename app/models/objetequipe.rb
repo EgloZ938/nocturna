@@ -1,0 +1,2 @@
+class Objetequipe < ApplicationRecord
+end
