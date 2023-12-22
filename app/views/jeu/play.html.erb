@@ -33,8 +33,6 @@
     </div>
 <% end %>
 
-
-
 <div id="inventaire">
     <div id="contenu-inventaire">
         <%= render partial: "inventaire", locals: { 
@@ -53,9 +51,14 @@
         stats: @stats
     } %>
 </div>
-
-<script type="text/javascript" src="/javascript/jeu.js">
+<script type="text/javascript">
+    let music = new Audio('/mp3/first-town.mp3');
+    let effet = new Audio('/mp3/effet_click.mp3');
+    let typeSound = new Audio('/mp3/text-sound.mp3');
 </script>
+<script type="text/javascript" src="/javascript/commun.js"></script>
+<script type="text/javascript" src="/javascript/jeu.js"></script>
+
 <script>
     $(document).ready(function() {
         $('.caseUtilisé').on('contextmenu', function(event) {
