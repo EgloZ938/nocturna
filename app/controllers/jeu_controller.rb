@@ -101,6 +101,8 @@ class JeuController < ApplicationController
         stats = Statsobetsequipe.find_or_initialize_by(user_id: @user.id)
         stats.update(pv: total_pv_bonus.to_s, force: total_force_bonus.to_s, vitesse: total_vitesse_bonus.to_s, exp_joueur: total_exp_bonus.to_s)
         @stats = Statsobetsequipe.find_by(user_id: session[:user_id])
+
+        @narration = Narrationpnj.find_by(user_id: session[:user_id])
     end
     
 
@@ -190,5 +192,9 @@ class JeuController < ApplicationController
         end
 
         redirect_back(fallback_location: root_path, notice: 'Objets supprimés avec succès.')
+    end
+
+    def create_narration
+        Narrationpnj.create(count: params[:count], user_id: session[:user_id])
     end
 end

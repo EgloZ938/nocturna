@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_19_162727) do
+ActiveRecord::Schema.define(version: 2023_12_21_201657) do
 
   create_table "cinematics", force: :cascade do |t|
     t.string "token"
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 2023_12_19_162727) do
   end
 
   create_table "jeus", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "narrationpnjs", force: :cascade do |t|
+    t.string "count"
+    t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

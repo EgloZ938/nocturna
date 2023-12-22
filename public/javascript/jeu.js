@@ -211,48 +211,77 @@ else {
     ];
     const dialogueElement = document.getElementById('dialogue');
     const continueIndicator = document.getElementById('continue-indicator');
-
-    function typeWriter(text, n) {
-        if (n === 0) typeSound.play(); // Commence à jouer le son au début du texte
+    if(continueIndicator != null){
+        function typeWriter(text, n) {
+            if (n === 0) typeSound.play(); // Commence à jouer le son au début du texte
     
-        if (n < (text.length)) {
-            dialogueElement.innerHTML = text.substring(0, n + 1);
-            n++;
-            setTimeout(function() {
-                typeWriter(text, n);
-            }, 40); // Vitesse du défilement
-        } else {
-            typeSound.pause(); // Arrête le son lorsque le texte est complètement affiché
-            typeSound.currentTime = 0; // Réinitialise le son pour la prochaine utilisation
-            continueIndicator.style.display = 'block'; // Affiche l'indicateur à la fin
+            if (n < (text.length)) {
+                dialogueElement.innerHTML = text.substring(0, n + 1);
+                n++;
+                setTimeout(function () {
+                    typeWriter(text, n);
+                }, 30); // Vitesse du défilement
+            } else {
+                typeSound.pause(); // Arrête le son lorsque le texte est complètement affiché
+                typeSound.currentTime = 0; // Réinitialise le son pour la prochaine utilisation
+                continueIndicator.style.display = 'block'; // Affiche l'indicateur à la fin
+            }
         }
+    
+        function nextDialogue() {
+            if (currentDialogue < dialogues.length) {
+                continueIndicator.style.display = 'none'; // Cache l'indicateur
+                typeWriter(dialogues[currentDialogue], 0);
+                currentDialogue++;
+            } else {
+                // Une fois tous les dialogues affichés, cache le conteneur #pnj
+                document.getElementById('pnj').style.display = 'none';
+                sendNarrationData();
+            }
+        }
+    
+        function sendNarrationData() {
+            const data = { count: "1" };
+        
+            fetch('/jeu/create_narration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': getCsrfToken() // Assurez-vous d'obtenir le token CSRF
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+        
+        function getCsrfToken() {
+            // Récupérer le token CSRF depuis un élément meta dans votre HTML
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+        
+    
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' && continueIndicator.style.display === 'block') {
+                nextDialogue();
+            }
+        });
+    
+        continueIndicator.addEventListener('click', function () {
+            if (continueIndicator.style.display === 'block') {
+                nextDialogue();
+            }
+        });
+    
+        // Démarre le premier dialogue
+        nextDialogue();
     }
 
-    function nextDialogue() {
-        if (currentDialogue < dialogues.length) {
-            continueIndicator.style.display = 'none'; // Cache l'indicateur
-            typeWriter(dialogues[currentDialogue], 0);
-            currentDialogue++;
-        } else {
-            // Une fois tous les dialogues affichés, cache le conteneur #pnj
-            document.getElementById('pnj').style.display = 'none';
-        }
-    }
-
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter' && continueIndicator.style.display === 'block') {
-            nextDialogue();
-        }
-    });
-
-    continueIndicator.addEventListener('click', function() {
-        if (continueIndicator.style.display === 'block') {
-            nextDialogue();
-        }
-    });
-
-    // Démarre le premier dialogue
-    nextDialogue();
 
 
     document.getElementById("quitter-button").addEventListener("click", () => {

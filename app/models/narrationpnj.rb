@@ -1,0 +1,2 @@
+class Narrationpnj < ApplicationRecord
+end

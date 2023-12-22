@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   get 'jeu/objetDesequipe'
   get 'jeu/objetSuppr'
   get 'jeu/objetSupprQuantite'
+  get '/jeu/create_narration'
 
 
   post 'register/create'
@@ -57,6 +58,7 @@ Rails.application.routes.draw do
   post 'gamemaster/createRequest'
   post 'gamemaster/newRequest'
   post 'jeu/objetSupprQuantite'
+  post '/jeu/create_narration'
   
   delete 'register/destroy'
   delete 'gamemaster/afficher/:id', to: 'gamemaster#destroy', as: 'delete'

@@ -5,6 +5,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<meta name="csrf-token" content="<%= form_authenticity_token %>">
 
 <script>
     $(function () {
@@ -19,228 +20,38 @@
 
 <img id="sac-a-dos" src="/images/sac_a_dos.jpg">
 
-
-<div id="pnj">
-    <div class="flex">
-        <div class="text">
-            <h2>Eldrin :</h2>
-            <h4 id="dialogue">Ah, te voilà enfin, <%= @user.name %> ! Nous t'attendions avec impatience. Je suis Eldrin, le gardien de la sagesse de Highgard. Ton arrivée en ces temps sombres n'est pas un hasard.</h4>
-            <!-- Ajoutez un conteneur pour l'indicateur ici -->
-            <div id="continue-indicator">&#x25BC;</div> <!-- Exemple avec un triangle -->
+<% if @narration.nil? %>
+    <div id="pnj">
+        <div class="flex">
+            <div class="text">
+                <h2>Eldrin :</h2>
+                <h4 id="dialogue"></h4>
+                <div id="continue-indicator">&#x25BC;</div>
+            </div>
+            <img id="pnj-narratif" src="/images/pnj-narratif.jpg">
         </div>
-        <img id="pnj-narratif" src="/images/pnj-narratif.jpg">
     </div>
-</div>
+<% end %>
 
 
 
 <div id="inventaire">
     <div id="contenu-inventaire">
-        <div id="header-inventaire" class="flex align-items space-between">
-            <img src=<%= @personnage.avatar %>>
-            <div class="flex column">
-                <% for i in 0..2 do %>
-                    <% if @equipe_triee[i] != nil %>
-                        <% 
-                            chaineData = @equipe_triee[i].data
-                            data = chaineData.split(":")
-                            if data[0] == "Point de vie"
-                                classeData = "pv"
-                            elsif data[0] == "Point d'attaque"
-                                classeData = "force"
-                            elsif data[0] == "Point d'exp"
-                                classeData = "exp"
-                            elsif data[0] == "Vitesse"
-                                classeData = "vitesse"
-                            elsif data[0] == "Valeur"
-                                classeData = "valeur"
-                            else 
-                                classeData = "none"
-                            end
-                        %>
-                        <div class="case maj caseUtilisé" id=<%= @equipe_triee[i].id %> style="background-image: url(<%= @equipe_triee[i].image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h6 class='maj'><%= @equipe_triee[i].nom %></h6><h5 class='<%= @equipe_triee[i].rarete %> rarete maj'><%= @equipe_triee[i].rarete %></h5><p class='maj'><%= @equipe_triee[i].description %></p><h6 class='<%= classeData %> data'><%= @equipe_triee[i].data %></h6></div>"></div>
-                        <div class="menuContextuel dropdown-menu" data-id=<%= @equipe_triee[i].id %>>
-                            <div>
-                                <%= link_to "Déséquiper", jeu_objetDesequipe_path(objet_id: @equipe_triee[i].id, user_id: session[:user_id]), class: "desequipe-link" %>
-                            </div>
-                        </div>
-                    <% else %>
-                        <div class="case"></div>
-                    <% end %>
-                <% end %>
-            </div>
-        </div>
-        <div class="main-case">
-        <% number = 0 %>
-            <% for i in 1..@rangee do %>
-            <div class="flex">
-                <% for a in 1..5 do %>
-                    <% if @structured_inventaire[number] %>
-                        <% 
-                            chaineData = @structured_inventaire[number][0].data
-                            data = chaineData.split(":")
-                            if data[0] == "Point de vie"
-                                classeData = "pv"
-                            elsif data[0] == "Point d'attaque"
-                                classeData = "force"
-                            elsif data[0] == "Point d'exp"
-                                classeData = "exp"
-                            elsif data[0] == "Vitesse"
-                                classeData = "vitesse"
-                            elsif data[0] == "Valeur"
-                                classeData = "valeur"
-                            else 
-                                classeData = "none"
-                            end
-                        %>
-                        <div class="case maj caseUtilisé" id="<%= number %>inventaire<%= @structured_inventaire[number][0].id %>" style="background-image: url(<%= @structured_inventaire[number][0].image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h6 class='maj'><%= @structured_inventaire[number][0].nom %></h6><h5 class='<%= @structured_inventaire[number][0].rarete %> rarete maj'><%= @structured_inventaire[number][0].rarete %></h5><p class='maj'><%= @structured_inventaire[number][0].description %></p><h6 class='<%= classeData %> data'><%= @structured_inventaire[number][0].data %></h6></div>">
-                            <% if @structured_inventaire[number][1] != 1 %>
-                                <h4 class="infoData"><%= @structured_inventaire[number][1] %></h4>
-                            <% end %>
-                        </div>
-                        <div class="menuContextuel dropdown-menu" data-id="<%= number %>inventaire<%= @structured_inventaire[number][0].id %>">
-                            <% if @structured_inventaire[number][0].caracteristique == "équipable" %>
-                                <div>
-                                    <%= link_to "Équiper", jeu_objetEquipe_path(objet_id: @structured_inventaire[number][0].id, user_id: session[:user_id]), class: "equip-link" %>
-                                </div>
-                            <% end %>
-                            <% if @structured_inventaire[number][1] > 1 %>
-                                <div>
-                                    <%= form_with url: jeu_objetSupprQuantite_path, method: :post do |form| %>
-                                        <%= form.number_field :quantite, min: 1, max: @structured_inventaire[number][1], value: 1 %>
-                                        <%= form.hidden_field :objet_id, value: @structured_inventaire[number][0].id %>
-                                        <%= form.hidden_field :user_id, value: session[:user_id] %>
-                                        <%= form.submit "Jeter", class: "your-custom-class" %>
-                                    <% end %>
-                                    </div>
-                                <div>
-                                    <%= link_to "Jeter la pile", jeu_objetSupprQuantite_path(objet_id: @structured_inventaire[number][0].id, user_id: session[:user_id], quantite: @structured_inventaire[number][1]) %>
-                                </div>
-                            <% else %>
-                                <div>
-                                    <%= link_to "Jeter", jeu_objetSuppr_path(objet_id: @structured_inventaire[number][0].id, user_id: session[:user_id]) %>
-                                </div>
-                            <% end %>
-                        </div>
-                    <% else %>
-                        <div class="case" id=<%= number %>></div>
-                    <% end %>
-                    <% number += 1 %>
-                <% end %>
-            </div>
-            <% end %>
-        </div>
+        <%= render partial: "inventaire", locals: { 
+            personnage: @personnage, 
+            equipe_triee: @equipe_triee, 
+            rangee: @rangee, 
+            structured_inventaire: @structured_inventaire 
+        } %>
     </div>
 </div>
 
 <div id="options">
-    <div id="main-menu">
-        <div class="lg bg flex align-items justify-content" id="reprendre-partie">
-            <h1>Reprendre</h1>
-        </div>
-        <div class="flex menu-md">
-            <div class="md bg flex align-items justify-content left" id="option-button">
-                <h1>Options</h1>
-            </div>
-            <div class="md bg flex align-items justify-content right" id="quitter-button">
-                <h1>Quitter</h1>
-            </div>
-        </div>
-    </div>
-    <div id="options-menu">
-        <div class="flex menu-md">
-            <div class="md bg flex align-items justify-content left" id="audio-button">
-                <h1>Audio</h1>
-            </div>
-            <div class="md bg flex align-items justify-content right" id="profil-button">
-                <h1>Profil</h1>
-            </div>
-        </div>
-        <div class="lg bg flex align-items justify-content" id="retour-option">
-            <h1>Retour</h1>
-        </div>
-    </div>
-    <div id="audio-menu">
-        <div class="lg bg msg flex align-items justify-content column">
-            <h1>Utilisez Firefox pour ne pas avoir à réactiver le son à chaque fois</h1>
-            <div class="flex align-items justify-content space-between w-100 container_volume_icon">
-                <img src="/images/volume_on.png" class="volume_icon">
-                <h1>Son activé</h1>
-            </div>
-            <div class="flex align-items justify-content space-between w-100 container_volume_icon">
-                <img src="/images/volume_off.png" class="volume_icon">
-                <h1>Son desactivé</h1>
-            </div>
-        </div>
-        <div class="flex menu-md">
-            <div class="md bg flex align-items justify-content left">
-                <label for="volume-music">Musique</label>
-                <input type="range" id="volume-music" name="volume-music" min="0" max="10" steps="1">
-            </div>
-            <div class="md bg flex align-items justify-content right">
-                <label for="volume-effect">Effet</label>
-                <input type="range" id="volume-effect" name="volume-effect" min="0" max="10" steps="1">
-            </div>
-        </div>
-        <div class="lg bg flex align-items justify-content" id="retour-audio">
-            <h1>Retour</h1>
-        </div>
-    </div>
-    <div id="profil-menu">
-        <div id="profil">
-            <div class="flex align-items space-between">
-                <img src=<%= @personnage.avatar %> id="avatar-profil">
-                <h1 class="color username"><%= @user.name %></h1>
-            </div>
-            <div class="flex align-items">
-                <h1>Classe : </h1>
-                <h1 class="color info classe"><%= @personnage.classe %></h1>
-            </div>
-            <div class="flex align-items">
-                <h1>Niveau : </h1>
-                <h1 class="color info">
-                    <%= @personnage.exp_joueur %>
-                    <% if @stats.exp_joueur != "0" %>
-                        <span class="commun">(</span><span class="exp">Bonus d'exp : +<%= @stats.exp_joueur %>%</span><span class="commun">)</span>
-                    <% end %>
-                </h1>
-            </div>
-            <div class="flex align-items">
-                <h1>Argent : </h1>
-                <h1 class="color info"><%= @personnage.argent %> écus</h1>
-            </div>
-            <div class="flex align-items">
-                <h1>Point de vie : </h1>
-                <h1 class="color info">
-                    <%= @personnage.pv %>
-                    <% if @stats.pv !="0" %>
-                        <span class="commun">+</span> <span class="pv"><%= @stats.pv %></span>
-                    <% end %>
-                </h1>
-            </div>
-            <div class="flex align-items">
-                <h1>Force : </h1>
-                <h1 class="color info">
-                    <%= @personnage.force %>
-                    <% if @stats.force != "0" %>
-                        <span class="commun">+</span> <span class="force"><%= @stats.force %></span>
-                    <% end %>
-                </h1>
-            </div>
-            <div class="flex align-items">
-                <h1>Vitesse : </h1>
-                <h1 class="color info">
-                    <%= @personnage.vitesse %>
-                    <% if @stats.vitesse != "0" %>
-                        <span class="commun">+</span> <span class="vitesse"><%= @stats.vitesse %></span>
-                    <% end %>
-                </h1>
-            </div>
-        </div>
-        <div class="lg bg flex align-items justify-content" id="retour-profil">
-            <h1>Retour</h1>
-        </div>
-    </div>
+    <%= render partial: "options", locals: {
+        personnage: @personnage,
+        user: @user,
+        stats: @stats
+    } %>
 </div>
 
 <script type="text/javascript" src="/javascript/jeu.js">
