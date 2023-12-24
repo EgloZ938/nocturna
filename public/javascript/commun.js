@@ -39,6 +39,43 @@ else {
         document.getElementById("inventaire").style.display = "flex";
     })
 
+    document.getElementById("craft").addEventListener("click", () => {
+        effet.play();
+        document.getElementById("etable").style.display = "flex";
+        let elementSource = document.getElementById("objets-craftables");
+        let autreElement = document.getElementById("info-objets-craft");
+        autreElement.style.minWidth = `${elementSource.offsetWidth}px`;
+        autreElement.style.minHeight = `${elementSource.offsetHeight}px`;
+    })
+
+
+    let objet_craftable = document.getElementsByClassName("objet_craftable");
+    let testDiv = document.getElementById("info-objets-craft");
+
+    for (let i = 0; i < objet_craftable.length; i++) {
+        objet_craftable[i].addEventListener("click", function (e) {
+            localStorage.setItem("token", "0");
+            localStorage.setItem("autoReload", "true");
+            // Cacher tous les éléments craft-info
+            let craft_info = document.getElementsByClassName("craft-info");
+            for (let j = 0; j < craft_info.length; j++) {
+                craft_info[j].style.display = "none";
+            }
+
+            // Identifier l'ID de l'élément cliqué
+            let id = this.id;
+            let craftInfoContent = document.getElementById("craft-info" + id);
+
+            // Vider la div 'test' et y ajouter le contenu de craft-info
+            testDiv.innerHTML = '';
+            if (craftInfoContent) {
+                testDiv.appendChild(craftInfoContent.cloneNode(true));
+                testDiv.lastChild.style.display = "block";
+                $('[data-toggle="tooltip"]').tooltip()
+            }
+        });
+    }
+
     let statusVolume = document.getElementsByClassName("status-volume");
     let lengthV = statusVolume.length;
     for (let i = 0; i < lengthV; i++) {
@@ -84,8 +121,12 @@ else {
         var x = e.keyCode;
         if (x == 27) {
             let inventaireElem = document.getElementById("inventaire");
+            let etableElem = document.getElementById("etable");
             if (window.getComputedStyle(inventaireElem, null).display == "flex") {
                 inventaireElem.style.display = "none";
+            }
+            else if (window.getComputedStyle(etableElem, null).display == "flex") {
+                etableElem.style.display = "none";
             }
             else {
                 let optionsElem = document.getElementById("options");

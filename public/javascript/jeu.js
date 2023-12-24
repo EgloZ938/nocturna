@@ -58,6 +58,7 @@ if (continueIndicator != null) {
             // Une fois tous les dialogues affichés, cache le conteneur #pnj
             document.getElementById('pnj').style.display = 'none';
             sendNarrationData();
+            document.getElementById("pnj2").style.display = "block";
         }
     }
 

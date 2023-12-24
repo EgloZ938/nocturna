@@ -36,6 +36,12 @@ Rails.application.routes.draw do
   get 'jeu/objetSuppr'
   get 'jeu/objetSupprQuantite'
   get '/jeu/create_narration'
+  get 'gamemaster/newCraft'
+  get 'gamemaster/createCraft'
+  get 'gamemaster/craft'
+  get 'gamemaster/showCraft'
+  get 'gamemaster/editCraft'
+  get 'jeu/crafterLobjet'
 
 
   post 'register/create'
@@ -59,6 +65,10 @@ Rails.application.routes.draw do
   post 'gamemaster/newRequest'
   post 'jeu/objetSupprQuantite'
   post '/jeu/create_narration'
+  post 'gamemaster/newCraft'
+  post 'gamemaster/createCraft'
+  post 'gamemaster/updateCraft'
+
   
   delete 'register/destroy'
   delete 'gamemaster/afficher/:id', to: 'gamemaster#destroy', as: 'delete'
@@ -67,8 +77,10 @@ Rails.application.routes.draw do
   delete 'gamemaster/destroyItem'
   delete 'gamemaster/destroyRequest'
   delete 'jeu/supprObjetInventaire', to: 'jeu#supprObjetInventaire', as: 'jeu_supprObjetInventaire'
+  delete 'gamemaster/destroyCraft'
   
   patch 'gamemaster/updateItem'
+  patch 'gamemaster/updateCraft'
 
   root 'accueil#index'
 

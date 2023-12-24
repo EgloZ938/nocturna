@@ -129,6 +129,50 @@ class GamemasterController < ApplicationController
         end
     end
 
+    def craft
+        @crafts = Craft.all
+        @objets = Objet.where(id: @crafts.pluck(:objet_id)).index_by(&:id)
+    end
+
+    def editCraft
+        @craft = Craft.find(params[:id])
+        session[:craft_id] = @craft.id
+    end
+
+    def updateCraft
+        @craft = Craft.find_by(id: session[:craft_id])
+        if @craft.update(craft_params)
+            session[:craft_id] = nil
+            redirect_to gamemaster_craft_path
+        end
+    end
+
+    def newCraft
+        @craft = Craft.new
+    end
+
+    def showCraft
+        @craft = Craft.find(params[:id])
+    end
+
+    def destroyCraft
+        @craft = Craft.find(params[:id])
+        if @craft
+            @craft.destroy
+        end
+
+        redirect_to gamemaster_craft_path
+    end
+
+    def createCraft
+        @craft = Craft.new(craft_params)
+        if @craft.save
+            redirect_to gamemaster_craft_path, notice: 'Le craft a été créé avec succès.'
+        else
+            render :new
+        end
+    end
+
     def newPnj
         @pnj = Pnj.new
     end
@@ -194,10 +238,14 @@ class GamemasterController < ApplicationController
     
       redirect_to gamemaster_request_path
     end
-    
-      def request_params
-        params.require(:request).permit(:question, :reponse1, :reponse2, :reponse3, :reponse4, :bonne_reponse, :pnj_id)
-      end
+
+    def craft_params
+        params.require(:craft).permit(:objet_id, :quantite, materials: {})
+    end
+
+    def request_params
+    params.require(:request).permit(:question, :reponse1, :reponse2, :reponse3, :reponse4, :bonne_reponse, :pnj_id)
+    end
 
     def pnj_params
       params.require(:pnj).permit(:name, :classe, :avatar, :pv, :vitesse, :force, :earn_xp)

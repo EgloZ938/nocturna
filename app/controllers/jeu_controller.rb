@@ -103,7 +103,45 @@ class JeuController < ApplicationController
         @stats = Statsobetsequipe.find_by(user_id: session[:user_id])
 
         @narration = Narrationpnj.find_by(user_id: session[:user_id])
+
+        classe_personnage = @personnage.classe.downcase # Assurer que la classe est en minuscules pour la comparaison
+
+        @crafts = Craft.all
+        @objets_craftables = Objet.where(id: @crafts.pluck(:objet_id).map(&:to_i)).index_by(&:id)
+
+        # Filtrer les crafts en fonction de la classe du personnage
+        crafts_filtrés = @crafts.select do |craft|
+            objet_craftable = @objets_craftables[craft.objet_id.to_i]
+            next false unless objet_craftable # Passer au suivant si l'objet n'existe pas
+            nom_objet = objet_craftable.nom.split.first.downcase
+
+            case nom_objet
+            when 'lame'
+                classe_personnage == 'assassin'
+            when 'épée'
+                classe_personnage == 'chevalier'
+            when 'sceptre'
+                classe_personnage == 'mage'
+            else
+                true # Autoriser tous les autres objets pour toutes les classes
+            end
+        end
+
+        # Préparer @materiaux_et_objets avec les crafts filtrés
+        @materiaux_et_objets = {}
+        crafts_filtrés.each do |craft|
+            materiaux_non_vides = craft.materials.select { |_, quantite| quantite.to_i > 0 }
+            objets_correspondants = Objet.where(nom: materiaux_non_vides.keys)
+
+            @materiaux_et_objets[craft] = objets_correspondants.index_by(&:nom).transform_values do |objet|
+                quantite = materiaux_non_vides[objet.nom]
+                [objet, quantite]
+            end
+        end
+
+        @quantites_totales = @inventaire.group(:objet_id).count
     end
+    
     
 
     def objetEquipe
@@ -156,8 +194,22 @@ class JeuController < ApplicationController
     
         # Récupérer l'inventaire actuel et sa taille
         @inventaire = Inventaire.where(user_id: user_id)
-        inventaire_taille_actuelle = @inventaire.count
-    
+        
+        objets = Objet.where(id: @inventaire.pluck(:objet_id).uniq).sort_by(&:nom)
+        
+        @structured_inventaire = []
+        
+        objets.each do |objet|
+            total_count = @inventaire.where(objet_id: objet.id).count
+            while total_count > 0
+                stack_count = [objet.stack.to_i, total_count].min
+                @structured_inventaire << [objet, stack_count, objet.stack]
+                total_count -= stack_count
+            end
+        end
+
+        inventaire_taille_actuelle = @structured_inventaire.count
+
         # Vérifier si l'inventaire est plein
         if inventaire_taille_actuelle >= personnage.sac_a_dos.to_i
             # Rediriger vers la page précédente avec un message d'erreur
@@ -172,6 +224,29 @@ class JeuController < ApplicationController
         end
     end    
 
+    def crafterLobjet
+        objet_id = params[:objet_id]
+        materiaux = params[:materiaux].to_unsafe_h
+        user_id = session[:user_id]
+      
+        noms_materiaux = materiaux.keys
+      
+        for i in 0..materiaux.length - 1 do
+          id = materiaux[noms_materiaux[i]][0]
+          nombre = materiaux[noms_materiaux[i]][1]
+          for j in 0..nombre.to_i - 1 do
+            Inventaire.find_by(objet_id: id, user_id: user_id).destroy
+          end
+        end
+      
+        inventaire = Inventaire.create(objet_id: objet_id, user_id: user_id)
+        if inventaire.save
+          redirect_to jeu_play_path, notice: "L'objet a été crafté avec succès."
+        else
+          redirect_to jeu_play_path, notice: "Erreur"
+        end
+      end
+      
 
     def objetSuppr
         objet_id = params[:objet_id]

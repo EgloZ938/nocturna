@@ -1,0 +1,23 @@
+
+<p>
+  <strong>ID de l'Objet à Créer:</strong>
+  <%= @craft.objet_id %>
+</p>
+
+<p>
+  <strong>Matériaux:</strong>
+  <ul>
+    <% @craft.materials.each do |material, quantity| %>
+      <% if quantity.present? && quantity.to_i > 0 %>
+        <li><%= "#{material}: #{quantity}" %></li>
+      <% end %>
+    <% end %>
+  </ul>
+</p>
+
+<p>
+  <strong>Quantité de l'Objet Produit:</strong>
+  <%= @craft.quantite %>
+</p>
+
+<%= link_to 'Retour', gamemaster_craft_path %>
