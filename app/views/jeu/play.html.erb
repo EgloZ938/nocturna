@@ -75,7 +75,7 @@
                             </div>
                             <div class="craft-info" id="craft-info<%= objet_craftable.id %>">
                                 <h2>Établi</h2>
-                                <div class="flex justify-content">
+                                <div class="flex justify-content objet-craft-etabli">
                                     <div class="case maj objet_craftable" style="background-image: url(<%= objet_craftable.image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h4 class='maj'><%= objet_craftable.nom %></h4><h3 class='<%= objet_craftable.rarete %> rarete maj'><%= objet_craftable.rarete %></h3><h5 class='maj'><%= objet_craftable.description %></h5><h4 class='<%= classeData %> data'><%= objet_craftable.data %></h4></div>">
                                     </div>
                                 </div>
@@ -107,7 +107,9 @@
                                     <% end %>
                                 </div>
                                 <% if all_materials_present %>
-                                    <%= link_to "Crafter", jeu_crafterLobjet_path(objet_id: objet_craftable.id, materiaux: objets_avec_quantite) %>
+                                    <div class="flex justify-content link-craft">
+                                        <%= link_to "Crafter", jeu_crafterLobjet_path(objet_id: objet_craftable.id, materiaux: objets_avec_quantite) %>
+                                    </div>
                                 <% end %>
                             </div>
                         <% else %>

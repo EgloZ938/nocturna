@@ -237,11 +237,20 @@ body {
 
 .craft-info{
     display: none;
-}
 
-.craft-info img{
-    width: 64px;
-    height: 64px;
+    img{
+        width: 64px;
+        height: 64px;
+    }
+
+    a{
+        color: white !important;
+        font-size: 34px !important;
+    }
+
+    .link-craft{
+        margin-top: 1rem;
+    }
 }
 
 .craftables-section{

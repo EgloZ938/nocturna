@@ -5,11 +5,17 @@ window.onbeforeunload = function () {
 window.onload = function () {
     let autoReload = localStorage.getItem("autoReload");
     let savedMusicTime = localStorage.getItem("musicTime");
+    let checkEtabli = localStorage.getItem("etabli");
 
     if (autoReload === "true" && savedMusicTime !== null) {
         // Rechargement automatique : reprendre la musique
         music.currentTime = parseFloat(savedMusicTime);
-        document.getElementById("sac-a-dos").click();
+        if(checkEtabli === "true"){
+            localStorage.removeItem("etabli");
+        }
+        else{
+            document.getElementById("sac-a-dos").click();
+        }
     } else {
         // Rechargement manuel : recommencer la musique depuis le début
         music.currentTime = 0;

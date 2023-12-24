@@ -56,6 +56,7 @@ else {
         objet_craftable[i].addEventListener("click", function (e) {
             localStorage.setItem("token", "0");
             localStorage.setItem("autoReload", "true");
+            localStorage.setItem("etabli", "true");
             // Cacher tous les éléments craft-info
             let craft_info = document.getElementsByClassName("craft-info");
             for (let j = 0; j < craft_info.length; j++) {
