@@ -1,0 +1,95 @@
+<div id="objets-craftables">
+    <h2>Objets Craftables</h2>
+    <div class="craftables-container">
+        <% @materiaux_et_objets.each_slice(5).with_index do |group, group_index| %>
+            <div class="craftables-row flex">
+                <% group.each do |craft, objets_avec_quantite| %>
+                    <% objet_craftable = @objets_craftables[craft.objet_id.to_i] %>
+                    <% if objet_craftable %>
+                        <% 
+                            chaineData = objet_craftable.data
+                            data = chaineData.split(":")
+                            if data[0] == "Point de vie"
+                                classeData = "pv"
+                            elsif data[0] == "Point d'attaque"
+                                classeData = "force"
+                            elsif data[0] == "Point d'exp"
+                                classeData = "exp"
+                            elsif data[0] == "Vitesse"
+                                classeData = "vitesse"
+                            elsif data[0] == "Valeur"
+                                classeData = "valeur"
+                            else
+                                classeData = "none"
+                            end
+                        %>
+                        <div class="case maj objet_craftable" id="<%= objet_craftable.id %>" style="background-image: url(<%= objet_craftable.image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h4 class='maj'><%= objet_craftable.nom %></h4><h3 class='<%= objet_craftable.rarete %> rarete maj'><%= objet_craftable.rarete %></h3><h5 class='maj'><%= objet_craftable.description %></h5><h4 class='<%= classeData %> data'><%= objet_craftable.data %></h4></div>">
+                            <!-- Autres détails de l'objet craftable -->
+                        </div>
+                        <div class="craft-info" id="craft-info<%= objet_craftable.id %>">
+                            <h2>Établi</h2>
+                            <div class="flex justify-content objet-craft-etabli">
+                                <div class="case maj objet_craftable" style="background-image: url(<%= objet_craftable.image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h4 class='maj'><%= objet_craftable.nom %></h4><h3 class='<%= objet_craftable.rarete %> rarete maj'><%= objet_craftable.rarete %></h3><h5 class='maj'><%= objet_craftable.description %></h5><h4 class='<%= classeData %> data'><%= objet_craftable.data %></h4></div>">
+                                </div>
+                            </div>
+                            <div class="flex justify-content">
+                                <% all_materials_present = true %>
+                                <% objets_avec_quantite.each do |nom_objet, (objet, quantite_requise)| %>
+                                    <% 
+                                        chaineData = objet.data
+                                        data = chaineData.split(":")
+                                        if data[0] == "Point de vie"
+                                            classeData = "pv"
+                                        elsif data[0] == "Point d'attaque"
+                                            classeData = "force"
+                                        elsif data[0] == "Point d'exp"
+                                            classeData = "exp"
+                                        elsif data[0] == "Vitesse"
+                                            classeData = "vitesse"
+                                        elsif data[0] == "Valeur"
+                                            classeData = "valeur"
+                                        else
+                                            classeData = "none"
+                                        end
+                                    %>
+                                    <% quantite_en_inventaire = @quantites_totales[objet.id.to_s] || 0 %>
+                                    <% all_materials_present &&= quantite_en_inventaire >= quantite_requise.to_i %>
+                                    <div class="case maj" style="background-image: url(<%= objet.image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h4 class='maj'><%= objet.nom %></h4><h3 class='<%= objet.rarete %> rarete maj'><%= objet.rarete %></h3><h5 class='maj'><%= objet.description %></h5><h4 class='<%= classeData %> data'><%= objet.data %></h4></div>">
+                                        <h2 class="infoData"><%= quantite_requise %></h2>
+                                    </div>
+                                <% end %>
+                            </div>
+                            <% if all_materials_present %>
+                                <div class="flex justify-content link-craft">
+                                    <%= link_to "Crafter", jeu_crafterLobjet_path(objet_id: objet_craftable.id, materiaux: objets_avec_quantite) %>
+                                </div>
+                            <% end %>
+                        </div>
+                    <% else %>
+                        <p>Objet craftable non trouvé.</p>
+                    <% end %>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
+</div>
+
+<div id="info-objets-craft">
+    <h2>Établi</h2>
+    <div class="flex justify-content objet-craft-etabli">
+        <div class="case"></div>
+    </div>
+    <div class="flex justify-content">
+        <div class="case"></div>
+        <div class="case"></div>
+        <div class="case"></div>
+        <div class="case"></div>
+        <div class="case"></div>
+    </div>
+</div>
+<script>
+    let elementSource = document.getElementById("objets-craftables");
+    let autreElement = document.getElementById("info-objets-craft");
+    autreElement.style.minWidth = `${elementSource.offsetWidth}px`;
+    autreElement.style.minHeight = `${elementSource.offsetHeight}px`;
+</script>
