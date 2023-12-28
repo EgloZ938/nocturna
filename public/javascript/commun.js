@@ -34,10 +34,13 @@ else {
         document.getElementById("status-volume-off").style.display = "block";
     }
 
-    document.getElementById("sac-a-dos").addEventListener("click", () => {
-        effet.play();
-        document.getElementById("inventaire").style.display = "flex";
-    })
+    let sac = document.getElementById("sac-a-dos");
+    if(sac !== null){
+        document.getElementById("sac-a-dos").addEventListener("click", () => {
+            effet.play();
+            document.getElementById("inventaire").style.display = "flex";
+        })
+    }
 
     document.getElementById("craft").addEventListener("click", () => {
         effet.play();

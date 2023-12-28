@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_22_184656) do
+ActiveRecord::Schema.define(version: 2023_12_28_150349) do
 
   create_table "cinematics", force: :cascade do |t|
     t.string "token"
@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(version: 2023_12_22_184656) do
     t.string "objet_id"
     t.json "materials", default: {}
     t.string "quantite"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "experiences", force: :cascade do |t|
+    t.integer "points", default: 0
+    t.text "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -90,12 +97,12 @@ ActiveRecord::Schema.define(version: 2023_12_22_184656) do
 
   create_table "pnjs", force: :cascade do |t|
     t.text "name"
-    t.text "classe"
     t.text "avatar"
     t.text "pv"
     t.text "vitesse"
     t.text "force"
     t.text "earn_xp"
+    t.text "earn_money"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

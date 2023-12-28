@@ -47,6 +47,7 @@ else {
         setTimeout(function() {
             document.getElementById("contenu-3").style.display = "none";
             document.getElementById("main").style.display = "none";
+            localStorage.setItem("token", "0");
             document.getElementsByTagName("form")[0].submit();
         }, 5000);
     })

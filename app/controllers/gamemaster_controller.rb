@@ -248,7 +248,7 @@ class GamemasterController < ApplicationController
     end
 
     def pnj_params
-      params.require(:pnj).permit(:name, :classe, :avatar, :pv, :vitesse, :force, :earn_xp)
+      params.require(:pnj).permit(:name, :avatar, :pv, :vitesse, :force, :earn_xp, :earn_money)
     end
 
     def item_params

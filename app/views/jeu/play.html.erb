@@ -5,7 +5,9 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<meta name="csrf-token" content="<%= form_authenticity_token %>">
+<% if @narration %>
+    <input type="hidden" id="input_narration_count" value="<%= @narration.count %>">
+<% end %>
 
 <script>
     $(function () {
@@ -13,12 +15,12 @@
     })
 </script>
 
-<body data-username="<%= @user.name %>">
-
 <img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
 <img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
 
-<img id="sac-a-dos" src="/images/sac_a_dos.jpg">
+<% if @narration %>
+    <img id="sac-a-dos" src="/images/sac_a_dos.jpg">
+<% end %>
 <img id="craft" src="/images/craft.jpg">
 
 <% if @narration.nil? %>
@@ -42,7 +44,119 @@
             <img id="pnj-narratif2" src="/images/pnj-narratif.jpg">
         </div>
     </div>
+
+    <script>
+    const dialogues = [
+        `Ah, te voilà enfin, <%= @user.name %> ! Nous t'attendions avec impatience. Je suis Eldrin, le gardien de la sagesse de Highgard. Ton arrivée en ces temps sombres n'est pas un hasard.`,
+        `Le royaume de Highgard, jadis un havre de paix et de prospérité, est maintenant plongé dans le chaos et l'obscurité. Une force maléfique, commandée par l'impitoyable Ilies, étend son ombre sur nos terres. Ses légions corrompent tout ce qui est bon et juste.`,
+        `Mais ne t'inquiète pas, tu ne seras pas seul dans cette quête. Je serai là pour te guider, et tu trouveras des alliés en cours de route. Ta première tâche sera d'apprendre à maîtriser tes compétences et à comprendre les lois de ce monde.`,
+        `Nous avons besoin de toi, <%= @user.name %>. Tu es celui que les anciennes prophéties ont prédit, l'élu qui possède la force et le courage pour libérer Highgard de cette emprise maléfique.`,
+        `Nous comptons sur toi, <%= @user.name %>. Lorsque tu te sentiras prêt à commencer cette aventure, appuie sur le bouton et embrasse ton destin. Le futur de Highgard est entre tes mains.`
+    ];
+    const dialogues2 = [
+        `Maintenant, il est temps de vous initier aux bases du jeu. Commençons par explorer le système de craft.`,
+        `Pour vous aider à démarrer, je vous ai fourni le nécessaire pour fabriquer une arme classique. Prenez un moment pour découvrir le menu de craft et assembler votre première arme.`,
+        `N'oubliez pas, <%= @user.name %> ! Chaque seconde compte, alors mettez-vous au travail sans tarder !`
+    ];
+    </script>
+<% elsif @narration.count == "1" %>
+    <div id="pnj">
+        <div class="flex">
+            <div class="text">
+                <h2>Eldrin :</h2>
+                <h4 id="dialogue"></h4>
+                <div id="continue-indicator">&#x25BC;</div>
+            </div>
+            <img id="pnj-narratif" src="/images/pnj-narratif.jpg">
+        </div>
+    </div>
+    <div id="pnj2">
+        <div class="flex">
+            <div class="text2">
+                <h2>Eldrin :</h2>
+                <h4 id="dialogue2"></h4>
+                <div id="continue-indicator2">&#x25BC;</div>
+            </div>
+            <img id="pnj-narratif2" src="/images/pnj-narratif.jpg">
+        </div>
+    </div>
+
+    <script>
+    const dialogues = [
+        `Félicitations pour avoir assemblé votre première arme ! Vous remarquerez que le bouton d'accès à l'inventaire est désormais disponible en haut à droite de votre écran. Laissez-moi vous guider dans son utilisation.`,
+        `Votre inventaire se présente sous forme de cases, chacune représentant un espace dans votre sac à dos. Pour interagir avec un objet, effectuez un clic droit sur la case correspondante.`,
+        `Option "Équiper" : Vous pouvez équiper un objet pour bénéficier de ses caractéristiques. Si vous équipez un nouvel objet alors qu'un autre est déjà en place, ils s'intervertiront automatiquement. Aucun besoin de déséquiper le premier.`,
+        `Option "Déséquiper" : Cela vous permet de retirer un objet équipé. Notez que si votre inventaire est plein, vous ne pourrez pas déséquiper l'objet par manque de place.`,
+        `Option "Jeter" : Utilisez cette fonction avec précaution, car elle permet de se débarrasser définitivement d'un objet non empilable.`,
+        `( Si l'idée de jeter l'objet que vous venez tout juste de fabriquer vous traverse l'esprit, sachez que cela ne sera pas possible pour le moment. Une mesure de protection a été mise en place pour préserver cet objet essentiel, car il vous sera indispensable dans votre affrontement imminent avec le PNJ. Rassurez-vous, cette restriction sera levée ultérieurement, rendant l'option de rejet pleinement opérationnelle lorsque vous n'en aurez plus besoin. )`,
+        `Option "Jeter plusieurs objets" : Pour les objets empilables, vous aurez la possibilité de jeter un nombre spécifique d'items de la pile.`,
+        `Option "Jeter la pile" : Pour les objets empilables, cette option permet de jeter la pile entière en une seule fois. Soyez prudent, car une fois jetés, ces objets sont perdus à jamais.`
+    ];
+    const dialogues2 = [
+        `Maintenant, explorons le système de rareté des objets. Comme vous le découvrirez, chaque objet dans notre monde possède un niveau de rareté, indiquant sa valeur et son unicité.`,
+        `Les objets "Communs" sont les plus fréquents. Ils sont fiables et faciles à trouver, mais n'offrent pas de caractéristiques exceptionnelles.`,
+        `Ensuite, viennent les objets "Atypiques". Plus rares que les communs, ils offrent des avantages légèrement supérieurs, vous donnant un petit plus dans vos aventures.`,
+        `Les objets "Rares" sont encore plus difficiles à dénicher. Leur qualité et leurs caractéristiques sont nettement meilleures, offrant un avantage significatif.`,
+        `Les objets "Épiques" sont des trouvailles exceptionnelles. Leur rareté s'accompagne de capacités remarquables, faisant d'eux des éléments précieux pour tout aventurier.`,
+        `Enfin, au sommet de l'échelle, se trouvent les objets "Légendaires". Extrêmement rares et incroyablement puissants, ces objets sont recherchés par tous pour leur immense valeur et les avantages uniques qu'ils confèrent.`,
+        `Rappelez-vous, <%= @user.name %>, plus un objet est rare, plus il est précieux et utile. La quête de ces trésors rares est ce qui fait le cœur même de notre aventure !`,
+        `Procédez maintenant à l'équipement de votre arme depuis votre inventaire. Une fois cette étape accomplie, nous nous lancerons dans une passionnante introduction aux personnages non-joueurs (PNJ), en mettant un accent particulier sur les mécanismes de combat !`
+    ];
+    </script>
+
+<% elsif @narration.count == "2" %>
+    <script>
+    const dialogues = [
+        
+    ];
+    const dialogues2 = [
+        
+    ];
+    </script>
+<% elsif @narration.count == "3" %>
+    <div id="pnj">
+        <div class="flex">
+            <div class="text">
+                <h2>Eldrin :</h2>
+                <h4 id="dialogue"></h4>
+                <div id="continue-indicator">&#x25BC;</div>
+            </div>
+            <img id="pnj-narratif" src="/images/pnj-narratif.jpg">
+        </div>
+    </div>
+    <div id="pnj2">
+        <div class="flex">
+            <div class="text2">
+                <h2>Eldrin :</h2>
+                <h4 id="dialogue2"></h4>
+                <div id="continue-indicator2">&#x25BC;</div>
+            </div>
+            <img id="pnj-narratif2" src="/images/pnj-narratif.jpg">
+        </div>
+    </div>
+
+    <script>
+    const dialogues = [
+        `Avec votre arme désormais équipée, vous êtes parfaitement préparé pour notre prochaine aventure : la découverte des PNJ !`,
+        `Les PNJ de notre monde possèdent des traits uniques. Pour commencer, chacun d'eux vous présentera une énigme intrigante.`,
+        `Vous devez résoudre cette énigme pour gagner le privilège de les défier. C'est le sésame qui ouvre la porte du combat.`,
+        `En triomphant, vous serez récompensé par des trésors variés. La valeur de ces objets dépendra de la difficulté de l'adversaire. De plus, chaque victoire enrichira votre expérience.`,
+        `Vous avez la liberté de relever le défi face à un PNJ autant de fois que vous le souhaitez.`,
+        `Si vous choisissez de défier à nouveau un PNJ, le combat commencera immédiatement. Ils se souviendront de vous et de votre réussite précédente face à leur énigme.`,
+        `Cependant, lors des combats suivants, seul l'or de l'expérience vous attendra, les trésors ne seront plus au rendez-vous.`
+    ];
+    const dialogues2 = [
+        `Parfait, vous avez saisi le concept. Désormais, j'abandonnerai le terme "PNJ" et désignerai nos acteurs par leur véritable nature.`,
+        `Je vais vous présenter à un acolyte d'Ilies que nous avons capturé. Cela vous donnera un aperçu concret de la manière dont les choses fonctionnent ici.`,
+        `Préparez-vous à être transporté dans une autre dimension lorsque je vous connecterai avec lui. Vous allez découvrir la magie envoûtante du Royaume de Highgard.`,
+        `Armez-vous de courage et de détermination. Une fois votre adversaire vaincu, vous serez conduit au premier village de Highgard, marquant la fin de votre introduction au jeu.`,
+        `Bonne chance, <%= @user.name %> ! Le destin de notre royaume repose désormais entre vos mains.`
+    ];
+    </script>
+
+    <%= button_to 'fin_introduction', jeu_combat_path(pnj_id: 1), style: 'display: none;', id: 'fin-introduction' %>
 <% end %>
+
 
 <div id="etable" class="flex">
     <%= render partial: "craft", locals: {
@@ -114,5 +228,3 @@
         });
     });
 </script>
-
-</body>

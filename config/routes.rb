@@ -42,6 +42,9 @@ Rails.application.routes.draw do
   get 'gamemaster/showCraft'
   get 'gamemaster/editCraft'
   get 'jeu/crafterLobjet'
+  get 'jeu/narrationdeux'
+  get 'jeu/combat'
+  get 'jeu/recompenses'
 
 
   post 'register/create'

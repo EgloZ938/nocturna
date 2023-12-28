@@ -19,8 +19,10 @@ class PersonnageController < ApplicationController
             end
             @statsobetsequipes = Statsobetsequipe.find_by(user_id: session[:user_id])
             @statsobetsequipes.destroy
-            @narration = Narrationpnj.find_by(user_id: session[:user_id])
-            @narration.destroy
+            @narration = Narrationpnj.where(user_id: session[:user_id])
+            for i in 0..@narration.length - 1 do
+                @narration[i].destroy
+            end
         end
 
         @cinematicExistant = Cinematic.find_by(user_id: session[:user_id])

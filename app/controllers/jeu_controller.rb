@@ -104,6 +104,41 @@ class JeuController < ApplicationController
 
         @narration = Narrationpnj.find_by(user_id: session[:user_id])
 
+        if @narration.nil?
+            @inventaire_joueur = Inventaire.where(user_id: session[:user_id])
+            if @inventaire_joueur.empty?
+                2.times do
+                    Inventaire.create(objet_id: "39", user_id: session[:user_id])
+                end
+                10.times do
+                    Inventaire.create(objet_id: "44", user_id: session[:user_id])
+                end
+            else
+                if @inventaire_joueur.length == 1
+                    Inventaire.find_by(user_id: session[:user_id]).destroy
+                    2.times do
+                        Inventaire.create(objet_id: "39", user_id: session[:user_id])
+                    end
+                    10.times do
+                        Inventaire.create(objet_id: "44", user_id: session[:user_id])
+                    end
+                end
+            end
+
+            @inventaire_bois = Inventaire.where(objet_id: "39", user_id: session[:user_id])
+            if @inventaire_bois.empty?
+                2.times do
+                    Inventaire.create(objet_id: "39", user_id: session[:user_id])
+                end
+            end
+            @inventaire_fer = Inventaire.where(objet_id: "44", user_id: session[:user_id])
+            if @inventaire_fer.empty?
+                10.times do
+                    Inventaire.create(objet_id: "44", user_id: session[:user_id])
+                end
+            end
+        end
+
         classe_personnage = @personnage.classe.downcase # Assurer que la classe est en minuscules pour la comparaison
 
         @crafts = Craft.all
@@ -181,7 +216,15 @@ class JeuController < ApplicationController
         if nouvel_objet_equipe
             # Supprimer un seul exemplaire de l'objet de l'inventaire
             Inventaire.find_by(user_id: user_id, objet_id: nouvel_objet_id).destroy
+
+            narration = Narrationpnj.find_by(user_id: session[:user_id])
+
+            if(narration.count == "2")
+                narration.update(count: "3", user_id: session[:user_id])
+            end
+
             redirect_to jeu_play_path
+            
         else
             redirect_to jeu_play_path, alert: "Impossible d'équiper l'objet."
         end
@@ -241,6 +284,10 @@ class JeuController < ApplicationController
       
         inventaire = Inventaire.create(objet_id: objet_id, user_id: user_id)
         if inventaire.save
+            @narration = Narrationpnj.find_by(user_id: session[:user_id])
+            if @narration.nil?
+                Narrationpnj.create(count: "1", user_id: session[:user_id])
+            end
           redirect_to jeu_play_path, notice: "L'objet a été crafté avec succès."
         else
           redirect_to jeu_play_path, notice: "Erreur"
@@ -252,9 +299,14 @@ class JeuController < ApplicationController
         objet_id = params[:objet_id]
         user_id = params[:user_id]
 
-        Inventaire.find_by(objet_id: objet_id, user_id: user_id).destroy
+        narration = Narrationpnj.find_by(user_id: session[:user_id])
 
-        redirect_back(fallback_location: root_path, notice: 'Objet supprimé avec succès.')
+        if(narration.count.to_i <= 4)
+            redirect_to jeu_play_path
+        else
+            Inventaire.find_by(objet_id: objet_id, user_id: user_id).destroy
+            redirect_back(fallback_location: root_path, notice: 'Objet supprimé avec succès.')
+        end
     end
 
     def objetSupprQuantite
@@ -267,6 +319,59 @@ class JeuController < ApplicationController
         end
 
         redirect_back(fallback_location: root_path, notice: 'Objets supprimés avec succès.')
+    end
+
+    def narrationdeux
+        @narration = Narrationpnj.find_by(user_id: session[:user_id])
+        if @narration.count == "1"
+            if @narration.update(count: "2", user_id: session[:user_id])
+                redirect_to jeu_play_path
+            else
+                redirect_to jeu_play_path
+            end
+        end
+
+    end
+
+
+    def combat
+        @user = User.new
+    end
+
+    def recompenses
+        ajouter_experiences(params[:exp])
+    end
+
+    def ajouter_experiences(points_gagnes)
+        @personnage = Personnage.find_by(user_id: session[:user_id])
+        @experience = Experience.find_or_create_by(user_id: session[:user_id])
+        
+        points_gagnes = points_gagnes.to_i
+        @experience.points += points_gagnes
+
+        current_level = @personnage.exp_joueur.to_i
+        while @experience.points >= points_requis_pour_niveau(current_level + 1)
+            current_level += 1
+            @personnage.update(exp_joueur: current_level.to_s)
+            @experience.points -= points_requis_pour_niveau(current_level)
+            if @experience.points < points_requis_pour_niveau(current_level + 1)
+                break
+            end
+        end
+
+        if @experience.points == points_requis_pour_niveau(current_level + 1)
+            @experience.points = 0
+        end
+
+        @experience.save
+        redirect_to jeu_combat_path
+    end
+    
+    def points_requis_pour_niveau(niveau)
+        a = 0.8
+        b = 3
+        c = 15
+        (a * niveau**b + c).to_i
     end
 
     def create_narration
