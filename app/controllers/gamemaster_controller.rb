@@ -211,7 +211,19 @@ class GamemasterController < ApplicationController
         @request = Request.new
     end
     
-    
+    def editRequest
+        @request = Request.find(params[:id])
+        session[:request_id] = @request.id
+    end
+
+    def updateRequest
+        @request = Request.find_by(id: session[:request_id])
+        if @request.update(request_params)
+            session[:request_id] = nil
+            redirect_to gamemaster_request_path
+        end
+    end
+
     def showRequest
         @request = Request.find(params[:id])
     end

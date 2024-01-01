@@ -1,0 +1,629 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'MedievalSharp', cursive !important;
+    background: url('bg_accueil.jpg');
+    background-size: cover;
+    letter-spacing: 1px;
+}
+
+.volume_icon {
+    width: 96px;
+    height: 96px;
+    margin-top: 15px;
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+.status-volume {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 15px;
+    cursor: pointer;
+    display: none;
+}
+
+
+#options {
+    position: absolute;
+    z-index: 900;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.75);
+    display: none;
+    top: 0;
+    left: 0;
+}
+
+#profil-menu {
+    display: none;
+}
+
+.lg {
+    width: 648px;
+    height: 50px;
+    text-align: center;
+    cursor: pointer;
+    margin: 1rem 0;
+}
+
+.md {
+    width: 315px;
+    height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.lg h1,
+.md h1 {
+    margin: 0;
+    color: white;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.menu-md {
+    margin: 0 0 1rem 0;
+}
+
+.bg {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.left {
+    margin-right: 0.5rem;
+}
+
+.right {
+    margin-left: 0.5rem;
+}
+
+.bg:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+#options-menu {
+    display: none;
+}
+
+#audio-menu {
+    display: none;
+}
+
+.invisible {
+    opacity: 0;
+}
+
+label {
+    color: white;
+    margin-right: 1rem;
+    font-size: 22px;
+}
+
+.hidden {
+    display: none;
+}
+
+.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+#profil {
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    color: white;
+}
+
+#profil-menu {
+    display: none;
+}
+
+#avatar-profil {
+    width: 128px;
+    border-radius: 15px;
+}
+
+.info {
+    margin-left: 13px;
+}
+
+.color {
+    color: #e4aa52 !important;
+}
+
+.classe:first-letter {
+    text-transform: uppercase;
+}
+
+.username {
+    font-size: 42px;
+}
+
+.msg {
+    height: auto;
+    cursor: auto;
+    pointer-events: none;
+    padding: 15px 0;
+}
+
+.container_volume_icon img {
+    margin-left: 15px;
+}
+
+.container_volume_icon h1 {
+    margin-right: 15px !important;
+}
+
+.container {
+    width: 750px;
+    margin: 0 auto;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-content {
+    justify-content: center;
+}
+
+.align-items {
+    align-items: center;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.text-align {
+    text-align: center;
+}
+
+#pnj {
+    z-index: 900;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    h2,
+    h4 {
+        margin: 0;
+        margin: 5px;
+    }
+}
+
+.text {
+    width: calc(100% - 400px - 3rem);
+    background: #fff;
+    min-height: 200px;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    border-radius: 5px;
+    border: 3px solid #e4aa52;
+}
+
+#pnj-narratif {
+    width: 400px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+    border: 3px solid #e4aa52;
+}
+
+.force {
+    color: #ff3c00;
+}
+
+.contain-button {
+    margin-top: 10px;
+}
+
+.medieval-button {
+    background-color: #795649;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+}
+
+.medieval-button:hover {
+    background-color: #5a3927;
+}
+
+.error-message {
+    color: #b22222;
+    /* Un rouge sombre pour l'erreur */
+    background-color: #fff4f4;
+    /* Un fond très pâle de rouge pour faire ressortir le texte */
+    border: 1px solid #b22222;
+    padding: 10px;
+    margin: 20px 5px;
+    border-radius: 8px;
+    font-family: 'Times New Roman', serif;
+    /* Une police classique pour un aspect médiéval */
+    font-size: 16px;
+    text-align: center;
+    /* Centrer le texte pour l'attention */
+    box-shadow: 0 0 10px rgba(178, 34, 34, 0.2);
+    /* Un léger ombrage pour donner de la profondeur */
+}
+
+.full-screen-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: black;
+    animation: backgroundFade 5s ease forwards;
+}
+
+@keyframes backgroundFade {
+
+    0%,
+    20% {
+        opacity: 1;
+    }
+
+    80%,
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+
+.line {
+    position: absolute;
+    height: 3px;
+    background: white;
+}
+
+/* Animation de base */
+@keyframes lineMove {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.line1 {
+    width: 100%;
+    top: 50%;
+    animation: lineMove 2s linear infinite;
+}
+
+.line2 {
+    width: 10%;
+    top: 20%;
+    left: 10%;
+    animation: lineMove 3s linear infinite reverse;
+}
+
+.line3 {
+    width: 5%;
+    top: 30%;
+    left: 60%;
+    animation: lineMove 1.5s linear infinite;
+}
+
+.line4 {
+    width: 15%;
+    top: 85%;
+    left: 70%;
+    animation: lineMove 4s linear infinite;
+}
+
+.line5 {
+    width: 5%;
+    top: 70%;
+    left: 30%;
+    animation: lineMove 2.5s linear infinite reverse;
+}
+
+.dialogue-box {
+    display: block;
+    position: fixed;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border-radius: 10px;
+    border: 3px solid #e4aa52;
+    padding: 15px 30px;
+    width: 99%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 9998;
+    color: black;
+    text-align: center;
+    font-size: 1.2em;
+    opacity: 0;
+    animation: showMessage 5.5s ease forwards;
+}
+
+
+@keyframes showMessage {
+
+    0%,
+    45% {
+        opacity: 0;
+    }
+
+    45.1%,
+    95% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.battle-scene {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.battle-character {
+    border-radius: 10px;
+    width: 400px;
+    border: 4px solid #2F5F8F; /* Bordure bleue foncée comme les boutons */
+    box-shadow: 0px 4px #1B3C5D; /* Ombre pour un effet en relief, similaire aux boutons */
+    background-color: #58AEDC; /* Fond bleu clair pour contraster avec la bordure */
+    padding: 10px; /* Espace entre l'image et la bordure pour un effet de cadre */
+}
+
+.ennemi-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    align-items: flex-end;
+    top: 2rem;
+    right: 2rem;
+    width: 400px;
+}
+
+.info-ennemi {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+    /* Ajustez la largeur selon vos besoins */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.nom-ennemi {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.joueur-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    width: 400px;
+}
+
+.info-joueur, .info-ennemi {
+    background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 80%; /* Ajustez la largeur selon vos besoins */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Ombre pour un effet de profondeur */
+    border: 3px solid #2F5F8F; /* Bordure bleue foncée pour correspondre aux boutons */
+    color: #0055A4; /* Couleur de texte coordonnée */
+    font-family: 'DotGothic16', sans-serif; /* Police pixellisée pour un style rétro */
+}
+
+.nom-joueur, .nom-ennemi {
+    font-weight: bold;
+    font-size: 1.5em; /* Taille de police plus grande pour mettre en valeur le nom */
+    text-align: center; /* Centrer le nom */
+    margin-bottom: 5px;
+}
+
+.pv-actuel-joueur, .pv-actuel-ennemi {
+    text-align: right;
+    color: #000; /* Texte noir pour plus de contraste */
+    font-size: 1.2em; /* Taille de police ajustée */
+    margin-left: 10px; /* Espacement entre la barre et le texte des PV */
+    font-weight: bold; /* Rendre le texte des PV plus visible */
+}
+
+.barre-de-vie {
+    display: flex;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive; /* Police pixellisée */
+    font-size: 8px; /* Taille de police réduite */
+    margin: 2px 0;
+    background-color: #ddd; /* Fond de la barre de vie */
+    border: 2px solid #000; /* Bordure noire autour de la barre */
+    border-radius: 0; /* Barres droites sans arrondi */
+    position: relative;
+    width: 300px; /* Largeur fixe pour la barre de vie */
+}
+
+.texte-pv{
+    background-color: #fff; /* Fond blanc pour le texte */
+    color: #000; /* Texte noir */
+    text-align: center;
+    padding: 0 4px; /* Un peu de padding autour du texte */
+    margin-right: -4px; /* Aligner le texte PV avec la bordure de la barre */
+    z-index: 1; /* S'assurer que le texte est au-dessus de la barre de vie */
+}
+
+.conteneur-barre {
+    flex-grow: 1;
+    border-radius: 0; /* Barres droites sans arrondi */
+    overflow: hidden;
+}
+
+.barre {
+    height: 12px; /* Hauteur de la barre */
+    transition: width 3s ease;
+}
+
+.pv-actuel {
+    text-align: right;
+}
+
+/* Couleurs de la barre */
+.barre.verte {
+    background-color: #00C000; /* Vert vif */
+}
+
+.barre.orange {
+    background-color: #FF8000; /* Orange vif */
+}
+
+.barre.rouge {
+    background-color: #F00000; /* Rouge vif */
+}
+
+#interface-combat {
+    position: fixed;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+}
+
+#interface-combat button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#interface-combat button:hover {
+    background-color: #388e3c;
+}
+
+.container-capacites {
+    position: absolute;
+    bottom: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 10px; /* Espacement entre les rangées */
+}
+
+.bouton-medieval {
+    background-color: #58AEDC; /* Couleur bleu clair */
+    color: #FFFFFF; /* Texte blanc */
+    border: 4px solid #2F5F8F; /* Bordure bleu foncé */
+    font-family: 'DotGothic16', sans-serif; /* Police pixellisée pour un style rétro */
+    padding: 15px 30px; /* Taille de padding augmentée pour de plus grands boutons */
+    text-transform: uppercase; /* Texte en majuscules */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Transition pour l'effet au survol */
+    border-radius: 10px; /* Bordures arrondies */
+    box-shadow: 0px 4px #1B3C5D; /* Ombre pour un effet en relief */
+    margin: 5px; /* Conservez la marge si nécessaire pour votre mise en page */
+    font-size: 18px; /* Taille de la police augmentée */
+    width: 200px; /* Largeur fixe pour l'uniformité */
+}
+
+.bouton-medieval:hover {
+    background-color: #3B7EA1; /* Couleur bleu un peu plus foncée au survol */
+    transform: translateY(-2px); /* Petit effet de déplacement au survol */
+}
+
+/* Conteneur pour chaque rangée de boutons */
+.bouton-rangee {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Espacement entre les boutons */
+}
+
+#messageCombat {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border-radius: 10px;
+    border: 3px solid #e4aa52;
+    padding: 15px 30px;
+    width: 99%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    color: black;
+    text-align: center;
+    font-size: 1.2em;
+    display: none;
+}
+
+.status {
+    font-family: 'DotGothic16', sans-serif; /* Police pixellisée pour un style rétro */
+    font-size: 12px;
+    text-align: center;
+    padding: 2px;
+    margin: 0 2.5px;
+    border-radius: 3px; /* Bordures arrondies légèrement pour un look plus doux */
+    height: min-content;
+    display: none;
+}
+
+.poison {
+    background-color: #A040A0; /* Couleur typique du poison dans les jeux Pokémon */
+    border: 2px solid #68007A; /* Bordure plus foncée pour un meilleur contraste */
+    color: white;
+}
+
+.paralysie {
+    background-color: #F8D030; /* Couleur typique de la paralysie dans les jeux Pokémon */
+    border: 2px solid #C7A008; /* Bordure plus foncée pour un meilleur contraste */
+    color: white;
+}

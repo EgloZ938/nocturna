@@ -1,24 +1,25 @@
 <%= stylesheet_link_tag('gamemaster') %>
 
 <div class="container">
-        <h1>Gestion utilisateur</h1>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Pseudo</th>
-                <th colspan="2">Interaction</th>
-            </tr>
+    <h1>Gestion des REQUÊTES</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Question</th>
+            <th colspan="3">Interaction</th>
+        </tr>
 
-            <% Request.all.each do |request| %>
-                <tr>
-                    <td><%= request.id %></td>
-                    <td><%= request.question %></td>
-                    <td><%= link_to 'Afficher +', gamemaster_showRequest_path(id: request.id) %></td>
-                    <td><%= link_to 'Supprimer', gamemaster_destroyRequest_path(id: request.id),
-                            method: :delete,
-                            data: { confirm: "En faisant ça vous allez supprimer l'utilisateur et la request lié avec. Êtes vous sûr ?" } %></td>
-                </tr>
-            <% end %>
-        </table>
-        <%= link_to 'Créer une nouvelle Request', gamemaster_newRequest_path %>
-    </div>
+        <% Request.all.each do |request| %>
+            <tr>
+                <td><%= request.id %></td>
+                <td><%= request.question %></td>
+                <td><%= link_to 'Afficher +', gamemaster_showRequest_path(id: request.id) %></td>
+                <td><%= link_to 'Modifier', gamemaster_editRequest_path(id: request.id) %></td>
+                <td><%= link_to 'Supprimer', gamemaster_destroyRequest_path(id: request.id),
+                        method: :delete,
+                        data: { confirm: "En faisant ça vous allez supprimer l'utilisateur et la request lié avec. Êtes vous sûr ?" } %></td>
+            </tr>
+        <% end %>
+    </table>
+    <%= link_to 'Créer une nouvelle Request', gamemaster_newRequest_path %>
+</div>

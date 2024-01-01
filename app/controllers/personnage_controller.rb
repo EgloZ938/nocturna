@@ -10,18 +10,25 @@ class PersonnageController < ApplicationController
         if @personnageExistant
             @personnageExistant.destroy
             @objets = Inventaire.where(user_id: session[:user_id])
-            for i in 0..@objets.length - 1 do
-                @objets[i].destroy
+            if @objets
+                @objets.destroy_all
             end
-            @objetsequipes = Objetequipe.where(user_id: session[:user_id])
-            for i in 0..@objetsequipes.length - 1 do
-                @objetsequipes[i].destroy
-            end
+            Objetequipe.where(user_id: session[:user_id]).destroy_all
             @statsobetsequipes = Statsobetsequipe.find_by(user_id: session[:user_id])
-            @statsobetsequipes.destroy
+            if  @statsobetsequipes
+                @statsobetsequipes.destroy
+            end
             @narration = Narrationpnj.where(user_id: session[:user_id])
-            for i in 0..@narration.length - 1 do
-                @narration[i].destroy
+            if @narration
+                @narration.destroy_all
+            end
+            @experience = Experience.find_by(user_id: session[:user_id])
+            if @experience
+                @experience.destroy
+            end
+            @resolue = Requestresolue.where(id_user: session[:user_id])
+            if @resolue
+                @resolue.destroy_all
             end
         end
 
@@ -39,9 +46,8 @@ class PersonnageController < ApplicationController
             flash[:alert] = "User not created"
             render :new
         end
-
-
     end
+
     def personnage_params
         params.require(:personnage).permit(:avatar, :avatar_unlock, :force, :exp_joueur, :classe, :sac_a_dos, :argent, :pv, :vitesse, :user_id)
     end

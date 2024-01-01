@@ -23,7 +23,11 @@
                 <div class="case maj caseUtilisé" id=<%= @equipe_triee[i].id %> style="background-image: url(<%= @equipe_triee[i].image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h4 class='maj'><%= @equipe_triee[i].nom %></h4><h3 class='<%= @equipe_triee[i].rarete %> rarete maj'><%= @equipe_triee[i].rarete %></h3><h5 class='maj'><%= @equipe_triee[i].description %></h5><h4 class='<%= classeData %> data'><%= @equipe_triee[i].data %></h4></div>"></div>
                 <div class="menuContextuel dropdown-menu" data-id=<%= @equipe_triee[i].id %>>
                     <div>
-                        <%= link_to "Déséquiper", jeu_objetDesequipe_path(objet_id: @equipe_triee[i].id, user_id: session[:user_id]), class: "desequipe-link" %>
+                        <%= form_with url: jeu_objetDesequipe_path, method: :get, local: true do %>
+                            <%= hidden_field_tag :objet_id, @equipe_triee[i].id %>
+                            <%= hidden_field_tag :user_id, session[:user_id] %>
+                            <%= button_tag "Déséquiper", class: "desequipe-link" %>
+                        <% end %>
                     </div>
                 </div>
             <% else %>
@@ -63,7 +67,11 @@
                 <div class="menuContextuel dropdown-menu" data-id="<%= number %>inventaire<%= @structured_inventaire[number][0].id %>">
                     <% if @structured_inventaire[number][0].caracteristique == "équipable" %>
                         <div>
-                            <%= link_to "Équiper", jeu_objetEquipe_path(objet_id: @structured_inventaire[number][0].id, user_id: session[:user_id]), class: "equip-link" %>
+                            <%= form_with url: jeu_objetEquipe_path, method: :get, local: true do %>
+                                <%= hidden_field_tag :objet_id, @structured_inventaire[number][0].id %>
+                                <%= hidden_field_tag :user_id, session[:user_id] %>
+                                <%= button_tag "Équiper", class: "equip-link" %>
+                            <% end %>
                         </div>
                     <% end %>
                     <% if @structured_inventaire[number][1] > 1 %>
@@ -76,11 +84,20 @@
                             <% end %>
                             </div>
                         <div>
-                            <%= link_to "Jeter la pile", jeu_objetSupprQuantite_path(objet_id: @structured_inventaire[number][0].id, user_id: session[:user_id], quantite: @structured_inventaire[number][1]) %>
+                            <%= form_with url: jeu_objetSupprQuantite_path, method: :get, local: true do %>
+                                <%= hidden_field_tag :objet_id, @structured_inventaire[number][0].id %>
+                                <%= hidden_field_tag :user_id, session[:user_id] %>
+                                <%= hidden_field_tag :quantite, @structured_inventaire[number][1] %>
+                                <%= button_tag "Jeter la pile", class: "delete-pile-link" %>
+                            <% end %>
                         </div>
                     <% else %>
                         <div>
-                            <%= link_to "Jeter", jeu_objetSuppr_path(objet_id: @structured_inventaire[number][0].id, user_id: session[:user_id]) %>
+                            <%= form_with url: jeu_objetSuppr_path, method: :get, local: true do %>
+                                <%= hidden_field_tag :objet_id, @structured_inventaire[number][0].id %>
+                                <%= hidden_field_tag :user_id, session[:user_id] %>
+                                <%= button_tag "Jeter", class: "delete-link" %>
+                            <% end %>
                         </div>
                     <% end %>
                 </div>

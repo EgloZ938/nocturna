@@ -1,1 +1,130 @@
-<%= link_to "Prendre les récompenses", jeu_recompenses_path(exp: 487) %>
+<%= stylesheet_link_tag('combat') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<%= link_to "Prendre les récompenses", jeu_recompenses_path(exp: @pnj.earn_xp), style: 'display: none;'%>
+
+<img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
+<img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
+
+<% if @resolue %>
+    <% if @resolue.resolue == "true" %>
+        <div class="full-screen-animation">
+            <div class="line line1"></div>
+            <div class="line line2"></div>
+            <div class="line line3"></div>
+            <div class="line line4"></div>
+            <div class="line line5"></div>
+            <!-- Ajoutez d'autres éléments ici pour plus d'effets -->
+        </div>
+        <div class="dialogue-box">
+            <h2><span class="force"><%= @pnj.name %></span> veut se battre !</h2>
+        </div>
+        <div class="battle-scene">
+            <div class="joueur-container">
+                <div class="info-joueur">
+                    <div class="flex space-between">
+                    <div class="nom-joueur"><%= @user.name %></div>
+                        <div class="flex">
+                            <div id="poison-joueur" class="poison status">PSN</div>
+                            <div id="paralysie-joueur"class="paralysie status">PAR</div>
+                        </div>
+                    </div>
+                    <div class="barre-de-vie">
+                        <div class="texte-pv">PV</div>
+                        <div class="conteneur-barre">
+                            <div class="barre verte" id="barre-pv-joueur" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="pv-actuel" id="pv-actuel-joueur"><%= @pv_final %> / <%= @pv_final %></div>
+                </div>
+                <img src="<%= @personnage.avatar %>" alt="Joueur" class="battle-character player" id="avatar-joueur"/>
+            </div>
+            <div class="ennemi-container">
+                <div class="info-ennemi">
+                    <div class="flex space-between">
+                        <div class="nom-ennemi"><%= @pnj.name %></div>
+                        <div class="flex">
+                            <div id="poison-ennemi" class="poison status">PSN</div>
+                            <div id="paralysie-ennemi" class="paralysie status">PAR</div>
+                        </div>
+                    </div>
+                    <div class="barre-de-vie">
+                        <div class="texte-pv">PV</div>
+                        <div class="conteneur-barre">
+                            <div class="barre verte" id="barre-pv-ennemi" style="width: 100%;"></div> <!-- La largeur sera ajustée dynamiquement -->
+                        </div>
+                    </div>
+                    <div class="pv-actuel" id="pv-actuel-ennemi"><%= @pnj.pv %> / <%= @pnj.pv %></div>
+                </div>
+                <img src="<%= @pnj.avatar %>" alt="Ennemi" class="battle-character enemy" id="avatar-ennemi"/>
+            </div>
+            <div id="container-capacites" class="container-capacites">
+                <div class="bouton-rangee">
+                    <button class="bouton-medieval" onclick="combat.effectuerTour('attaque classique'); toggleCapacites();">Attaque</button>
+                    <button class="bouton-medieval" onclick="combat.effectuerTour('abri'); toggleCapacites();">Abri</button>
+                </div>
+                <div class="bouton-rangee">
+                    <button class="bouton-medieval" onclick="combat.effectuerTour('poison'); toggleCapacites();">Poison</button>
+                    <button class="bouton-medieval" onclick="combat.effectuerTour('paralysie'); toggleCapacites();">Paralysie</button>
+                </div>
+            </div>
+            <div id="messageCombat">
+            </div>
+        </div>
+        <script>
+            const jsonJoueur = {
+                nom: "<%= @user.name %>",
+                pv: <%= @pv_final %>,
+                pvMax: <%= @pv_final %>,
+                force: <%= @force_final %>,
+                vitesse: <%= @vitesse_final %>,
+                vitesseMax: <%= @vitesse_final %>
+            };
+            const jsonEnnemi = {
+                nom: "<%= @pnj.name %>",
+                pv: <%= @pnj.pv %>,
+                pvMax: <%= @pnj.pv %>,
+                force: <%= @pnj.force %>,
+                vitesse: <%= @pnj.vitesse %>,
+                vitesseMax: <%= @vitesse_final %>
+            };
+            let joueur = jsonJoueur;
+            let ennemi = jsonEnnemi;
+        </script>
+        <script src="/javascript/combat.js"></script>
+    <% else %>
+        <%= render partial: "combat", locals: { 
+            personnage: @personnage, 
+            pnj: @pnj, 
+            request: @request, 
+            resolue: @resolue 
+        } %>
+    <% end %>
+<% else %>
+    <%= render partial: "combat", locals: { 
+        personnage: @personnage, 
+        pnj: @pnj, 
+        request: @request, 
+        resolue: @resolue 
+    } %>
+<% end %>
+
+<div id="options">
+    <%= render partial: "options", locals: {
+        personnage: @personnage,
+        user: @user,
+        stats: @stats
+    } %>
+</div>
+
+<script type="text/javascript">
+    let music = new Audio('/mp3/combat.mp3');
+    let effet = new Audio('/mp3/effet_click.mp3');
+    let typeSound = new Audio('/mp3/text-sound.mp3');
+</script>
+<script type="text/javascript" src="/javascript/commun.js"></script>

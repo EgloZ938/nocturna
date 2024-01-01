@@ -13,6 +13,7 @@ Rails.application.config.assets.precompile += %w( personnage.css )
 Rails.application.config.assets.precompile += %w( gamemaster.css )
 Rails.application.config.assets.precompile += %w( jeu.css )
 Rails.application.config.assets.precompile += %w( cinematic.css )
+Rails.application.config.assets.precompile += %w( combat.css )
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.

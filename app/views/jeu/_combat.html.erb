@@ -1,0 +1,40 @@
+<div id="pnj">
+    <div class="flex">
+        <div class="text">
+            <h2 class="force"> <%= @pnj.name %> :</h2>
+            <h4 id="dialogue">
+                <%= @request.question %>
+            </h4>
+            <div class="flex contain-button justify-content">
+                <%= form_with url: jeu_requestCheck_path, method: :get, local: true do %>
+                    <%= hidden_field_tag :id_reponse, 1 %>
+                    <%= hidden_field_tag :pnj_id, @pnj.id %>
+                    <%= button_tag @request.reponse1, class: "medieval-button" %>
+                <% end %>
+                <%= form_with url: jeu_requestCheck_path, method: :get, local: true do %>
+                    <%= hidden_field_tag :id_reponse, 2 %>
+                    <%= hidden_field_tag :pnj_id, @pnj.id %>
+                    <%= button_tag @request.reponse2, class: "medieval-button" %>
+                <% end %>
+                <%= form_with url: jeu_requestCheck_path, method: :get, local: true do %>
+                    <%= hidden_field_tag :id_reponse, 3 %>
+                    <%= hidden_field_tag :pnj_id, @pnj.id %>
+                    <%= button_tag @request.reponse3, class: "medieval-button" %>
+                <% end %>
+                <%= form_with url: jeu_requestCheck_path, method: :get, local: true do %>
+                    <%= hidden_field_tag :id_reponse, 4 %>
+                    <%= hidden_field_tag :pnj_id, @pnj.id %>
+                    <%= button_tag @request.reponse4, class: "medieval-button" %>
+                <% end %>
+            </div>
+            <% if @resolue %>
+                <% if @resolue.resolue == "false" %> 
+                    <div class="flex justify-content error-message">
+                        <h4>La réponse n'est pas celle attendue. Que l'intuition te guide à nouveau !</h4>
+                    </div>
+                <% end %>
+            <% end %>
+        </div>
+        <img id="pnj-narratif" src="<%= @pnj.avatar %>">
+    </div>
+</div>

@@ -154,7 +154,11 @@
     ];
     </script>
 
-    <%= button_to 'fin_introduction', jeu_combat_path(pnj_id: 1), style: 'display: none;', id: 'fin-introduction' %>
+    <%= link_to 'fin_introduction', jeu_combat_path(pnj_id: 1), style: 'display: none;', id: 'fin-introduction' %>
+<% elsif @narration.count == "4" %>
+    <script>
+        location.href = "/jeu/combat?pnj_id=1";
+    </script>
 <% end %>
 
 

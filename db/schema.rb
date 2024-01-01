@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_28_150349) do
+ActiveRecord::Schema.define(version: 2023_12_28_221352) do
 
   create_table "cinematics", force: :cascade do |t|
     t.string "token"
@@ -103,6 +103,14 @@ ActiveRecord::Schema.define(version: 2023_12_28_150349) do
     t.text "force"
     t.text "earn_xp"
     t.text "earn_money"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "requestresolues", force: :cascade do |t|
+    t.text "id_request"
+    t.text "id_user"
+    t.text "resolue"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

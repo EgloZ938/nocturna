@@ -42,14 +42,16 @@ else {
         })
     }
 
-    document.getElementById("craft").addEventListener("click", () => {
-        effet.play();
-        document.getElementById("etable").style.display = "flex";
-        let elementSource = document.getElementById("objets-craftables");
-        let autreElement = document.getElementById("info-objets-craft");
-        autreElement.style.minWidth = `${elementSource.offsetWidth}px`;
-        autreElement.style.minHeight = `${elementSource.offsetHeight}px`;
-    })
+    if(document.getElementById("craft") !== null)[
+        document.getElementById("craft").addEventListener("click", () => {
+            effet.play();
+            document.getElementById("etable").style.display = "flex";
+            let elementSource = document.getElementById("objets-craftables");
+            let autreElement = document.getElementById("info-objets-craft");
+            autreElement.style.minWidth = `${elementSource.offsetWidth}px`;
+            autreElement.style.minHeight = `${elementSource.offsetHeight}px`;
+        })
+    ]
 
 
     let objet_craftable = document.getElementsByClassName("objet_craftable");

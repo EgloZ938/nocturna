@@ -4,7 +4,6 @@
 
     <table>
         <tr>
-            <th></th>
             <th>question</th>
             <% if @request %>
                 <th>reponse1</th>
@@ -16,11 +15,6 @@
         </tr>
 
         <tr>
-            <% if @request %>
-                <td><img src="<%= @request.question %>"></td>
-            <% else %>
-                <td><img src="/images/no_avatar.jpg"></td>
-            <% end %>
             <td><%= @request.question %></td>
             <% if @request %>
                 <td><%= @request.reponse1 %></td>

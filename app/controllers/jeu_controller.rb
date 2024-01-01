@@ -301,7 +301,7 @@ class JeuController < ApplicationController
 
         narration = Narrationpnj.find_by(user_id: session[:user_id])
 
-        if(narration.count.to_i <= 4)
+        if(narration.count.to_i < 4)
             redirect_to jeu_play_path
         else
             Inventaire.find_by(objet_id: objet_id, user_id: user_id).destroy
@@ -335,7 +335,46 @@ class JeuController < ApplicationController
 
 
     def combat
-        @user = User.new
+        @personnage = Personnage.find_by(user_id: session[:user_id])
+        @pnj = Pnj.find_by(id: params[:pnj_id])
+        @request = Request.find_by(pnj_id: @pnj.id)
+        @resolue = Requestresolue.find_by(id_request: @request.id, id_user: session[:user_id])
+        @user = User.find_by(id: session[:user_id])
+        @stats = Statsobetsequipe.find_by(user_id: session[:user_id])
+    
+        @pv_final = @personnage.pv.to_i + @stats.pv.to_i
+        @force_final = @personnage.force.to_i + @stats.force.to_i
+        @vitesse_final = @personnage.vitesse.to_i + @stats.vitesse.to_i
+        @exp_joueur_final = @personnage.exp_joueur.to_i + @stats.exp_joueur.to_i
+    
+        narration = Narrationpnj.find_by(user_id: session[:user_id])
+    
+        if narration && narration.count == "3"
+            narration.update(count: "4", user_id: session[:user_id])
+        end
+    end
+
+    def requestCheck
+        @pnj = Pnj.find_by(id: params[:pnj_id])
+        @request = Request.find_by(pnj_id: @pnj.id)
+        
+        if @request.bonne_reponse == params[:id_reponse]
+            @resolue = Requestresolue.find_by(id_request: @request.id, id_user: session[:user_id])
+            if @resolue
+                Requestresolue.update(id_request: @request.id, id_user: session[:user_id], resolue: "true")
+            else
+                Requestresolue.create(id_request: @request.id, id_user: session[:user_id], resolue: "true")
+            end
+        else
+            @resolue = Requestresolue.find_by(id_request: @request.id, id_user: session[:user_id])
+            if @resolue
+                Requestresolue.update(id_request: @request.id, id_user: session[:user_id], resolue: "false")
+            else
+                Requestresolue.create(id_request: @request.id, id_user: session[:user_id], resolue: "false")
+            end
+        end
+
+        redirect_to jeu_combat_path(pnj_id: @pnj.id)
     end
 
     def recompenses

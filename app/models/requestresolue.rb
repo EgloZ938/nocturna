@@ -1,0 +1,2 @@
+class Requestresolue < ApplicationRecord
+end

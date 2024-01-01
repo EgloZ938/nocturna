@@ -50,7 +50,7 @@ if (continueIndicator != null) {
             n++;
             setTimeout(function () {
                 typeWriter(text, n);
-            }, 20);
+            }, 2);
         } else {
             typeSound.pause();
             typeSound.currentTime = 0;
@@ -80,7 +80,7 @@ if (continueIndicator != null) {
                         location.href = "/jeu/narrationdeux";
                     }
                     else if(narration_count == "3"){
-                        
+                        location.href = "/jeu/combat?pnj_id=1";
                     }
                 }
                 else{

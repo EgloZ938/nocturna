@@ -7,11 +7,11 @@
             <th></th>
             <th>Pseudo</th>
             <% if @pnj %>
-                <th>Niveau</th>
-                <th>Classe</th>
                 <th>Pv</th>
                 <th>Force</th>
                 <th>Vitesse</th>
+                <th>gagne xp</th>
+                <th>gagne argent</th>
             <% end %>
         </tr>
 
@@ -23,11 +23,11 @@
             <% end %>
             <td><%= @pnj.name %></td>
             <% if @pnj %>
-                <td><%= @pnj.earn_xp %></td>
-                <td class="classe"><%= @pnj.classe %></td>
                 <td><%= @pnj.pv %></td>
                 <td><%= @pnj.force %></td>
                 <td><%= @pnj.vitesse %></td>
+                <td><%= @pnj.earn_xp %></td>
+                <td><%= @pnj.earn_money %></td>
             <% end %>
         </tr>
     </table>
