@@ -35,7 +35,7 @@ class PersonnageController < ApplicationController
             end
             @victoirepnj = VictoirePnj.where(id_user: session[:user_id])
             if @victoirepnj
-                VictoirePnj.where(id_user: session[:user_id]).destroy_all
+                VictoirePnj.where(user_id: session[:user_id]).destroy_all
             end
         end
 
