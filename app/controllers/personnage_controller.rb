@@ -13,7 +13,10 @@ class PersonnageController < ApplicationController
             if @objets
                 @objets.destroy_all
             end
-            Objetequipe.where(user_id: session[:user_id]).destroy_all
+            @objetequipes = Objetequipe.where(user_id: session[:user_id])
+            if @objetequipes
+                Objetequipe.where(user_id: session[:user_id]).destroy_all
+            end
             @statsobetsequipes = Statsobetsequipe.find_by(user_id: session[:user_id])
             if  @statsobetsequipes
                 @statsobetsequipes.destroy
@@ -29,6 +32,10 @@ class PersonnageController < ApplicationController
             @resolue = Requestresolue.where(id_user: session[:user_id])
             if @resolue
                 @resolue.destroy_all
+            end
+            @victoirepnj = VictoirePnj.where(id_user: session[:user_id])
+            if @victoirepnj
+                VictoirePnj.where(id_user: session[:user_id]).destroy_all
             end
         end
 

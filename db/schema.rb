@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_02_161412) do
+ActiveRecord::Schema.define(version: 2024_01_03_000904) do
 
   create_table "cinematics", force: :cascade do |t|
     t.string "token"
@@ -141,6 +141,14 @@ ActiveRecord::Schema.define(version: 2024_01_02_161412) do
   create_table "users", force: :cascade do |t|
     t.text "name"
     t.text "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "victoire_pnjs", force: :cascade do |t|
+    t.text "user_id"
+    t.text "pnj_id"
+    t.boolean "premiere_victoire"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

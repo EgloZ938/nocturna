@@ -390,12 +390,20 @@ class JeuController < ApplicationController
 
     def recompenses
         @pnj = Pnj.find_by(id: params[:id])
+
         narration = Narrationpnj.find_by(user_id: session[:user_id])
-    
         if narration && narration.count == "4"
             narration.update(count: "5", user_id: session[:user_id])
         end
-        ajouter_items(@pnj.reward_items)
+
+        victoire_pnj = VictoirePnj.find_or_initialize_by(user_id: session[:user_id], pnj_id: @pnj.id)
+
+        unless victoire_pnj.premiere_victoire
+            ajouter_items(@pnj.reward_items)
+            victoire_pnj.premiere_victoire = true
+            victoire_pnj.save
+        end
+
         ajouter_money(@pnj.earn_money)
         ajouter_experiences(@pnj.earn_xp)
         progression = session[:progression]

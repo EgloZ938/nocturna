@@ -1,0 +1,2 @@
+class VictoirePnj < ApplicationRecord
+end
