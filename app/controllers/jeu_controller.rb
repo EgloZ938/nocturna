@@ -175,6 +175,8 @@ class JeuController < ApplicationController
         end
 
         @quantites_totales = @inventaire.group(:objet_id).count
+
+        session[:progression] = "play";
     end
     
     
@@ -352,6 +354,15 @@ class JeuController < ApplicationController
         if narration && narration.count == "3"
             narration.update(count: "4", user_id: session[:user_id])
         end
+
+        reward_item_ids = @pnj.reward_items.split(',').map(&:to_i)
+
+        @reward_items = []
+
+        reward_item_ids.each do |id|
+            objet = Objet.find_by(id: id)
+            @reward_items << objet if objet
+        end
     end
 
     def requestCheck
@@ -378,8 +389,39 @@ class JeuController < ApplicationController
     end
 
     def recompenses
-        ajouter_experiences(params[:exp])
+        @pnj = Pnj.find_by(id: params[:id])
+        narration = Narrationpnj.find_by(user_id: session[:user_id])
+    
+        if narration && narration.count == "4"
+            narration.update(count: "5", user_id: session[:user_id])
+        end
+        ajouter_items(@pnj.reward_items)
+        ajouter_money(@pnj.earn_money)
+        ajouter_experiences(@pnj.earn_xp)
+        progression = session[:progression]
+
+        redirect_to send("jeu_#{progression}_path")
     end
+    
+    def ajouter_items(items)
+        return if items.blank?
+    
+        user_id = session[:user_id]
+        reward_item_ids = items.split(',').map(&:to_i)
+    
+        reward_item_ids.each do |item_id|
+            Inventaire.create(objet_id: item_id, user_id: user_id)
+        end
+    end
+    
+
+    def ajouter_money(money)
+        @personnage = Personnage.find_by(user_id: session[:user_id])
+        money_actuel = @personnage.argent.to_i
+        nouvel_argent = money_actuel + money.to_i
+        @personnage.update(argent: nouvel_argent.to_s)
+    end
+    
 
     def ajouter_experiences(points_gagnes)
         @personnage = Personnage.find_by(user_id: session[:user_id])
@@ -387,23 +429,42 @@ class JeuController < ApplicationController
         
         points_gagnes = points_gagnes.to_i
         @experience.points += points_gagnes
-
+    
         current_level = @personnage.exp_joueur.to_i
         while @experience.points >= points_requis_pour_niveau(current_level + 1)
             current_level += 1
             @personnage.update(exp_joueur: current_level.to_s)
+            mettre_a_jour_stats_personnage(@personnage, current_level) # Mise à jour des stats
             @experience.points -= points_requis_pour_niveau(current_level)
             if @experience.points < points_requis_pour_niveau(current_level + 1)
                 break
             end
         end
-
+    
         if @experience.points == points_requis_pour_niveau(current_level + 1)
             @experience.points = 0
         end
-
+    
         @experience.save
-        redirect_to jeu_combat_path
+    end
+    
+    def mettre_a_jour_stats_personnage(personnage, niveau)
+        case personnage.classe
+        when "assassin"
+            personnage.force = personnage.force.to_i + (15 * 1.2).to_i
+            personnage.pv = personnage.pv.to_i + (5 * 1.0).to_i
+            personnage.vitesse = personnage.vitesse.to_i + (10 * 1.2).to_i
+        when "chevalier"
+            personnage.force = personnage.force.to_i + (10 * 1.0).to_i
+            personnage.pv = personnage.pv.to_i + (15 * 1.5).to_i
+            personnage.vitesse = personnage.vitesse.to_i + (5 * 0.8).to_i
+        when "mage"
+            personnage.force = personnage.force.to_i + (15 * 1.2).to_i
+            personnage.pv = personnage.pv.to_i + (10 * 1.1).to_i
+            personnage.vitesse = personnage.vitesse.to_i + (10 * 0.9).to_i
+        end
+    
+        personnage.save
     end
     
     def points_requis_pour_niveau(niveau)

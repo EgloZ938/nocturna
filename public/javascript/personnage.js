@@ -96,9 +96,9 @@ for(let i = 0; i < length; i++){
             inputAvatar.value = cheminAvatar;
             inputClasse.value = classeJoueur;
             inputAvatarUnlock.value = "3";
-            inputForce.value = "400";
-            inputPv.value = "900";
-            inputVitesse.value = "400";
+            inputForce.value = "500";
+            inputPv.value = "800";
+            inputVitesse.value = "450";
         }
         else if(id == "avatar-5"){
             let classeJoueur = "chevalier";

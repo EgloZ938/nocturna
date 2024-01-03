@@ -265,20 +265,15 @@ label {
 
 .error-message {
     color: #b22222;
-    /* Un rouge sombre pour l'erreur */
     background-color: #fff4f4;
-    /* Un fond très pâle de rouge pour faire ressortir le texte */
     border: 1px solid #b22222;
     padding: 10px;
     margin: 20px 5px;
     border-radius: 8px;
     font-family: 'Times New Roman', serif;
-    /* Une police classique pour un aspect médiéval */
     font-size: 16px;
     text-align: center;
-    /* Centrer le texte pour l'attention */
     box-shadow: 0 0 10px rgba(178, 34, 34, 0.2);
-    /* Un léger ombrage pour donner de la profondeur */
 }
 
 .full-screen-animation {
@@ -405,10 +400,10 @@ label {
 .battle-character {
     border-radius: 10px;
     width: 400px;
-    border: 4px solid #2F5F8F; /* Bordure bleue foncée comme les boutons */
-    box-shadow: 0px 4px #1B3C5D; /* Ombre pour un effet en relief, similaire aux boutons */
-    background-color: #58AEDC; /* Fond bleu clair pour contraster avec la bordure */
-    padding: 10px; /* Espace entre l'image et la bordure pour un effet de cadre */
+    border: 4px solid #2F5F8F;
+    box-shadow: 0px 4px #1B3C5D;
+    background-color: #58AEDC;
+    padding: 10px;
 }
 
 .ennemi-container {
@@ -427,7 +422,6 @@ label {
     padding: 10px;
     margin-bottom: 10px;
     width: 80%;
-    /* Ajustez la largeur selon vos besoins */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -448,62 +442,61 @@ label {
 }
 
 .info-joueur, .info-ennemi {
-    background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 10px;
-    width: 80%; /* Ajustez la largeur selon vos besoins */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Ombre pour un effet de profondeur */
-    border: 3px solid #2F5F8F; /* Bordure bleue foncée pour correspondre aux boutons */
-    color: #0055A4; /* Couleur de texte coordonnée */
-    font-family: 'DotGothic16', sans-serif; /* Police pixellisée pour un style rétro */
+    width: 80%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    border: 3px solid #2F5F8F;
+    color: #0055A4;
+    font-family: 'DotGothic16', sans-serif;
 }
 
 .nom-joueur, .nom-ennemi {
     font-weight: bold;
-    font-size: 1.5em; /* Taille de police plus grande pour mettre en valeur le nom */
-    text-align: center; /* Centrer le nom */
+    font-size: 1.5em;
+    text-align: center;
     margin-bottom: 5px;
 }
 
 .pv-actuel-joueur, .pv-actuel-ennemi {
     text-align: right;
-    color: #000; /* Texte noir pour plus de contraste */
-    font-size: 1.2em; /* Taille de police ajustée */
-    margin-left: 10px; /* Espacement entre la barre et le texte des PV */
-    font-weight: bold; /* Rendre le texte des PV plus visible */
+    color: #000;
+    font-size: 1.2em;
+    margin-left: 10px;
+    font-weight: bold;
 }
 
 .barre-de-vie {
     display: flex;
     align-items: center;
-    font-family: 'Press Start 2P', cursive; /* Police pixellisée */
-    font-size: 8px; /* Taille de police réduite */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
     margin: 2px 0;
-    background-color: #ddd; /* Fond de la barre de vie */
-    border: 2px solid #000; /* Bordure noire autour de la barre */
-    border-radius: 0; /* Barres droites sans arrondi */
+    background-color: #ddd;
+    border: 2px solid #000;
+    border-radius: 0;
     position: relative;
-    width: 300px; /* Largeur fixe pour la barre de vie */
+    width: 300px;
 }
 
 .texte-pv{
-    background-color: #fff; /* Fond blanc pour le texte */
-    color: #000; /* Texte noir */
+    background-color: #fff;
+    color: #000;
     text-align: center;
-    padding: 0 4px; /* Un peu de padding autour du texte */
-    margin-right: -4px; /* Aligner le texte PV avec la bordure de la barre */
-    z-index: 1; /* S'assurer que le texte est au-dessus de la barre de vie */
+    padding: 0 4px;
+    margin-right: -4px;
 }
 
 .conteneur-barre {
     flex-grow: 1;
-    border-radius: 0; /* Barres droites sans arrondi */
+    border-radius: 0;
     overflow: hidden;
 }
 
 .barre {
-    height: 12px; /* Hauteur de la barre */
+    height: 12px;
     transition: width 3s ease;
 }
 
@@ -511,17 +504,16 @@ label {
     text-align: right;
 }
 
-/* Couleurs de la barre */
 .barre.verte {
-    background-color: #00C000; /* Vert vif */
+    background-color: #00C000;
 }
 
 .barre.orange {
-    background-color: #FF8000; /* Orange vif */
+    background-color: #FF8000;
 }
 
 .barre.rouge {
-    background-color: #F00000; /* Rouge vif */
+    background-color: #F00000;
 }
 
 #interface-combat {
@@ -556,35 +548,34 @@ label {
     align-items: center;
     left: 50%;
     transform: translateX(-50%);
-    gap: 10px; /* Espacement entre les rangées */
+    gap: 10px;
 }
 
 .bouton-medieval {
-    background-color: #58AEDC; /* Couleur bleu clair */
-    color: #FFFFFF; /* Texte blanc */
-    border: 4px solid #2F5F8F; /* Bordure bleu foncé */
-    font-family: 'DotGothic16', sans-serif; /* Police pixellisée pour un style rétro */
-    padding: 15px 30px; /* Taille de padding augmentée pour de plus grands boutons */
-    text-transform: uppercase; /* Texte en majuscules */
+    background-color: #58AEDC;
+    color: #FFFFFF;
+    border: 4px solid #2F5F8F;
+    font-family: 'DotGothic16', sans-serif;
+    padding: 15px 30px;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s; /* Transition pour l'effet au survol */
-    border-radius: 10px; /* Bordures arrondies */
-    box-shadow: 0px 4px #1B3C5D; /* Ombre pour un effet en relief */
-    margin: 5px; /* Conservez la marge si nécessaire pour votre mise en page */
-    font-size: 18px; /* Taille de la police augmentée */
-    width: 200px; /* Largeur fixe pour l'uniformité */
+    transition: background-color 0.3s, transform 0.2s;
+    border-radius: 10px;
+    box-shadow: 0px 4px #1B3C5D;
+    margin: 5px;
+    font-size: 18px;
+    width: 200px;
 }
 
 .bouton-medieval:hover {
-    background-color: #3B7EA1; /* Couleur bleu un peu plus foncée au survol */
-    transform: translateY(-2px); /* Petit effet de déplacement au survol */
+    background-color: #3B7EA1;
+    transform: translateY(-2px);
 }
 
-/* Conteneur pour chaque rangée de boutons */
 .bouton-rangee {
     display: flex;
     justify-content: center;
-    gap: 10px; /* Espacement entre les boutons */
+    gap: 10px;
 }
 
 #messageCombat {
@@ -606,24 +597,197 @@ label {
 }
 
 .status {
-    font-family: 'DotGothic16', sans-serif; /* Police pixellisée pour un style rétro */
+    font-family: 'DotGothic16', sans-serif;
     font-size: 12px;
     text-align: center;
     padding: 2px;
     margin: 0 2.5px;
-    border-radius: 3px; /* Bordures arrondies légèrement pour un look plus doux */
+    border-radius: 3px;
     height: min-content;
     display: none;
 }
 
 .poison {
-    background-color: #A040A0; /* Couleur typique du poison dans les jeux Pokémon */
-    border: 2px solid #68007A; /* Bordure plus foncée pour un meilleur contraste */
+    background-color: #A040A0;
+    border: 2px solid #68007A;
     color: white;
 }
 
 .paralysie {
-    background-color: #F8D030; /* Couleur typique de la paralysie dans les jeux Pokémon */
-    border: 2px solid #C7A008; /* Bordure plus foncée pour un meilleur contraste */
+    background-color: #F8D030;
+    border: 2px solid #C7A008;
     color: white;
+}
+
+@keyframes personnageKO {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+}
+
+.personnage-ko {
+    animation: personnageKO 1s ease forwards;
+}
+
+.boite-dialogue {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialogue-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 500px;
+}
+
+.dialogue-content h2 {
+    font-size: 2em;
+    color: #e4aa52;
+    margin-bottom: 20px;
+}
+
+.dialogue-content p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.dialogue-content button {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 200px;
+    font-size: 1em;
+}
+
+.boutonRecompenses {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1em;
+}
+
+.case {
+    width: 96px;
+    height: 96px;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    margin: 5px;
+    background-size: cover;
+    position: relative;
+}
+
+.maj:first-letter {
+    text-transform: uppercase;
+}
+
+.title {
+    font-family: 'MedievalSharp', cursive;
+    color: #d3d3d3;
+
+    h5 {
+        margin: 0;
+    }
+
+    h6 {
+        margin: 0;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .rarete {
+        margin: 5px 0;
+    }
+
+    .data {
+        margin-top: 5px;
+    }
+}
+
+.commun {
+    color: #fff;
+}
+
+.atypique {
+    color: #1eff00;
+}
+
+.rare {
+    color: #0070dd;
+}
+
+.épique {
+    color: #a335ee;
+}
+
+.légendaire {
+    color: #ff8000;
+}
+
+.pv {
+    color: #1eff00;
+}
+
+.force {
+    color: #ff3c00;
+}
+
+.exp {
+    color: rgb(175, 241, 100);
+}
+
+.vitesse {
+    color: #e4c952;
+}
+
+.valeur {
+    color: rgb(82, 228, 155);
+}
+
+.none {
+    color: #d3d3d3;
+}
+
+.infoData {
+    color: white;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+    margin-right: 2.5px;
+    cursor: default;
+}
+
+.tooltip-inner {
+    min-width: 250px;
+}
+
+#recompenses{
+    margin: 10px 0;
+    width: 100%;
+    justify-content: center;
 }

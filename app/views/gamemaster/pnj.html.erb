@@ -6,7 +6,7 @@
             <tr>
                 <th>ID</th>
                 <th>Pseudo</th>
-                <th colspan="2">Interaction</th>
+                <th colspan="3">Interaction</th>
             </tr>
 
             <% @pnjs.each do |pnj| %>
@@ -14,6 +14,7 @@
                     <td><%= pnj.id %></td>
                     <td><%= pnj.name %></td>
                     <td><%= link_to 'Afficher +', gamemaster_showPnj_path(id: pnj.id) %></td>
+                    <td><%= link_to 'Modifier', gamemaster_editPnj_path(id: pnj.id) %></td>
                     <td><%= link_to 'Supprimer', gamemaster_destroyPnj_path(id: pnj.id),
                             method: :delete,
                             data: { confirm: "En faisant ça vous allez supprimer l'utilisateur et le pnj lié avec. Êtes vous sûr ?" } %></td>

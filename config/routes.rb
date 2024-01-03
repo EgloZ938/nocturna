@@ -47,6 +47,8 @@ Rails.application.routes.draw do
   get 'jeu/recompenses'
   get 'gamemaster/editRequest'
   get 'jeu/requestCheck'
+  get 'gamemaster/editPnj'
+  get 'gamemaster/updatePnj'
 
 
   post 'register/create'
@@ -88,6 +90,7 @@ Rails.application.routes.draw do
   patch 'gamemaster/updateItem'
   patch 'gamemaster/updateCraft'
   patch 'gamemaster/updateRequest'
+  patch 'gamemaster/updatePnj'
 
   root 'accueil#index'
 

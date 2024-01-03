@@ -198,6 +198,19 @@ class GamemasterController < ApplicationController
         end
     end
    
+    def editPnj
+        @pnj = Pnj.find(params[:id])
+        session[:pnj_id] = @pnj.id
+    end
+
+    def updatePnj
+        @pnj = Pnj.find_by(id: session[:pnj_id])
+        if @pnj.update(pnj_params)
+            session[:pnj_id] = nil
+            redirect_to gamemaster_pnj_path
+        end
+    end
+
     def destroyPnj
         @pnj = Pnj.find(params[:id])
         if @pnj
@@ -256,11 +269,11 @@ class GamemasterController < ApplicationController
     end
 
     def request_params
-    params.require(:request).permit(:question, :reponse1, :reponse2, :reponse3, :reponse4, :bonne_reponse, :pnj_id)
+        params.require(:request).permit(:question, :reponse1, :reponse2, :reponse3, :reponse4, :bonne_reponse, :pnj_id)
     end
 
     def pnj_params
-      params.require(:pnj).permit(:name, :avatar, :pv, :vitesse, :force, :earn_xp, :earn_money)
+        params.require(:pnj).permit(:name, :avatar, :pv, :vitesse, :force, :earn_xp, :earn_money, :reward_items)
     end
 
     def item_params

@@ -1,7 +1,7 @@
 <%= stylesheet_link_tag('gamemaster') %>
 
 <h1>tkt</h1>
-<%= form_with model: @pnj, url: gamemaster_createPnj_path do |form| %>
+<%= form_with model: @pnj, url: gamemaster_updatePnj_path do |form| %>
   <div>
     <%= form.label :name %><br>
     <%= form.text_field :name %>

@@ -1,5 +1,6 @@
 window.onbeforeunload = function () {
     localStorage.setItem("musicTime", music.currentTime.toString());
+    localStorage.setItem("token", "0");
 };
 
 window.onload = function () {
@@ -34,14 +35,15 @@ window.onload = function () {
 
 let currentDialogue = 0;
 
-const dialogueElement = document.getElementById('dialogue');
-
-let currentDialogueIndex = 0;
-let currentDialogueArray = dialogues; // Commence avec les dialogues de PNJ1
-let currentDialogueElement = dialogueElement; // L'élément de dialogue pour PNJ1
 let continueIndicator = document.getElementById('continue-indicator'); // Indicateur pour PNJ1
 
 if (continueIndicator != null) {
+    const dialogueElement = document.getElementById('dialogue');
+
+    let currentDialogueIndex = 0;
+    let currentDialogueArray = dialogues; // Commence avec les dialogues de PNJ1
+    let currentDialogueElement = dialogueElement; // L'élément de dialogue pour PNJ1
+
     function typeWriter(text, n) {
         if (n === 0) typeSound.play();
 
@@ -50,7 +52,7 @@ if (continueIndicator != null) {
             n++;
             setTimeout(function () {
                 typeWriter(text, n);
-            }, 2);
+            }, 20);
         } else {
             typeSound.pause();
             typeSound.currentTime = 0;

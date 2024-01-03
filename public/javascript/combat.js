@@ -6,18 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
     fullScreenAnimation.addEventListener("animationend", function () {
         this.style.display = "none";
         setTimeout(() => {
-            dialogueBox.style.display = "none"; // Cache la dialogue-box après 2,5 secondes
-        }, 2500); // 2500 millisecondes = 2,5 secondes
+            dialogueBox.style.display = "none";
+        }, 2500);
     });
 
-    // Au départ, cachez les boutons
     containerCapacites.style.display = "none";
 
     dialogueBox.addEventListener("animationend", function () {
-        // Quand l'animation de la dialogue-box se termine, la cacher
         dialogueBox.style.display = "none";
 
-        // Et affichez les boutons de capacité
         containerCapacites.style.display = "flex";
     });
 });
@@ -25,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function animerPV(pvDebut, pvFin, pvMax, idPvTexte, duree) {
     var pvTexte = document.getElementById(idPvTexte);
     var difference = Math.abs(pvFin - pvDebut);
-    var pas = difference / (duree / 20); // Diviser la durée totale par le temps d'intervalle (20 ms ici)
+    var pas = difference / (duree / 20);
     var pvActuels = pvDebut;
 
     function miseAJourPV() {
@@ -34,7 +31,6 @@ function animerPV(pvDebut, pvFin, pvMax, idPvTexte, duree) {
             pvTexte.textContent = Math.round(pvActuels) + ' / ' + pvMax;
             setTimeout(miseAJourPV, 20);
         } else {
-            // S'assurer que le texte final est correct
             pvTexte.textContent = pvFin + ' / ' + pvMax;
         }
     }
@@ -48,13 +44,10 @@ function ajusterBarreDeVie(pvActuels, pvMax, idBarre, idPvTexte) {
     var pvTexte = document.getElementById(idPvTexte);
     var pvDebut = parseInt(pvTexte.textContent.split(' / ')[0]);
 
-    // Définir la largeur de la barre avec une transition fluide
     barre.style.width = pourcentagePV + '%';
 
-    // Animer les PV sur une durée de 3 secondes (3000 millisecondes)
     animerPV(pvDebut, pvActuels, pvMax, idPvTexte, 2800);
 
-    // Changer la couleur de la barre en fonction du pourcentage de PV
     barre.classList.remove('verte', 'orange', 'rouge');
     if (pourcentagePV > 50) {
         barre.classList.add('verte');
@@ -74,6 +67,15 @@ function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function actionFinCombat() {
+    const action = document.getElementById("boutonAction").textContent;
+    if (action === "Obtenir Récompenses") {
+        window.location.href = "/chemin/vers/recompenses";
+    } else {
+        location.reload();
+    }
+}
+
 class Combat {
     constructor(joueur, ennemi) {
         this.joueur = joueur;
@@ -86,6 +88,7 @@ class Combat {
         this.ennemiParalyse = false;
         this.intensitePoisonJoueur = 50;
         this.intensitePoisonEnnemi = 50;
+        this.combatTermine = false;
     }
 
     setAbriUtiliseEnnemi(value) {
@@ -147,6 +150,9 @@ class Combat {
                     this.actualiserInterface();
                     await delay(3000);
                     this.verifierFinCombat();
+                    if (this.combatTermine) {
+                        return;
+                    }
                 }
             }
             else {
@@ -157,12 +163,18 @@ class Combat {
                 this.actualiserInterface();
                 await delay(3000);
                 this.verifierFinCombat();
+                if (this.combatTermine) {
+                    return;
+                }
                 this.messageCombat(this.ennemi.nom + " utilise " + ennemiAttack);
                 this.executerAttaque(this.ennemi, this.joueur, ennemiAttack);
                 await delay(750);
                 this.actualiserInterface();
                 await delay(3000);
                 this.verifierFinCombat();
+                if (this.combatTermine) {
+                    return;
+                }
             }
         }
         else if (joueurRapide == false && ennemiAttack !== 'abri') {
@@ -188,22 +200,31 @@ class Combat {
                     this.actualiserInterface();
                     await delay(3000);
                     this.verifierFinCombat();
+                    if (this.combatTermine) {
+                        return;
+                    }
                 }
             }
             else {
                 this.setAbriUtiliseJoueur(false);
                 this.messageCombat(this.ennemi.nom + " utilise " + ennemiAttack);
-                this.executerAttaque(this.joueur, this.ennemi, attaque);
-                await delay(750);
-                this.actualiserInterface();
-                await delay(3000);
-                this.verifierFinCombat();
-                this.messageCombat(this.joueur.nom + " utilise " + attaque);
                 this.executerAttaque(this.ennemi, this.joueur, ennemiAttack);
                 await delay(750);
                 this.actualiserInterface();
                 await delay(3000);
                 this.verifierFinCombat();
+                if (this.combatTermine) {
+                    return;
+                }
+                this.messageCombat(this.joueur.nom + " utilise " + attaque);
+                this.executerAttaque(this.joueur, this.ennemi, attaque);
+                await delay(750);
+                this.actualiserInterface();
+                await delay(3000);
+                this.verifierFinCombat();
+                if (this.combatTermine) {
+                    return;
+                }
             }
         }
         else if (ennemiAttack == 'abri') {
@@ -306,6 +327,9 @@ class Combat {
                     this.actualiserInterface();
                     await delay(3000);
                     this.verifierFinCombat();
+                    if (this.combatTermine) {
+                        return;
+                    }
                 }
             }
         }
@@ -316,6 +340,9 @@ class Combat {
         }
         this.dialogueBox();
         this.verifierFinCombat();
+        if (this.combatTermine) {
+            return;
+        }
         toggleCapacites();
     }
 
@@ -333,7 +360,6 @@ class Combat {
             }
         }
 
-        // Si l'attaquant peut attaquer ou utilise 'abri'
         if (peutAttaquer || attaque === 'abri') {
             if (attaque == 'attaque classique') {
                 if (cible.pv > 0) {
@@ -358,7 +384,7 @@ class Combat {
                     document.getElementById("paralysie-ennemi").style.display = "block";
                     let value = cible.vitesseMax / 2;
                     this.setEnnemiVitesse(value);
-                    await delay(3000); // Ajouté pour que le message "est paralysé" reste visible pendant 3 secondes
+                    await delay(3000);
                 }
                 else if (attaqueur.nom == this.ennemi.nom && this.joueurParalyse == false) {
                     this.setJoueurParalyse(true);
@@ -367,10 +393,10 @@ class Combat {
                     document.getElementById("paralysie-joueur").style.display = "block";
                     let value = cible.vitesseMax / 2;
                     this.setJoueurVitesse(value);
-                    await delay(3000); // Ajouté pour que le message "est paralysé" reste visible pendant 3 secondes
+                    await delay(3000);
                 }
                 else {
-                    this.messageCombat("Mais cela échoue");
+                    this.messageCombat(this.attaqueur.nom + "essaye de paralyser mais cela échoue");
                     await delay(3000);
                 }
             }
@@ -414,30 +440,56 @@ class Combat {
 
     verifierFinCombat() {
         if(this.joueur.pv <= 0 && this.ennemi.pv <= 0){
-            this.finDuCombat('Égalité');
+            this.miseKO("joueur");
+            this.miseKO("ennemi");
+            this.combatTermine = true;
+            this.dialogueBox();
+            setTimeout(() => this.finDuCombat("Égalité"), 1000);
         }
         else if (this.joueur.pv <= 0) {
-            this.finDuCombat("Défaite");
+            this.miseKO("joueur");
+            this.combatTermine = true;
+            this.dialogueBox();
+            setTimeout(() => this.finDuCombat("Défaite"), 1000);
         } 
         else if (this.ennemi.pv <= 0) {
-            this.finDuCombat("Victoire");
+            this.miseKO("ennemi");
+            this.combatTermine = true;
+            this.dialogueBox();
+            setTimeout(() => this.finDuCombat("Victoire"), 1000);
         }
-
     }
 
     finDuCombat(resultat) {
-        alert(`Combat terminé: ${resultat}!`);
+        this.desactiverBoutonsCombat();
+        let messageEpic = "";
+        let texteBouton = "";
+    
+        if (resultat === "Victoire") {
+            messageEpic = "Félicitations! Vous avez triomphé avec bravoure.";
+            document.getElementById("boutonAction").style.display = "none";
+        }
+        else{
+            messageEpic = "La défaite est amère, mais chaque bataille est une leçon.";
+            texteBouton = "Recommencer";
+            document.getElementById("boutonAction").textContent = texteBouton;
+            document.getElementById("containerRecompenses").style.display = "none";
+        } 
+        
+        document.getElementById("resultatCombat").textContent = `Combat terminé: ${resultat}!`;
+        document.getElementById("messageEpic").textContent = messageEpic;
+        document.getElementById("boiteFinCombat").style.display = "flex";
     }
 
     appliquerPoison() {
         if (this.joueurEmpoisone && this.ennemiEmpoisone) {
             this.joueur.pv -= this.intensitePoisonJoueur;
-            this.joueur.pv = Math.max(0, this.joueur.pv); // Éviter les PV négatifs
-            this.intensitePoisonJoueur += 50; // Augmenter l'intensité pour le prochain tour
+            this.joueur.pv = Math.max(0, this.joueur.pv);
+            this.intensitePoisonJoueur += 50;
 
             this.ennemi.pv -= this.intensitePoisonEnnemi;
-            this.ennemi.pv = Math.max(0, this.ennemi.pv); // Éviter les PV négatifs
-            this.intensitePoisonEnnemi += 50; // Augmenter l'intensité pour le prochain tour
+            this.ennemi.pv = Math.max(0, this.ennemi.pv);
+            this.intensitePoisonEnnemi += 50;
 
             this.playPoisonSound();
             this.messageCombat(this.joueur.nom + " et " + this.ennemi.nom + " souffrent du poison");
@@ -445,22 +497,22 @@ class Combat {
         else {
             if (this.joueurEmpoisone) {
                 this.joueur.pv -= this.intensitePoisonJoueur;
-                this.joueur.pv = Math.max(0, this.joueur.pv); // Éviter les PV négatifs
-                this.intensitePoisonJoueur += 50; // Augmenter l'intensité pour le prochain tour
+                this.joueur.pv = Math.max(0, this.joueur.pv);
+                this.intensitePoisonJoueur += 50;
                 this.playPoisonSound();
                 this.messageCombat(this.joueur.nom + " souffre du poison");
             }
 
             if (this.ennemiEmpoisone) {
                 this.ennemi.pv -= this.intensitePoisonEnnemi;
-                this.ennemi.pv = Math.max(0, this.ennemi.pv); // Éviter les PV négatifs
-                this.intensitePoisonEnnemi += 50; // Augmenter l'intensité pour le prochain tour
+                this.ennemi.pv = Math.max(0, this.ennemi.pv);
+                this.intensitePoisonEnnemi += 50;
                 this.playPoisonSound();
                 this.messageCombat(this.ennemi.nom + " souffre du poison");
             }
         }
 
-        this.actualiserInterface(); // Mettre à jour l'interface pour refléter les changements
+        this.actualiserInterface();
     }
 
     dialogueBox() {
@@ -517,6 +569,19 @@ class Combat {
     actualiserInterface() {
         ajusterBarreDeVie(this.joueur.pv, this.joueur.pvMax, 'barre-pv-joueur', 'pv-actuel-joueur');
         ajusterBarreDeVie(this.ennemi.pv, this.ennemi.pvMax, 'barre-pv-ennemi', 'pv-actuel-ennemi');
+    }
+
+    desactiverBoutonsCombat() {
+        const boutons = document.querySelectorAll(".bouton-medieval");
+        boutons.forEach(bouton => {
+            bouton.style.display = "none";
+            bouton.disabled = true;
+        });
+    }
+
+    miseKO(personnage) {
+        const elementPersonnage = document.getElementById(personnage === "joueur" ? "avatar-joueur" : "avatar-ennemi");
+        elementPersonnage.classList.add("personnage-ko");
     }
 }
 
