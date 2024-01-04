@@ -148,7 +148,7 @@ body {
     }
 }
 
-.text2{
+.text2 {
     width: calc(100% - 400px - 3rem);
     background: #fff;
     min-height: 140px;
@@ -208,7 +208,7 @@ body {
     left: 0;
 }
 
-#etable{
+#etable {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -220,7 +220,7 @@ body {
     display: none;
 }
 
-#objets-craftables{
+#objets-craftables {
     width: fit-content;
     display: flex;
     flex-direction: column;
@@ -228,46 +228,46 @@ body {
     background: rgba(255, 255, 255, 0.25);
 }
 
-#info-objets-craft{
+#info-objets-craft {
     background: rgba(255, 255, 255, 0.25);
     margin-left: 2rem;
     padding: 1rem;
 }
 
-.craft-info{
+.craft-info {
     display: none;
 
-    img{
+    img {
         width: 64px;
         height: 64px;
     }
 
-    a{
+    a {
         color: white !important;
         font-size: 34px !important;
     }
 
-    .link-craft{
+    .link-craft {
         margin-top: 1rem;
     }
 }
 
-.craftables-section{
+.craftables-section {
     display: flex;
     flex-flow: row wrap;
     background-color: rgba(255, 255, 255, 0.25);
 }
 
-.craftables-section img{
+.craftables-section img {
     width: 64px;
     height: 64px;
 }
 
-.objet_craftable{
+.objet_craftable {
     cursor: pointer;
 }
 
-.objet-craft-etabli{
+.objet-craft-etabli {
     margin-bottom: 2rem;
 }
 
@@ -573,7 +573,7 @@ h1 {
         border: 0;
     }
 
-    button:hover{
+    button:hover {
         text-decoration: underline;
     }
 
@@ -601,5 +601,65 @@ h1 {
 
     input:focus {
         outline: none;
+    }
+}
+
+.village-intro {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    z-index: 1000;
+}
+
+.text-container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    /* Fond semi-transparent */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.village-name {
+    font-size: 3em;
+    font-weight: bold;
+    animation: fadeIn 2s;
+}
+
+.village-description {
+    font-size: 1.2em;
+    margin-top: 10px;
+    animation: fadeIn 3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.village-intro.fadeOut {
+    animation: fadeOut 2s;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
     }
 }

@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   get 'jeu/requestCheck'
   get 'gamemaster/editPnj'
   get 'gamemaster/updatePnj'
+  get 'jeu/lumina'
 
 
   post 'register/create'

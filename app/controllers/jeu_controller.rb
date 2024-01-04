@@ -176,7 +176,14 @@ class JeuController < ApplicationController
 
         @quantites_totales = @inventaire.group(:objet_id).count
 
-        session[:progression] = "play";
+        
+        narration = Narrationpnj.find_by(user_id: session[:user_id])
+        if narration
+            if(narration.count < "5")
+                session[:progression] = "lumina";
+            end
+        end
+
     end
     
     

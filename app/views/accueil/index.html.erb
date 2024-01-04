@@ -32,10 +32,11 @@
             <div class="md bg flex align-items justify-content left" id="option-button">
                 <h1>Options</h1>
             </div>
-            <%= form_with(url: '/register/destroy', method: 'delete') do |form| %>
-                <%= form.hidden_field :authenticity_token, value: form_authenticity_token %>
-                <%= form.submit 'Se déconnecter' %>
-            <% end %>
+            <form class="button_to md bg flex align-items justify-content right" method="post" action="/register/destroy">
+                <input type="hidden" name="_method" value="delete">
+                <input type="submit" value="Se déconnecter" id="submit">
+                <input type="hidden" name="authenticity_token" value="brKcXums0HZAfJMR2EixDH0T3igZiHrenv88yNeqMiPzhOsZlIqdFM1+/Aw8ddw+kib2sw3HaE3btX+iUDCIKg==">
+            </form>
         </div>
         <% if @gamemaster %>
             <div class="lg bg flex align-items justify-content" id="gamemaster-button">

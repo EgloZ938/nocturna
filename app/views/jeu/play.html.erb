@@ -159,6 +159,11 @@
     <script>
         location.href = "/jeu/combat?pnj_id=1";
     </script>
+<% elsif @narration.count == "5" %>
+    <script>
+        progression = "<%= session[:progression] %>";
+        location.href = `/jeu/${progression}`;
+    </script>
 <% end %>
 
 
