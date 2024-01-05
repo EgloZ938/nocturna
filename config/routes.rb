@@ -50,8 +50,11 @@ Rails.application.routes.draw do
   get 'gamemaster/editPnj'
   get 'gamemaster/updatePnj'
   get 'jeu/lumina'
+  get 'gamemaster/pnjZone'
+  get 'gamemaster/newPnjZone'
+  get 'gamemaster/editPnjZone'
 
-
+  post 'gamemaster/createPnjZone'
   post 'register/create'
   post 'register/connexion'
   post 'personnage/new'
@@ -87,11 +90,13 @@ Rails.application.routes.draw do
   delete 'gamemaster/destroyRequest'
   delete 'jeu/supprObjetInventaire', to: 'jeu#supprObjetInventaire', as: 'jeu_supprObjetInventaire'
   delete 'gamemaster/destroyCraft'
+  delete 'gamemaster/destroyPnjZone'
   
   patch 'gamemaster/updateItem'
   patch 'gamemaster/updateCraft'
   patch 'gamemaster/updateRequest'
   patch 'gamemaster/updatePnj'
+  patch 'gamemaster/updatePnjZone'
 
   root 'accueil#index'
 

@@ -19,6 +19,47 @@ class JeuController < ApplicationController
     end
 
     def play
+        
+        commun
+
+        narration = Narrationpnj.find_by(user_id: session[:user_id])
+        if narration
+            if(narration.count < "5")
+                session[:progression] = "lumina"
+            end
+        end
+
+    end
+    
+    def lumina
+        session[:progression] = "lumina"
+        commun
+    
+        pnjzones = Pnjzone.where(zone: "lumina")
+        @pnjs = pnjzones.map do |pnjzone|
+            pnj = Pnj.find(pnjzone.pnj_id)
+            reward_items = get_reward_items(pnj.reward_items)
+            victoire_pnj = VictoirePnj.find_by(user_id: session[:user_id], pnj_id: pnj.id)
+            victoire_pnj = victoire_pnj ? victoire_pnj.premiere_victoire : false
+            [pnj.avatar, pnj.name, pnj.pv, pnj.vitesse, pnj.force, pnj.earn_xp, pnj.earn_money, reward_items, pnj.id, victoire_pnj]
+        end
+    end
+    
+
+    def get_reward_items(reward_item_ids)
+        return [] if reward_item_ids.blank?
+        reward_item_ids.split(',').map do |item_with_quantity|
+            item_parts = item_with_quantity.split('@')
+            item_id = item_parts[0].to_i
+            quantity = item_parts.length > 1 ? item_parts[1].to_i : 1
+    
+            objet = Objet.find_by(id: item_id)
+            [objet, quantity] if objet
+        end.compact
+    end
+    
+
+    def commun
         @user = User.find_by(id: session[:user_id])
         @personnage = Personnage.find_by(id: session[:personnage_id])
         @rangee = @personnage.sac_a_dos.to_i / 5
@@ -175,18 +216,7 @@ class JeuController < ApplicationController
         end
 
         @quantites_totales = @inventaire.group(:objet_id).count
-
-        
-        narration = Narrationpnj.find_by(user_id: session[:user_id])
-        if narration
-            if(narration.count < "5")
-                session[:progression] = "lumina";
-            end
-        end
-
     end
-    
-    
 
     def objetEquipe
         user_id = params[:user_id]
@@ -356,19 +386,31 @@ class JeuController < ApplicationController
         @vitesse_final = @personnage.vitesse.to_i + @stats.vitesse.to_i
         @exp_joueur_final = @personnage.exp_joueur.to_i + @stats.exp_joueur.to_i
     
+        victoire_pnj = VictoirePnj.find_by(user_id: session[:user_id], pnj_id: @pnj.id)
+
+        if victoire_pnj.blank?
+            victoire_pnj = false
+        else
+            victoire_pnj = victoire_pnj.premiere_victoire
+        end
+
+        @victoire_pnj = victoire_pnj
+
         narration = Narrationpnj.find_by(user_id: session[:user_id])
     
         if narration && narration.count == "3"
             narration.update(count: "4", user_id: session[:user_id])
         end
 
-        reward_item_ids = @pnj.reward_items.split(',').map(&:to_i)
-
         @reward_items = []
 
-        reward_item_ids.each do |id|
-            objet = Objet.find_by(id: id)
-            @reward_items << objet if objet
+        @pnj.reward_items.split(',').each do |item_with_quantity|
+            item_parts = item_with_quantity.split('@') # Sépare l'ID de l'objet et la quantité
+            item_id = item_parts[0].to_i
+            quantity = item_parts.length > 1 ? item_parts[1].to_i : 1 # Quantité par défaut est 1
+        
+            objet = Objet.find_by(id: item_id)
+            @reward_items << [objet, quantity] if objet
         end
     end
 
@@ -420,14 +462,18 @@ class JeuController < ApplicationController
     
     def ajouter_items(items)
         return if items.blank?
-    
+        
         user_id = session[:user_id]
-        reward_item_ids = items.split(',').map(&:to_i)
     
-        reward_item_ids.each do |item_id|
-            Inventaire.create(objet_id: item_id, user_id: user_id)
+        items.split(',').each do |item_with_quantity|
+            item_parts = item_with_quantity.split('@')
+            item_id = item_parts[0].to_i
+            quantity = item_parts.length > 1 ? item_parts[1].to_i : 1
+    
+            quantity.times { Inventaire.create(objet_id: item_id, user_id: user_id) }
         end
     end
+    
     
 
     def ajouter_money(money)

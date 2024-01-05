@@ -1,0 +1,58 @@
+<table>
+    <tr>
+        <th>Avatar</th>
+        <th>Nom</th>
+        <th>PV</th>
+        <th>Vitesse</th>
+        <th>Force</th>
+        <th>XP</th>
+        <th>Argent</th>
+        <th>Récompenses</th>
+        <th>Action</th>
+    </tr>
+
+    <% @pnjs.each do |pnj| %>
+        <tr>
+            <td><img src="<%= pnj[0] %>" alt="Avatar" style="width: 100px; height: 100px;"></td>
+            <td><%= pnj[1] %></td>
+            <td><%= pnj[2] %></td>
+            <td><%= pnj[3] %></td>
+            <td><%= pnj[4] %></td>
+            <td><%= pnj[5] %></td>
+            <td><%= pnj[6] %></td>
+            <td>
+                <% if pnj[9] != true %>
+                    <% pnj[7].each_slice(2) do |pair| %>
+                        <div class="rewards-row">
+                            <% pair.each do |item, quantity| %>
+                                <% 
+                                    chaineData = item.data
+                                    data = chaineData.split(":")
+                                    if data[0] == "Point de vie"
+                                        classeData = "pv"
+                                    elsif data[0] == "Point d'attaque"
+                                        classeData = "force"
+                                    elsif data[0] == "Point d'exp"
+                                        classeData = "exp"
+                                    elsif data[0] == "Vitesse"
+                                        classeData = "vitesse"
+                                    elsif data[0] == "Valeur"
+                                        classeData = "valeur"
+                                    else 
+                                        classeData = "none"
+                                    end
+                                %>
+                                <div class="case maj caseUtilisé" style="background-image: url(<%= item.image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h4 class='maj'><%= item.nom %></h4><h3 class='<%= item.rarete %> rarete maj'><%= item.rarete %></h3><h5 class='maj'><%= item.description %></h5><h4 class='<%= classeData %> data'><%= item.data %></h4></div>">
+                                    <h2 class="infoData"><%= quantity %></h2>
+                                </div>
+                            <% end %>
+                        </div>
+                    <% end %>
+                <% else %>
+                    Récompenses obtenues
+                <% end %>
+            </td>
+            <td><button class="combat-btn" id="<%= pnj[8] %>">Affronter</button></td>
+        </tr>
+    <% end %>
+</table>

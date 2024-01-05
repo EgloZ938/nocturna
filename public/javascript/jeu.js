@@ -9,7 +9,6 @@ window.onload = function () {
     let checkEtabli = localStorage.getItem("etabli");
 
     if (autoReload === "true" && savedMusicTime !== null) {
-        // Rechargement automatique : reprendre la musique
         music.currentTime = parseFloat(savedMusicTime);
         if (checkEtabli === "true") {
             localStorage.removeItem("etabli");
@@ -24,12 +23,10 @@ window.onload = function () {
             }
         }
     } else {
-        // Rechargement manuel : recommencer la musique depuis le début
         music.currentTime = 0;
     }
 
     music.play();
-    // Réinitialiser l'indicateur
     localStorage.removeItem("autoReload");
 };
 

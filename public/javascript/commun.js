@@ -41,6 +41,12 @@ else {
             document.getElementById("inventaire").style.display = "flex";
         })
     }
+    let pnjs = document.getElementById("pnjs-combat");
+    if(pnjs !== null){
+        document.getElementById("icon-pnj").addEventListener("click", () =>{
+            document.getElementById("pnjs-combat").style.display = "flex";
+        })
+    } 
 
     if(document.getElementById("craft") !== null)[
         document.getElementById("craft").addEventListener("click", () => {
@@ -128,11 +134,15 @@ else {
         if (x == 27) {
             let inventaireElem = document.getElementById("inventaire");
             let etableElem = document.getElementById("etable");
+            let pnjsCombatElem = document.getElementById("pnjs-combat");
             if (window.getComputedStyle(inventaireElem, null).display == "flex") {
                 inventaireElem.style.display = "none";
             }
             else if (window.getComputedStyle(etableElem, null).display == "flex") {
                 etableElem.style.display = "none";
+            }
+            else if(window.getComputedStyle(pnjsCombatElem, null).display == "flex") {
+                pnjsCombatElem.style.display = "none";
             }
             else {
                 let optionsElem = document.getElementById("options");

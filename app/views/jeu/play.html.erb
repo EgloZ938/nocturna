@@ -13,6 +13,11 @@
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+
+    let valueAnim = localStorage.getItem('village-anim');
+    if(valueAnim != "true"){
+        localStorage.setItem("village-anim", "false");   
+    }
 </script>
 
 <img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
@@ -162,7 +167,12 @@
 <% elsif @narration.count == "5" %>
     <script>
         progression = "<%= session[:progression] %>";
-        location.href = `/jeu/${progression}`;
+        if(progression){
+            location.href = `/jeu/${progression}`;
+        }
+        else{
+            location.href = "jeu/lumina";
+        }
     </script>
 <% end %>
 

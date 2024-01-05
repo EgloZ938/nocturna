@@ -220,6 +220,48 @@ class GamemasterController < ApplicationController
         redirect_to gamemaster_pnj_path
     end
 
+    def pnjZone
+        @pnjzones = Pnjzone.all
+    end
+
+    def newPnjZone
+        @pnjzone = Pnjzone.new
+    end
+
+    def createPnjZone
+        @pnjzone = Pnjzone.new(pnjZone_params)
+        if @pnjzone.save
+            flash[:notice] = "succesfully created pnj zone"
+
+            redirect_to gamemaster_pnjZone_path
+        else
+            flash[:alert] = "pnj zone not created"
+            render :new
+        end
+    end
+
+    def editPnjZone
+        @pnjzone = Pnjzone.find(params[:id])
+        session[:pnjzone_id] = @pnjzone.id
+    end
+
+    def updatePnjZone
+        @pnjzone = Pnjzone.find_by(id: session[:pnjzone_id])
+        if @pnjzone.update(pnjZone_params)
+            session[:pnjzone_id] = nil
+            redirect_to gamemaster_pnjZone_path
+        end
+    end
+
+    def destroyPnjZone
+        @pnjzone = Pnjzone.find(params[:id])
+        if @pnjzone
+            @pnjzone.destroy
+        end
+
+        redirect_to gamemaster_pnjZone_path
+    end
+
     def newRequest
         @request = Request.new
     end
@@ -274,6 +316,10 @@ class GamemasterController < ApplicationController
 
     def pnj_params
         params.require(:pnj).permit(:name, :avatar, :pv, :vitesse, :force, :earn_xp, :earn_money, :reward_items)
+    end
+
+    def pnjZone_params
+        params.require(:pnjzone).permit(:pnj_id, :zone)
     end
 
     def item_params

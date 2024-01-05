@@ -84,6 +84,19 @@ body {
     margin-top: 15px;
 }
 
+#icon-pnj{
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    z-index: 1;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 15px;
+    margin-top: 15px;
+}
+
 #pnj {
     z-index: 900;
     width: 100%;
@@ -299,6 +312,7 @@ body {
     margin: 5px;
     background-size: cover;
     position: relative;
+    cursor: pointer;
 }
 
 .main-case {
@@ -622,29 +636,31 @@ h1 {
     top: 50%;
     transform: translateY(-50%);
     background: rgba(0, 0, 0, 0.5);
-    /* Fond semi-transparent */
     color: white;
     padding: 20px;
     border-radius: 10px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+    clip-path: polygon(0% 15%, 100% 15%, 100% 85%, 85% 100%, 15% 85%, 0% 100%, 15% 0%, 85% 0%);
 }
 
 .village-name {
     font-size: 3em;
     font-weight: bold;
     animation: fadeIn 2s;
+    margin-top: 30px;
 }
 
 .village-description {
     font-size: 1.2em;
     margin-top: 10px;
-    animation: fadeIn 3s;
+    animation: fadeIn 2s;
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
     }
-
     to {
         opacity: 1;
     }
@@ -662,4 +678,89 @@ h1 {
     to {
         opacity: 0;
     }
+}
+
+.full-screen-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    display: none;
+}
+
+.container {
+    background: #f8f0e3;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    max-width: 90%;
+    max-height: 80%;
+    overflow-y: auto;
+    margin: 20px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+}
+
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+
+    .case{
+        width: 48%;
+    }
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fffbe6;
+    border: 2px solid #d6cda4;
+}
+
+th, td {
+    padding: 10px 15px;
+    border: 1px solid #d6cda4;
+    text-align: left;
+}
+
+th {
+    background-color: #b59f7b;
+    color: white;
+    font-size: 18px;
+}
+
+td {
+    font-size: 16px;
+}
+
+.combat-btn {
+    background-color: #8c6239;
+    color: white;
+    padding: 8px 15px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.combat-btn:hover {
+    background-color: #7a541f;
+}
+
+.rewards-row {
+    display: flex;
+    justify-content: flex-start; /* Alignez les éléments au début du conteneur */
+    gap: 10px; /* Espace entre les éléments */
+    margin-bottom: 10px; /* Espace sous chaque rangée */
 }

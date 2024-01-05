@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_03_000904) do
+ActiveRecord::Schema.define(version: 2024_01_05_033344) do
 
   create_table "cinematics", force: :cascade do |t|
     t.string "token"
@@ -104,6 +104,13 @@ ActiveRecord::Schema.define(version: 2024_01_03_000904) do
     t.text "earn_xp"
     t.text "earn_money"
     t.text "reward_items"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pnjzones", force: :cascade do |t|
+    t.text "pnj_id"
+    t.text "zone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
