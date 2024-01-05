@@ -70,10 +70,12 @@
     <%= render partial: "options", locals: {
         personnage: @personnage,
         user: @user,
-        stats: @stats
+        stats: @stats,
+        progression_experience: @progression_experience,
+        points_exp_actuels: @points_exp_actuels,
+        points_exp_prochain_niveau: @points_exp_prochain_niveau
     } %>
 </div>
-
 
 <script type="text/javascript">
     let music = new Audio('/mp3/first-town.mp3');

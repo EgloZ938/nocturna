@@ -216,6 +216,27 @@ class JeuController < ApplicationController
         end
 
         @quantites_totales = @inventaire.group(:objet_id).count
+
+        @experience = Experience.find_by(user_id: session[:user_id])
+
+        if @experience.present? && @personnage.present?
+            current_level = @personnage.exp_joueur.to_i
+            current_exp = @experience.points
+            exp_prochain_niveau = points_requis_pour_niveau(current_level + 1)
+    
+            # Calculer la progression
+            @progression_experience = if exp_prochain_niveau > 0
+                                         (current_exp.to_f / exp_prochain_niveau.to_f) * 100
+                                       else
+                                         0
+                                       end
+            @points_exp_actuels = current_exp
+            @points_exp_prochain_niveau = exp_prochain_niveau
+        else
+            @progression_experience = 0
+            @points_exp_actuels = 0
+            @points_exp_prochain_niveau = 0
+        end
     end
 
     def objetEquipe
@@ -474,8 +495,6 @@ class JeuController < ApplicationController
         end
     end
     
-    
-
     def ajouter_money(money)
         @personnage = Personnage.find_by(user_id: session[:user_id])
         money_actuel = @personnage.argent.to_i

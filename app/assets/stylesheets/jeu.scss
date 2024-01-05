@@ -764,3 +764,24 @@ td {
     gap: 10px; /* Espace entre les éléments */
     margin-bottom: 10px; /* Espace sous chaque rangée */
 }
+
+.progress-container {
+    margin: 20px 0; /* Centrer la barre et ajouter un peu d'espace autour */
+    background-color: #fff; /* Fond blanc de la barre */
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Ombre légère pour du relief */
+    overflow: hidden; /* Garantit que la barre interne reste dans les coins arrondis */
+}
+
+.progress-barr {
+    height: 20px;
+    background-color: #e4aa52; /* Couleur verte pour la barre de progression */
+    width: 0%; /* Démarre à 0%, sera défini par le style inline */
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+.exp-info {
+    text-align: center;
+    margin-left: 10px; /* Un peu d'espace au-dessus de la barre */
+}

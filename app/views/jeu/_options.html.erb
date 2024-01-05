@@ -69,6 +69,12 @@
                 <% end %>
             </h1>
         </div>
+        <div class="progress-container">
+            <div class="progress-barr" style="width: <%= @progression_experience %>%;"></div>
+        </div>
+        <div class="exp-info">
+            <%= @points_exp_actuels %> / <%= @points_exp_prochain_niveau %>
+        </div>
         <div class="flex align-items">
             <h1>Argent : </h1>
             <h1 class="color info"><%= @personnage.argent %> écus</h1>
