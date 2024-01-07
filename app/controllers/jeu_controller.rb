@@ -47,6 +47,20 @@ class JeuController < ApplicationController
             end
             [pnj.avatar, pnj.name, pnj.pv, pnj.vitesse, pnj.force, pnj.earn_xp, pnj.earn_money, reward_items, pnj.id, ajouter_objet]
         end
+
+        zone_actuelle = 'lumina'
+        quetes_zone = Quetezone.where(zone: zone_actuelle).pluck(:quete_id)
+        quetes = Quete.where(id: quetes_zone)
+      
+        user_id = session[:user_id]
+        @progressions_quetes = quetes.map do |quete|
+            progression_quete = Progressionquete.find_by(user_id: user_id, quete_id: quete.id)
+            progression_actuelle = progression_quete ? progression_quete.progression.to_i : 0
+            accomplie = progression_quete ? progression_quete.accomplie : false
+            { quete: quete, progression: progression_actuelle, accomplie: accomplie }
+        end
+
+        
     end
     
 

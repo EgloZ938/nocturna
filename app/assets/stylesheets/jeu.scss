@@ -97,6 +97,19 @@ body {
     margin-top: 15px;
 }
 
+#quete{
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    z-index: 1;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 141px;
+    margin-top: 15px;
+}
+
 #pnj {
     z-index: 900;
     width: 100%;
@@ -694,7 +707,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 999;
     display: none;
 }
 
@@ -788,4 +801,37 @@ td {
 .exp-info {
     text-align: center;
     margin-left: 10px; /* Un peu d'espace au-dessus de la barre */
+}
+
+.quetes-container {
+    max-height: 400px;
+}
+
+.quete {
+    background-color: #fffbe6;
+    border: 2px solid #d6cda4;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.progress-bar {
+    height: 20px;
+    background-color: #e4aa52 !important;
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+.progress-info {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.quete-accomplie {
+    color: green;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
 }

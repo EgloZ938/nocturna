@@ -28,8 +28,10 @@
 <% if @narration %>
     <img id="sac-a-dos" src="/images/sac_a_dos.jpg">
 <% end %>
+
 <img id="craft" src="/images/craft.jpg">
 <img id="icon-pnj" src="/images/pnj.jpg">
+<img id="quete" src="/images/quete.jpg">
 
 <div id="village-intro" class="village-intro">
     <div class="text-container">
@@ -65,6 +67,28 @@
         } %>
     </div>
 </div>
+
+<div class="full-screen-container" id="quetes-menu">
+    <div class="container">
+        <h1>Quêtes à réaliser à Lumina</h1>
+        <div class="quetes-container">
+            <% @progressions_quetes.each do |progression| %>
+                <div class="quete">
+                    <h2><%= progression[:quete].titre %></h2>
+                    <p><%= progression[:quete].description %></p>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: <%= (progression[:progression].to_f / progression[:quete].objectif.to_i) * 100 %>%;"></div>
+                    </div>
+                    <p class="progress-info"><%= progression[:progression] %>/<%= progression[:quete].objectif %></p>
+                    <% if progression[:accomplie] %>
+                        <p class="quete-accomplie">Quête accomplie</p>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>
+
 
 <div id="options">
     <%= render partial: "options", locals: {

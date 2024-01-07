@@ -1,0 +1,2 @@
+class Quetezone < ApplicationRecord
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_05_153318) do
+ActiveRecord::Schema.define(version: 2024_01_07_210040) do
 
   create_table "cinematics", force: :cascade do |t|
     t.string "token"
@@ -110,6 +110,31 @@ ActiveRecord::Schema.define(version: 2024_01_05_153318) do
 
   create_table "pnjzones", force: :cascade do |t|
     t.text "pnj_id"
+    t.text "zone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "progressionquetes", force: :cascade do |t|
+    t.text "progression"
+    t.text "accomplie"
+    t.text "quete_id"
+    t.text "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "quetes", force: :cascade do |t|
+    t.text "titre"
+    t.text "description"
+    t.text "recompenses"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "objectif"des
+  end
+
+  create_table "quetezones", force: :cascade do |t|
+    t.text "quete_id"
     t.text "zone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

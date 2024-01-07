@@ -53,6 +53,14 @@ Rails.application.routes.draw do
   get 'gamemaster/pnjZone'
   get 'gamemaster/newPnjZone'
   get 'gamemaster/editPnjZone'
+  get 'gamemaster/quete'
+  get 'gamemaster/newQuete'
+  get 'gamemaster/editQuete'
+  get 'gamemaster/showQuete'
+  get 'gamemaster/queteZone'
+  get 'gamemaster/newQueteZone'
+  get 'gamemaster/editQueteZone'
+
 
   post 'gamemaster/createPnjZone'
   post 'register/create'
@@ -80,6 +88,11 @@ Rails.application.routes.draw do
   post 'gamemaster/createCraft'
   post 'gamemaster/updateCraft'
   post 'gamemaster/editRequest'
+  post 'gamemaster/createQuete'
+  post 'gamemaster/editQuete'
+  post 'gameamster/updateQuete'
+  post 'gamemaster/createQueteZone'
+  post 'gamamaster/updateQueteZone'
 
   
   delete 'register/destroy'
@@ -91,12 +104,16 @@ Rails.application.routes.draw do
   delete 'jeu/supprObjetInventaire', to: 'jeu#supprObjetInventaire', as: 'jeu_supprObjetInventaire'
   delete 'gamemaster/destroyCraft'
   delete 'gamemaster/destroyPnjZone'
+  delete 'gamemaster/destroyQuete'
+  delete 'gamemaster/destroyQueteZone'
   
   patch 'gamemaster/updateItem'
   patch 'gamemaster/updateCraft'
   patch 'gamemaster/updateRequest'
   patch 'gamemaster/updatePnj'
   patch 'gamemaster/updatePnjZone'
+  patch 'gamemaster/updateQuete'
+  patch 'gamemaster/updateQueteZone'
 
   root 'accueil#index'
 

@@ -44,11 +44,12 @@ else {
     let pnjs = document.getElementById("pnjs-combat");
     if(pnjs !== null){
         document.getElementById("icon-pnj").addEventListener("click", () =>{
+            effet.play();
             document.getElementById("pnjs-combat").style.display = "flex";
         })
     } 
 
-    if(document.getElementById("craft") !== null)[
+    if(document.getElementById("craft") !== null){
         document.getElementById("craft").addEventListener("click", () => {
             effet.play();
             document.getElementById("etable").style.display = "flex";
@@ -57,8 +58,14 @@ else {
             autreElement.style.minWidth = `${elementSource.offsetWidth}px`;
             autreElement.style.minHeight = `${elementSource.offsetHeight}px`;
         })
-    ]
+    }
 
+    if(document.getElementById("quete") !== null){
+        document.getElementById("quete").addEventListener("click", () =>{
+            effet.play();
+            document.getElementById("quetes-menu").style.display = "flex";
+        })
+    }
 
     let objet_craftable = document.getElementsByClassName("objet_craftable");
     let testDiv = document.getElementById("info-objets-craft");
@@ -135,9 +142,10 @@ else {
             let inventaireElem = document.getElementById("inventaire");
             let etableElem = document.getElementById("etable");
             let pnjsCombatElem = document.getElementById("pnjs-combat");
+            let queteElem = document.getElementById("quetes-menu");
             let optionsElem = document.getElementById("options");
             
-            let elements = [inventaireElem, etableElem, pnjsCombatElem];
+            let elements = [inventaireElem, etableElem, pnjsCombatElem, queteElem];
             let isAnyElementOpen = elements.some(elem => elem && window.getComputedStyle(elem, null).display === "flex");
     
             elements.forEach(elem => {

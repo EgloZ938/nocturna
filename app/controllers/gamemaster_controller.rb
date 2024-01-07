@@ -306,6 +306,95 @@ class GamemasterController < ApplicationController
       redirect_to gamemaster_request_path
     end
 
+    def quete
+        @quetes = Quete.all
+    end
+
+    def newQuete
+        @quete = Quete.new
+    end
+
+    def createQuete
+        @quete = Quete.new(quete_params)
+        if @quete.save
+            flash[:notice] = "succesfully created quête"
+    
+            redirect_to gamemaster_quete_path
+        else
+            flash[:alert] = "quete not created"
+            render :new
+        end
+    end
+
+    def showQuete
+        @quete = Quete.find(params[:id])
+    end
+
+    def editQuete
+        @quete = Quete.find(params[:id])
+        session[:quete_id] = @quete.id
+    end
+
+    def updateQuete
+        @quete = Quete.find_by(id: session[:quete_id])
+        if @quete.update(quete_params)
+            session[:quete_id] = nil
+            redirect_to gamemaster_quete_path
+        end
+    end
+
+    def destroyQuete
+    
+        @quete = Quete.find(params[:id])
+        if @quete
+            @quete.destroy
+        end
+      
+        redirect_to gamemaster_quete_path
+    end
+
+    def queteZone
+        @quetezones = Quetezone.all
+    end
+
+    def newQueteZone
+        @quetezone = Quetezone.new
+    end
+    
+    def createQueteZone
+        @quetezone = Quetezone.new(queteZone_params)
+        if @quetezone.save
+            flash[:notice] = "succesfully created quetezone"
+
+            redirect_to gamemaster_queteZone_path
+        else
+            flash[:alert] = "queteZone not created"
+            render :new
+        end
+    end
+
+    def editQueteZone
+        @quetezone = Quetezone.find(params[:id])
+        session[:queteZone_id] = @quetezone.id
+    end
+
+    def updateQueteZone
+        @quetezone = Quetezone.find_by(id: session[:queteZone_id])
+        if @quetezone.update(queteZone_params)
+            session[:queteZone_id] = nil
+            redirect_to gamemaster_queteZone_path
+        end
+    end
+
+    def destroyQueteZone
+        @quetezone = Quetezone.find(params[:id])
+        if @quetezone
+            @quetezone.destroy
+        end
+
+        redirect_to gamemaster_queteZone_path
+    end
+
     def craft_params
         params.require(:craft).permit(:objet_id, :quantite, materials: {})
     end
@@ -332,6 +421,14 @@ class GamemasterController < ApplicationController
 
     def giveItem_params
         params.require(:inventaire).permit(:objet_id, :user_id)
+    end
+
+    def quete_params
+        params.require(:quete).permit(:titre, :description, :recompenses, :objectif)
+    end
+
+    def queteZone_params
+        params.require(:quetezone).permit(:quete_id, :zone)
     end
 
     private

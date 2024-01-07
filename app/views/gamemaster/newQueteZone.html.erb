@@ -1,0 +1,16 @@
+<%= stylesheet_link_tag('gamemaster') %>
+
+<h1>tkt</h1>
+<%= form_with model: @quetezone, url: gamemaster_createQueteZone_path do |form| %>
+  <div>
+    <%= form.label :quete_id %><br>
+    <%= form.text_field :quete_id %>
+  </div>
+  <div>
+    <%= form.label :zone %><br>
+    <%= form.text_field :zone %>
+  </div>
+  <p>
+    <%= form.submit "submit" %>
+  </p>
+<% end %>
