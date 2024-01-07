@@ -33,15 +33,19 @@ class JeuController < ApplicationController
     
     def lumina
         session[:progression] = "lumina"
+
         commun
     
         pnjzones = Pnjzone.where(zone: "lumina")
         @pnjs = pnjzones.map do |pnjzone|
             pnj = Pnj.find(pnjzone.pnj_id)
             reward_items = get_reward_items(pnj.reward_items)
-            victoire_pnj = VictoirePnj.find_by(user_id: session[:user_id], pnj_id: pnj.id)
-            victoire_pnj = victoire_pnj ? victoire_pnj.premiere_victoire : false
-            [pnj.avatar, pnj.name, pnj.pv, pnj.vitesse, pnj.force, pnj.earn_xp, pnj.earn_money, reward_items, pnj.id, victoire_pnj]
+            if peut_ajouter_objets?(session[:user_id], pnj.reward_items)
+                ajouter_objet = false
+            else
+                ajouter_objet = true
+            end
+            [pnj.avatar, pnj.name, pnj.pv, pnj.vitesse, pnj.force, pnj.earn_xp, pnj.earn_money, reward_items, pnj.id, ajouter_objet]
         end
     end
     
@@ -407,16 +411,6 @@ class JeuController < ApplicationController
         @vitesse_final = @personnage.vitesse.to_i + @stats.vitesse.to_i
         @exp_joueur_final = @personnage.exp_joueur.to_i + @stats.exp_joueur.to_i
     
-        victoire_pnj = VictoirePnj.find_by(user_id: session[:user_id], pnj_id: @pnj.id)
-
-        if victoire_pnj.blank?
-            victoire_pnj = false
-        else
-            victoire_pnj = victoire_pnj.premiere_victoire
-        end
-
-        @victoire_pnj = victoire_pnj
-
         narration = Narrationpnj.find_by(user_id: session[:user_id])
     
         if narration && narration.count == "3"
@@ -432,6 +426,12 @@ class JeuController < ApplicationController
         
             objet = Objet.find_by(id: item_id)
             @reward_items << [objet, quantity] if objet
+        end
+
+        if peut_ajouter_objets?(session[:user_id], @pnj.reward_items)
+            @ajouter_objet = false
+        else
+            @ajouter_objet = true
         end
     end
 
@@ -465,15 +465,10 @@ class JeuController < ApplicationController
         if narration && narration.count == "4"
             narration.update(count: "5", user_id: session[:user_id])
         end
-
-        victoire_pnj = VictoirePnj.find_or_initialize_by(user_id: session[:user_id], pnj_id: @pnj.id)
-
-        unless victoire_pnj.premiere_victoire
+        
+        if peut_ajouter_objets?(session[:user_id], @pnj.reward_items)
             ajouter_items(@pnj.reward_items)
-            victoire_pnj.premiere_victoire = true
-            victoire_pnj.save
         end
-
         ajouter_money(@pnj.earn_money)
         ajouter_experiences(@pnj.earn_xp)
         progression = session[:progression]
@@ -514,8 +509,13 @@ class JeuController < ApplicationController
         while @experience.points >= points_requis_pour_niveau(current_level + 1)
             current_level += 1
             @personnage.update(exp_joueur: current_level.to_s)
-            mettre_a_jour_stats_personnage(@personnage, current_level) # Mise à jour des stats
+            mettre_a_jour_stats_personnage(@personnage, current_level)
             @experience.points -= points_requis_pour_niveau(current_level)
+            
+            if current_level >= 10
+                @personnage.update(sac_a_dos: "20")
+            end
+    
             if @experience.points < points_requis_pour_niveau(current_level + 1)
                 break
             end
@@ -557,4 +557,51 @@ class JeuController < ApplicationController
     def create_narration
         Narrationpnj.create(count: params[:count], user_id: session[:user_id])
     end
+
+    def peut_ajouter_objets?(user_id, items)
+        @personnage = Personnage.find_by(user_id: user_id)
+        return false unless @personnage
+    
+        capacite_sac_a_dos = @personnage.sac_a_dos.to_i
+        @inventaire = Inventaire.where(user_id: user_id)
+        
+        # Calculer l'espace occupé et l'espace disponible dans le sac
+        espace_occupe = calculer_espace_occupe(@inventaire)
+        espace_disponible = capacite_sac_a_dos - espace_occupe
+    
+        # Calculer l'espace nécessaire pour les nouveaux objets
+        espace_necessaire = items.split(',').sum do |item_with_quantity|
+            item_parts = item_with_quantity.split('@')
+            item_id = item_parts[0].to_i
+            quantity = item_parts.length > 1 ? item_parts[1].to_i : 1
+    
+            objet = Objet.find(item_id)
+            next 0 unless objet
+    
+            # Si l'objet peut être stacké et qu'il existe déjà dans l'inventaire, pas besoin de plus d'espace
+            if objet.stack.to_i > 1 && @inventaire.exists?(objet_id: item_id)
+                0
+            else
+                quantity # Espace nécessaire si l'objet ne peut pas être stacké ou n'existe pas encore
+            end
+        end
+    
+        # Vérifier si l'espace nécessaire est disponible
+        espace_necessaire <= espace_disponible
+    end
+    
+    def calculer_espace_occupe(inventaire)
+        inventaire.group(:objet_id).count.sum do |objet_id, count|
+            objet = Objet.find(objet_id)
+            next 0 unless objet
+    
+            # Si l'objet peut être stacké, il occupe moins d'espace
+            if objet.stack.to_i > 1
+                (count.to_f / objet.stack.to_i).ceil
+            else
+                count
+            end
+        end
+    end
+    
 end

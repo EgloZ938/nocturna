@@ -1,0 +1,2 @@
+class Progressionquete < ApplicationRecord
+end

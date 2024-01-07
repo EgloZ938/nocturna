@@ -22,7 +22,7 @@ body {
 }
 
 .justify-content {
-    justify-content: center;
+    justify-content: center !important;
 }
 
 .align-items {
@@ -391,6 +391,10 @@ body {
 
 #audio-menu {
     display: none;
+}
+
+.profil-image{
+    margin-bottom: 2rem;
 }
 
 .invisible {

@@ -33,10 +33,6 @@ class PersonnageController < ApplicationController
             if @resolue
                 @resolue.destroy_all
             end
-            @victoirepnj = VictoirePnj.where(id_user: session[:user_id])
-            if @victoirepnj
-                VictoirePnj.where(user_id: session[:user_id]).destroy_all
-            end
         end
 
         @cinematicExistant = Cinematic.find_by(user_id: session[:user_id])

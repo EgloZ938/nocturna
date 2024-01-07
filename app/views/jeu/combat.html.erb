@@ -85,11 +85,13 @@
                     <button id="boutonAction" onclick="actionFinCombat()"></button>
                     <div id="containerRecompenses">
                         <h2>Récompenses :</h2>
-                        <% if @victoire_pnj != true %>
-                            <h3>Objets :</h3>
+                        <h3>Objets :</h3>
+                        <% if @ajouter_objet == true %>
+                            <h3 class="force">Inventaire plein</h3>
+                        <% else %>
                             <div id="recompenses" class="flex">
                                 <% @reward_items.each do |item, quantity| %>
-                                    <% 
+                                    <%
                                         chaineData = item.data
                                         data = chaineData.split(":")
                                         if data[0] == "Point de vie"
@@ -107,7 +109,9 @@
                                         end
                                     %>
                                     <div class="case maj caseUtilisé" style="background-image: url(<%= item.image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h4 class='maj'><%= item.nom %></h4><h3 class='<%= item.rarete %> rarete maj'><%= item.rarete %></h3><h5 class='maj'><%= item.description %></h5><h4 class='<%= classeData %> data'><%= item.data %></h4></div>">
+                                    <% if quantity > 1 %>
                                         <h2 class="infoData"><%= quantity %></h2>
+                                    <% end %>
                                     </div>
                                 <% end %>
                             </div>

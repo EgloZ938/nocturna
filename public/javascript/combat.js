@@ -547,21 +547,53 @@ class Combat {
 
     playAttaqueSound() {
         let attaque = new Audio('/mp3/attaque.mp3');
+        let storageStatus = localStorage.getItem("volume-status");
+        let volumeEffet = localStorage.getItem("volume-effet");
+        if(storageStatus == "false"){
+            attaque.volume = 0;
+        }
+        else{
+            attaque.volume = volumeEffet;
+        }
         attaque.play();
     }
 
     playAbriSound() {
         let abri = new Audio('/mp3/abri.mp3');
+        let storageStatus = localStorage.getItem("volume-status");
+        let volumeEffet = localStorage.getItem("volume-effet");
+        if(storageStatus == "false"){
+            abri.volume = 0;
+        }
+        else{
+            abri.volume = volumeEffet;
+        }
         abri.play();
     }
 
     playPoisonSound() {
         let poison = new Audio('/mp3/poison.mp3');
+        let storageStatus = localStorage.getItem("volume-status");
+        let volumeEffet = localStorage.getItem("volume-effet");
+        if(storageStatus == "false"){
+            poison.volume = 0;
+        }
+        else{
+            poison.volume = volumeEffet;
+        }
         poison.play();
     }
 
     playParalysieSound() {
         let paralyse = new Audio('/mp3/paralysie.mp3');
+        let storageStatus = localStorage.getItem("volume-status");
+        let volumeEffet = localStorage.getItem("volume-effet");
+        if(storageStatus == "false"){
+            paralyse.volume = 0;
+        }
+        else{
+            paralyse.volume = volumeEffet;
+        }
         paralyse.play();
     }
 

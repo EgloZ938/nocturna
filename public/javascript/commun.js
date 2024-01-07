@@ -131,31 +131,27 @@ else {
 
     function keyCode(e) {
         var x = e.keyCode;
-        if (x == 27) {
+        if (x == 27) { // Touche Échap
             let inventaireElem = document.getElementById("inventaire");
             let etableElem = document.getElementById("etable");
             let pnjsCombatElem = document.getElementById("pnjs-combat");
-            if (window.getComputedStyle(inventaireElem, null).display == "flex") {
-                inventaireElem.style.display = "none";
-            }
-            else if (window.getComputedStyle(etableElem, null).display == "flex") {
-                etableElem.style.display = "none";
-            }
-            else if(window.getComputedStyle(pnjsCombatElem, null).display == "flex") {
-                pnjsCombatElem.style.display = "none";
-            }
-            else {
-                let optionsElem = document.getElementById("options");
-                if (window.getComputedStyle(optionsElem, null).display == "none") {
-                    optionsElem.style.display = "flex";
+            let optionsElem = document.getElementById("options");
+            
+            let elements = [inventaireElem, etableElem, pnjsCombatElem];
+            let isAnyElementOpen = elements.some(elem => elem && window.getComputedStyle(elem, null).display === "flex");
+    
+            elements.forEach(elem => {
+                if (elem && window.getComputedStyle(elem, null).display === "flex") {
+                    elem.style.display = "none";
                 }
-                else {
-                    optionsElem.style.display = "none";
-                    document.getElementById("main-menu").style.display = "block";
-                    document.getElementById("options-menu").style.display = "none";
-                    document.getElementById("audio-menu").style.display = "none";
-                    document.getElementById("profil-menu").style.display = "none";
-                }
+            });
+    
+            if (!isAnyElementOpen) {
+                optionsElem.style.display = (window.getComputedStyle(optionsElem, null).display === "none") ? "flex" : "none";
+                document.getElementById("main-menu").style.display = "block";
+                document.getElementById("options-menu").style.display = "none";
+                document.getElementById("audio-menu").style.display = "none";
+                document.getElementById("profil-menu").style.display = "none";
             }
         }
     }

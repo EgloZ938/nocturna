@@ -1,0 +1,2 @@
+class Queteresolue < ApplicationRecord
+end

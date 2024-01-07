@@ -21,35 +21,36 @@
             <td><%= pnj[5] %></td>
             <td><%= pnj[6] %></td>
             <td>
-                <% if pnj[9] != true %>
-                    <% pnj[7].each_slice(2) do |pair| %>
-                        <div class="rewards-row">
-                            <% pair.each do |item, quantity| %>
-                                <% 
-                                    chaineData = item.data
-                                    data = chaineData.split(":")
-                                    if data[0] == "Point de vie"
-                                        classeData = "pv"
-                                    elsif data[0] == "Point d'attaque"
-                                        classeData = "force"
-                                    elsif data[0] == "Point d'exp"
-                                        classeData = "exp"
-                                    elsif data[0] == "Vitesse"
-                                        classeData = "vitesse"
-                                    elsif data[0] == "Valeur"
-                                        classeData = "valeur"
-                                    else 
-                                        classeData = "none"
-                                    end
-                                %>
-                                <div class="case maj caseUtilisé" style="background-image: url(<%= item.image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h4 class='maj'><%= item.nom %></h4><h3 class='<%= item.rarete %> rarete maj'><%= item.rarete %></h3><h5 class='maj'><%= item.description %></h5><h4 class='<%= classeData %> data'><%= item.data %></h4></div>">
+                <% pnj[7].each_slice(2) do |pair| %>
+                    <div class="rewards-row justify-content">
+                        <% pair.each do |item, quantity| %>
+                            <% 
+                                chaineData = item.data
+                                data = chaineData.split(":")
+                                if data[0] == "Point de vie"
+                                    classeData = "pv"
+                                elsif data[0] == "Point d'attaque"
+                                    classeData = "force"
+                                elsif data[0] == "Point d'exp"
+                                    classeData = "exp"
+                                elsif data[0] == "Vitesse"
+                                    classeData = "vitesse"
+                                elsif data[0] == "Valeur"
+                                    classeData = "valeur"
+                                else 
+                                    classeData = "none"
+                                end
+                            %>
+                            <div class="case maj caseUtilisé" style="background-image: url(<%= item.image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h4 class='maj'><%= item.nom %></h4><h3 class='<%= item.rarete %> rarete maj'><%= item.rarete %></h3><h5 class='maj'><%= item.description %></h5><h4 class='<%= classeData %> data'><%= item.data %></h4></div>">
+                                <% if quantity > 1 %>
                                     <h2 class="infoData"><%= quantity %></h2>
-                                </div>
-                            <% end %>
-                        </div>
+                                <% end %>
+                            </div>
+                        <% end %>
+                    </div>
+                    <% if pnj[9] == true %>
+                        <p class="force text-align">Inventaire plein</p>
                     <% end %>
-                <% else %>
-                    Récompenses obtenues
                 <% end %>
             </td>
             <td><button class="combat-btn" id="<%= pnj[8] %>">Affronter</button></td>
