@@ -30,7 +30,7 @@ body {
 }
 
 .space-between {
-    justify-content: space-between;
+    justify-content: space-between !important;
 }
 
 .column {
@@ -798,6 +798,10 @@ td {
     transition: width 0.5s ease-in-out;
 }
 
+#barre-exp-profil{
+    width: 55%;
+}
+
 .exp-info {
     text-align: center;
     margin-left: 10px; /* Un peu d'espace au-dessus de la barre */
@@ -830,8 +834,73 @@ td {
 }
 
 .quete-accomplie {
-    color: green;
+    position: relative;
+    box-shadow: 0 0 10px rgba(139, 69, 19, 0.5); /* Ombre brun foncé pour un look médiéval */
+}
+
+.accomplie-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(218, 165, 32, 0.2); /* Fond doré pâle transparent */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.accomplie-checkmark {
+    color: #DAA520; /* Couleur dorée */
+    font-size: 120px;
     font-weight: bold;
-    text-align: center;
-    margin-top: 10px;
+    text-shadow: 1px 1px 2px #000; /* Ombre portée pour plus de profondeur */
+}
+
+@keyframes bouncing {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.fleche-container {
+    position: fixed;
+    cursor: pointer;
+}
+
+.fleche-haut {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%); /* Centre la flèche horizontalement */
+}
+
+.fleche-bas {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+}
+
+.fleche-gauche {
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%) rotate(270deg);
+}
+
+.fleche-droite {
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.fleche-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.fleche-animate {
+    animation: bouncing 1s infinite;
 }

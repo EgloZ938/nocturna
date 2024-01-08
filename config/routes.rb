@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   get 'gamemaster/queteZone'
   get 'gamemaster/newQueteZone'
   get 'gamemaster/editQueteZone'
+  get 'jeu/vallee'
 
 
   post 'gamemaster/createPnjZone'

@@ -33,36 +33,78 @@ class JeuController < ApplicationController
     
     def lumina
         session[:progression] = "lumina"
-
         commun
-    
+      
         pnjzones = Pnjzone.where(zone: "lumina")
         @pnjs = pnjzones.map do |pnjzone|
             pnj = Pnj.find(pnjzone.pnj_id)
             reward_items = get_reward_items(pnj.reward_items)
             if peut_ajouter_objets?(session[:user_id], pnj.reward_items)
-                ajouter_objet = false
+            ajouter_objet = false
             else
-                ajouter_objet = true
+            ajouter_objet = true
             end
             [pnj.avatar, pnj.name, pnj.pv, pnj.vitesse, pnj.force, pnj.earn_xp, pnj.earn_money, reward_items, pnj.id, ajouter_objet]
         end
-
+      
         zone_actuelle = 'lumina'
         quetes_zone = Quetezone.where(zone: zone_actuelle).pluck(:quete_id)
         quetes = Quete.where(id: quetes_zone)
-      
         user_id = session[:user_id]
+        
         @progressions_quetes = quetes.map do |quete|
             progression_quete = Progressionquete.find_by(user_id: user_id, quete_id: quete.id)
+            
+            if quete.id == 1
+            # Logique pour la quête de fabrication
+            casque_progression, armure_progression = progression_quete&.progression&.split(',')&.map(&:to_i) || [0, 0]
+            progression_actuelle = casque_progression + armure_progression
+            else
+            # Logique pour les autres quêtes
             progression_actuelle = progression_quete ? progression_quete.progression.to_i : 0
+            end
+            
             accomplie = progression_quete ? progression_quete.accomplie : false
             { quete: quete, progression: progression_actuelle, accomplie: accomplie }
         end
-
+      
+        niveau_actuel = @personnage.exp_joueur.to_i
+        progression_niveau = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: 2)
+        objectif_niveau = Quete.find_by(id: 2).objectif.to_i
         
-    end
+        if niveau_actuel >= objectif_niveau
+          progression_niveau.progression = objectif_niveau.to_s
+          progression_niveau.accomplie = "true"
+        else
+          progression_niveau.progression = niveau_actuel.to_s
+          progression_niveau.accomplie = "false"
+        end
+        
+        progression_niveau.save
+
+
+        quetes_zone = Quetezone.where(zone: "lumina").pluck(:quete_id)
+        toutes_quetes_accomplies = Progressionquete.where(quete_id: quetes_zone, user_id: session[:user_id], accomplie: "true").count == quetes_zone.count
+      
+        @afficher_fleche = toutes_quetes_accomplies
+    end      
     
+    def vallee
+        session[:progression] = "vallee"
+        commun
+
+        pnjzones = Pnjzone.where(zone: "vallee")
+        @pnjs = pnjzones.map do |pnjzone|
+            pnj = Pnj.find(pnjzone.pnj_id)
+            reward_items = get_reward_items(pnj.reward_items)
+            if peut_ajouter_objets?(session[:user_id], pnj.reward_items)
+            ajouter_objet = false
+            else
+            ajouter_objet = true
+            end
+            [pnj.avatar, pnj.name, pnj.pv, pnj.vitesse, pnj.force, pnj.earn_xp, pnj.earn_money, reward_items, pnj.id, ajouter_objet]
+        end
+    end
 
     def get_reward_items(reward_item_ids)
         return [] if reward_item_ids.blank?
@@ -255,6 +297,7 @@ class JeuController < ApplicationController
             @points_exp_actuels = 0
             @points_exp_prochain_niveau = 0
         end
+        @personnage = Personnage.find_by(id: session[:personnage_id])
     end
 
     def objetEquipe
@@ -353,25 +396,27 @@ class JeuController < ApplicationController
         noms_materiaux = materiaux.keys
       
         for i in 0..materiaux.length - 1 do
-          id = materiaux[noms_materiaux[i]][0]
-          nombre = materiaux[noms_materiaux[i]][1]
-          for j in 0..nombre.to_i - 1 do
+            id = materiaux[noms_materiaux[i]][0]
+            nombre = materiaux[noms_materiaux[i]][1]
+            for j in 0..nombre.to_i - 1 do
             Inventaire.find_by(objet_id: id, user_id: user_id).destroy
-          end
+            end
         end
       
         inventaire = Inventaire.create(objet_id: objet_id, user_id: user_id)
         if inventaire.save
             @narration = Narrationpnj.find_by(user_id: session[:user_id])
             if @narration.nil?
-                Narrationpnj.create(count: "1", user_id: session[:user_id])
+            Narrationpnj.create(count: "1", user_id: session[:user_id])
             end
-          redirect_to jeu_play_path, notice: "L'objet a été crafté avec succès."
+        
+            # Vérifier et mettre à jour la progression de la quête de fabrication
+            mise_a_jour_progression_fabrication(objet_id, user_id)
+            redirect_to jeu_play_path, notice: "L'objet a été crafté avec succès."
         else
-          redirect_to jeu_play_path, notice: "Erreur"
+            redirect_to jeu_play_path, notice: "Erreur"
         end
-      end
-      
+    end
 
     def objetSuppr
         objet_id = params[:objet_id]
@@ -530,6 +575,16 @@ class JeuController < ApplicationController
                 @personnage.update(sac_a_dos: "20")
             end
     
+            if current_level >= 15
+                if @personnage.classe == 'assassin'
+                    @personnage.update(avatar: "/images/4.jpg")
+                elsif @personnage.classe == 'chevalier'
+                    @personnage.update(avatar: "/images/6.jpg")
+                else
+                    @personnage.update(avatar: "/images/8.jpg")
+                end
+            end
+
             if @experience.points < points_requis_pour_niveau(current_level + 1)
                 break
             end
@@ -618,4 +673,24 @@ class JeuController < ApplicationController
         end
     end
     
+      
+    def mise_a_jour_progression_fabrication(objet_id, user_id)
+        nom_objet = Objet.find(objet_id).nom
+
+        # Quête spécifique pour la fabrication du casque et de l'armure atypique
+        quete_id_fabrication = 1 # Assurez-vous que cet ID est correct
+      
+        progression_quete = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: quete_id_fabrication)
+        progression_quete.progression ||= "0,0"  # Initialise avec "0,0" si nil
+        casque_progression, armure_progression = progression_quete.progression.split(',').map(&:to_i)
+      
+        casque_progression = 1 if nom_objet == "Casque léger amélioré"
+        armure_progression = 1 if nom_objet == "Armure légère amélioré"
+      
+        progression_totale = casque_progression + armure_progression
+        progression_quete.progression = "#{casque_progression},#{armure_progression}"
+        progression_quete.accomplie = "true" if progression_totale >= 2
+        progression_quete.save
+    end
+
 end

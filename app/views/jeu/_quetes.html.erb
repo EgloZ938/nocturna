@@ -1,0 +1,17 @@
+<div class="quetes-container">
+    <% @progressions_quetes.each do |progression| %>
+        <div class="quete <%= 'quete-accomplie' if progression[:accomplie] == 'true' %>">
+            <% if progression[:accomplie] == 'true' %>
+                <div class="accomplie-overlay">
+                    <span class="accomplie-checkmark">&#10003;</span>
+                </div>
+            <% end %>
+            <h2><%= progression[:quete].titre %></h2>
+            <p><%= progression[:quete].description %></p>
+            <div class="progress-container">
+                <div class="progress-bar" style="width: <%= (progression[:progression].to_f / progression[:quete].objectif.to_i) * 100 %>%;"></div>
+            </div>
+            <p class="progress-info"><%= progression[:progression] %>/<%= progression[:quete].objectif %></p>
+        </div>
+    <% end %>
+</div>

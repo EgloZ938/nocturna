@@ -60,20 +60,24 @@
             <h1>Classe : </h1>
             <h1 class="color info classe"><%= @personnage.classe %></h1>
         </div>
-        <div class="flex align-items">
-            <h1>Niveau : </h1>
-            <h1 class="color info">
-                <%= @personnage.exp_joueur %>
-                <% if @stats.exp_joueur != "0" %>
-                    <span class="commun">(</span><span class="exp">Bonus d'exp : +<%= @stats.exp_joueur %>%</span><span class="commun">)</span>
-                <% end %>
-            </h1>
-        </div>
-        <div class="progress-container">
-            <div class="progress-barr" style="width: <%= @progression_experience %>%;"></div>
-        </div>
-        <div class="exp-info">
-            <h3><%= @points_exp_actuels %> / <%= @points_exp_prochain_niveau %></h3>
+        <div class="flex align-items space-between">
+            <div class="flex align-items">
+                <h1>Niveau : </h1>
+                <h1 class="color info">
+                    <%= @personnage.exp_joueur %>
+                    <% if @stats.exp_joueur != "0" %>
+                        <span class="commun">(</span><span class="exp">Bonus d'exp : +<%= @stats.exp_joueur %>%</span><span class="commun">)</span>
+                    <% end %>
+                </h1>
+            </div>
+            <div id="barre-exp-profil">
+                <div class="progress-container">
+                    <div class="progress-barr" style="width: <%= @progression_experience %>%;"></div>
+                </div>
+                <div class="exp-info">
+                    <h3><%= @points_exp_actuels %> / <%= @points_exp_prochain_niveau %></h3>
+                </div>
+            </div>
         </div>
         <div class="flex align-items">
             <h1>Argent : </h1>

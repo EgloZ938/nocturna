@@ -35,21 +35,21 @@ else {
     }
 
     let sac = document.getElementById("sac-a-dos");
-    if(sac !== null){
+    if (sac !== null) {
         document.getElementById("sac-a-dos").addEventListener("click", () => {
             effet.play();
             document.getElementById("inventaire").style.display = "flex";
         })
     }
     let pnjs = document.getElementById("pnjs-combat");
-    if(pnjs !== null){
-        document.getElementById("icon-pnj").addEventListener("click", () =>{
+    if (pnjs !== null) {
+        document.getElementById("icon-pnj").addEventListener("click", () => {
             effet.play();
             document.getElementById("pnjs-combat").style.display = "flex";
         })
-    } 
+    }
 
-    if(document.getElementById("craft") !== null){
+    if (document.getElementById("craft") !== null) {
         document.getElementById("craft").addEventListener("click", () => {
             effet.play();
             document.getElementById("etable").style.display = "flex";
@@ -60,8 +60,8 @@ else {
         })
     }
 
-    if(document.getElementById("quete") !== null){
-        document.getElementById("quete").addEventListener("click", () =>{
+    if (document.getElementById("quete") !== null) {
+        document.getElementById("quete").addEventListener("click", () => {
             effet.play();
             document.getElementById("quetes-menu").style.display = "flex";
         })
@@ -144,16 +144,16 @@ else {
             let pnjsCombatElem = document.getElementById("pnjs-combat");
             let queteElem = document.getElementById("quetes-menu");
             let optionsElem = document.getElementById("options");
-            
+
             let elements = [inventaireElem, etableElem, pnjsCombatElem, queteElem];
             let isAnyElementOpen = elements.some(elem => elem && window.getComputedStyle(elem, null).display === "flex");
-    
+
             elements.forEach(elem => {
                 if (elem && window.getComputedStyle(elem, null).display === "flex") {
                     elem.style.display = "none";
                 }
             });
-    
+
             if (!isAnyElementOpen) {
                 optionsElem.style.display = (window.getComputedStyle(optionsElem, null).display === "none") ? "flex" : "none";
                 document.getElementById("main-menu").style.display = "block";
@@ -237,4 +237,35 @@ else {
     document.getElementById("quitter-button").addEventListener("click", () => {
         location.href = "/";
     })
+
+    let combatBtn = document.getElementsByClassName("combat-btn");
+    if (combatBtn !== null) {
+        for (let i = 0; i < combatBtn.length; i++) {
+            combatBtn[i].addEventListener("click", (e) => {
+                let id = e.target.id;
+                location.href = `/jeu/combat?pnj_id=${id}`;
+            })
+        }
+    }
+
+    let villageAnim = localStorage.getItem("village-anim");
+    if(villageAnim == null){
+        localStorage.setItem("village-anim", "true");
+    }
+    villageAnim = localStorage.getItem("village-anim");
+    
+    if(villageAnim == "true"){
+        var intro = document.getElementById('village-intro');
+        intro.style.display = 'block';
+    
+        setTimeout(function() {
+            intro.classList.add('fadeOut');
+        }, 2000);
+    
+        setTimeout(function() {
+            intro.style.display = 'none';
+        }, 4000);
+
+        localStorage.setItem("village-anim", "false");
+    }
 }

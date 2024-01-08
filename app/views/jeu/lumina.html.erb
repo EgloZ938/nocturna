@@ -35,7 +35,7 @@
 
 <div id="village-intro" class="village-intro">
     <div class="text-container">
-        <h1 class="village-name">LUMINA</h1>
+        <h1 class="village-name">Lumina</h1>
         <p class="village-description">Un havre de lumière dans les ténèbres de Nocturna, promesse d'un nouveau départ.</p>
     </div>
 </div>
@@ -71,21 +71,9 @@
 <div class="full-screen-container" id="quetes-menu">
     <div class="container">
         <h1>Quêtes à réaliser à Lumina</h1>
-        <div class="quetes-container">
-            <% @progressions_quetes.each do |progression| %>
-                <div class="quete">
-                    <h2><%= progression[:quete].titre %></h2>
-                    <p><%= progression[:quete].description %></p>
-                    <div class="progress-container">
-                        <div class="progress-bar" style="width: <%= (progression[:progression].to_f / progression[:quete].objectif.to_i) * 100 %>%;"></div>
-                    </div>
-                    <p class="progress-info"><%= progression[:progression] %>/<%= progression[:quete].objectif %></p>
-                    <% if progression[:accomplie] %>
-                        <p class="quete-accomplie">Quête accomplie</p>
-                    <% end %>
-                </div>
-            <% end %>
-        </div>
+        <%= render partial: "quetes", locals: {
+            progressions_quetes: @progressions_quetes
+        } %>
     </div>
 </div>
 
@@ -100,6 +88,13 @@
         points_exp_prochain_niveau: @points_exp_prochain_niveau
     } %>
 </div>
+
+
+<% if @afficher_fleche %>
+    <div class="fleche-container fleche-haut" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Se rendre à la Vallée des Murmures">
+        <img class="fleche-img fleche-animate" src="/images/fleche-direction.jpg" id="fleche-direction">
+    </div>
+<% end %>
 
 <script type="text/javascript">
     let music = new Audio('/mp3/first-town.mp3');

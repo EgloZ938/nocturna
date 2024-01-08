@@ -461,14 +461,14 @@ class Combat {
     }
 
     finDuCombat(resultat) {
-        music.pause();
-        let musicVictoire = new Audio("/mp3/victoire-combat.mp3");
-        musicVictoire.play();
         this.desactiverBoutonsCombat();
         let messageEpic = "";
         let texteBouton = "";
     
         if (resultat === "Victoire") {
+            music.pause();
+            let musicVictoire = new Audio("/mp3/victoire-combat.mp3");
+            musicVictoire.play();
             messageEpic = "Félicitations! Vous avez triomphé avec bravoure.";
             document.getElementById("boutonAction").style.display = "none";
         }

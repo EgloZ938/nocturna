@@ -118,11 +118,12 @@
                         <% end %>
                         <h3>Argent : <%= @pnj.earn_money %></h3>
                         <h3>Points d'expériences : <%= @pnj.earn_xp %></h3>
+                        
+                        <%= form_with url: jeu_recompenses_path, method: :get, local: true do %>
+                            <%= hidden_field_tag :id, @pnj.id %>
+                            <%= submit_tag "Prendre les récompenses", class: 'boutonRecompenses' %>
+                        <% end %>
                     </div>
-                    <%= form_with url: jeu_recompenses_path, method: :get, local: true do %>
-                        <%= hidden_field_tag :id, @pnj.id %>
-                        <%= submit_tag "Prendre les récompenses", class: 'boutonRecompenses' %>
-                    <% end %>
                 </div>
             </div>
         </div>

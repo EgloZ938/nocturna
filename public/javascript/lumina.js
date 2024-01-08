@@ -28,34 +28,12 @@ window.onload = function () {
 
     music.play();
     localStorage.removeItem("autoReload");
-
-    let villageAnim = localStorage.getItem("village-anim");
-    if(villageAnim == null){
-        localStorage.setItem("village-anim", "true");
-    }
-    villageAnim = localStorage.getItem("village-anim");
-    
-    if(villageAnim == "true"){
-        var intro = document.getElementById('village-intro');
-        intro.style.display = 'block';
-    
-        setTimeout(function() {
-            intro.classList.add('fadeOut');
-        }, 2000);
-    
-        setTimeout(function() {
-            intro.style.display = 'none';
-        }, 4000);
-
-        localStorage.setItem("village-anim", "false");
-    }
 };
 
-
-let combatBtn = document.getElementsByClassName("combat-btn");
-for(let i = 0; i < combatBtn.length; i++){
-    combatBtn[i].addEventListener("click", (e) =>{
-        let id = e.target.id;
-        location.href = `/jeu/combat?pnj_id=${id}`;
+let fleche = document.getElementById("fleche-direction");
+if(fleche !== null){
+    fleche.addEventListener("click", () =>{
+        localStorage.setItem("village-anim", "true");
+        location.href = "/jeu/vallee"
     })
 }
