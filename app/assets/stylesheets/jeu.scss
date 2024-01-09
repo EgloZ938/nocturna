@@ -33,6 +33,12 @@ body {
     justify-content: space-between !important;
 }
 
+.space-around{
+    justify-content: space-around !important;
+}
+
+
+
 .column {
     flex-direction: column;
 }
@@ -221,7 +227,7 @@ body {
     border: 3px solid #e4aa52;
 }
 
-#inventaire {
+#inventaire{
     position: absolute;
     z-index: 900;
     width: 100%;
@@ -903,4 +909,53 @@ td {
 
 .fleche-animate {
     animation: bouncing 1s infinite;
+}
+
+.img-disabled {
+    filter: grayscale(80%);
+    pointer-events: none;
+}
+
+.marche{
+    color: #fff;
+    max-width: 30%;
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 15px;
+    border: 1px solid black;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+#marche-icon{
+    width: 96px;
+    height: 96px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 15px;
+    margin-right: 396px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.row-objet{
+    flex-flow: row wrap;
+}
+
+.menuMarche{
+    input{
+        font-size: 1.5rem;
+    }
+
+    form{
+        display: flex;
+    }
+    
+    input[type="number"]{
+        width: 20%;
+    }
+
+    h3{
+        margin-top: 15px;
+    }
+
+    min-width: 500px !important;
 }

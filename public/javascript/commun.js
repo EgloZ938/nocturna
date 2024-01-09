@@ -60,6 +60,14 @@ else {
         })
     }
 
+    if (document.getElementById("marche-icon") !== null){
+        document.getElementById("marche-icon").addEventListener("click", () =>{
+            effet.play();
+            document.getElementById("marche").style.display = "flex";
+            console.log("tg")
+        })
+    }
+
     if (document.getElementById("quete") !== null) {
         document.getElementById("quete").addEventListener("click", () => {
             effet.play();
@@ -138,14 +146,15 @@ else {
 
     function keyCode(e) {
         var x = e.keyCode;
-        if (x == 27) { // Touche Échap
+        if (x == 27) {
             let inventaireElem = document.getElementById("inventaire");
             let etableElem = document.getElementById("etable");
             let pnjsCombatElem = document.getElementById("pnjs-combat");
             let queteElem = document.getElementById("quetes-menu");
             let optionsElem = document.getElementById("options");
+            let marcheElem = document.getElementById("marche");
 
-            let elements = [inventaireElem, etableElem, pnjsCombatElem, queteElem];
+            let elements = [inventaireElem, etableElem, pnjsCombatElem, queteElem, marcheElem];
             let isAnyElementOpen = elements.some(elem => elem && window.getComputedStyle(elem, null).display === "flex");
 
             elements.forEach(elem => {

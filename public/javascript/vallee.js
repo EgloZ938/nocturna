@@ -32,5 +32,10 @@ window.onload = function () {
 
 document.getElementById("fleche-direction-lumina").addEventListener("click", () => {
     localStorage.setItem("village-anim", "true");
-    location.href = "/jeu/lumina"
+    location.href = "/jeu/lumina";
+})
+
+document.getElementById("fleche-direction-valdara").addEventListener("click", () =>{
+    localStorage.setItem("village-anim", "true");
+    location.href = "/jeu/valdara";
 })

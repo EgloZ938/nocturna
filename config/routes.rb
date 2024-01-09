@@ -61,8 +61,13 @@ Rails.application.routes.draw do
   get 'gamemaster/newQueteZone'
   get 'gamemaster/editQueteZone'
   get 'jeu/vallee'
+  get 'jeu/valdara'
+  get 'jeu/acheterObjet'
+  get 'jeu/vendreObjet'
 
 
+  post 'jeu/acheterObjet'
+  post 'jeu/vendreObjet'
   post 'gamemaster/createPnjZone'
   post 'register/create'
   post 'register/connexion'

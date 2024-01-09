@@ -87,7 +87,7 @@ class Combat {
         this.joueurParalyse = false;
         this.ennemiParalyse = false;
         this.intensitePoisonJoueur = 50;
-        this.intensitePoisonEnnemi = 50;
+        this.intensitePoisonEnnemi = 100;
         this.combatTermine = false;
     }
 
@@ -351,7 +351,8 @@ class Combat {
         let peutAttaquer = true;
 
         if ((attaqueur.nom === this.joueur.nom && this.joueurParalyse) || (attaqueur.nom === this.ennemi.nom && this.ennemiParalyse)) {
-            peutAttaquer = Math.random() < 0.5;
+            peutAttaquer = Math.random() < 0.6;
+            console.log(peutAttaquer)
             if (!peutAttaquer && attaque != 'abri') {
                 this.playParalysieSound();
                 this.messageCombat(`${attaqueur.nom} est paralysé et n'a pas pu attaquer`);
@@ -492,7 +493,7 @@ class Combat {
 
             this.ennemi.pv -= this.intensitePoisonEnnemi;
             this.ennemi.pv = Math.max(0, this.ennemi.pv);
-            this.intensitePoisonEnnemi += 50;
+            this.intensitePoisonEnnemi += 100;
 
             this.playPoisonSound();
             this.messageCombat(this.joueur.nom + " et " + this.ennemi.nom + " souffrent du poison");
@@ -509,7 +510,7 @@ class Combat {
             if (this.ennemiEmpoisone) {
                 this.ennemi.pv -= this.intensitePoisonEnnemi;
                 this.ennemi.pv = Math.max(0, this.ennemi.pv);
-                this.intensitePoisonEnnemi += 50;
+                this.intensitePoisonEnnemi += 100;
                 this.playPoisonSound();
                 this.messageCombat(this.ennemi.nom + " souffre du poison");
             }

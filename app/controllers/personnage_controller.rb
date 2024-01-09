@@ -33,6 +33,10 @@ class PersonnageController < ApplicationController
             if @resolue
                 @resolue.destroy_all
             end
+            @progressionquete = Progressionquete.where(id_user: session[:user_id])
+            if @progressionquete
+                @progressionquete.destroy_all
+            end
         end
 
         @cinematicExistant = Cinematic.find_by(user_id: session[:user_id])

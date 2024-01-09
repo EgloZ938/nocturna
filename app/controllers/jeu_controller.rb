@@ -68,7 +68,9 @@ class JeuController < ApplicationController
             { quete: quete, progression: progression_actuelle, accomplie: accomplie }
         end
       
-        niveau_actuel = @personnage.exp_joueur.to_i
+        personnage_xp = Personnage.find_by(id: session[:personnage_id])
+
+        niveau_actuel = personnage_xp.exp_joueur.to_i
         progression_niveau = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: 2)
         objectif_niveau = Quete.find_by(id: 2).objectif.to_i
         
@@ -89,6 +91,66 @@ class JeuController < ApplicationController
         @afficher_fleche = toutes_quetes_accomplies
     end      
     
+    def valdara
+        session[:progression] = "valdara"
+        commun
+
+        zone_actuelle = 'valdara'
+        quetes_zone = Quetezone.where(zone: zone_actuelle).pluck(:quete_id)
+        quetes = Quete.where(id: quetes_zone)
+        user_id = session[:user_id]
+
+        @progressions_quetes = quetes.map do |quete|
+            progression_quete = Progressionquete.find_by(user_id: user_id, quete_id: quete.id)
+            
+            if quete.id == 1
+            casque_progression, armure_progression = progression_quete&.progression&.split(',')&.map(&:to_i) || [0, 0]
+            progression_actuelle = casque_progression + armure_progression
+            else
+            progression_actuelle = progression_quete ? progression_quete.progression.to_i : 0
+            end
+            
+            accomplie = progression_quete ? progression_quete.accomplie : false
+            { quete: quete, progression: progression_actuelle, accomplie: accomplie }
+        end
+
+        niveau_actuel = @personnage.exp_joueur.to_i
+        progression_niveau = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: 4)
+        objectif_niveau = Quete.find_by(id: 4).objectif.to_i
+        
+        if niveau_actuel >= objectif_niveau
+          progression_niveau.progression = objectif_niveau.to_s
+          progression_niveau.accomplie = "true"
+        else
+          progression_niveau.progression = niveau_actuel.to_s
+          progression_niveau.accomplie = "false"
+        end
+        
+        progression_niveau.save
+
+        quetes_zone = Quetezone.where(zone: "valdara").pluck(:quete_id)
+        toutes_quetes_accomplies = Progressionquete.where(quete_id: quetes_zone, user_id: session[:user_id], accomplie: "true").count == quetes_zone.count
+      
+        @afficher_fleche = toutes_quetes_accomplies
+
+        objets_marche = Objet.where(caracteristique: ["achetable", "vendable", "achetable/vendable"])
+
+        # Noms pour identifier les groupes spéciaux
+        noms_pieces_or = ["Pièce d'or", "Sac de pièces d'or", "Gros sac de pièces d'or"]
+        rarete_ordre = ["commun", "atypique", "rare", "épique", "légendaire"]
+        
+        # Séparez les objets en trois groupes
+        groupes_objets = objets_marche.reject { |objet| noms_pieces_or.include?(objet.nom) || objet.nom.start_with?("Orbe") }
+        groupes_pieces_or = objets_marche.select { |objet| noms_pieces_or.include?(objet.nom) }
+        groupes_orbes = objets_marche.select { |objet| objet.nom.start_with?("Orbe") }
+        
+        # Triez les objets du groupe 'groupes_objets' par rareté
+        groupes_objets = groupes_objets.sort_by { |objet| rarete_ordre.index(objet.rarete) || rarete_ordre.length }
+        
+        # Construisez le tableau final @objets_groupes avec ces trois groupes
+        @objets_groupes = [groupes_objets, groupes_pieces_or, groupes_orbes]
+    end
+
     def vallee
         session[:progression] = "vallee"
         commun
@@ -118,6 +180,17 @@ class JeuController < ApplicationController
         end.compact
     end
     
+    def acheterObjet
+        objet_id = params[:objet_id]
+        quantite = params[:quantite]
+
+
+    end
+
+    def vendreObjet
+        objet_id = params[:objet_id]
+        quantite = params[:quantite]
+    end
 
     def commun
         @user = User.find_by(id: session[:user_id])
@@ -263,7 +336,6 @@ class JeuController < ApplicationController
             end
         end
 
-        # Préparer @materiaux_et_objets avec les crafts filtrés
         @materiaux_et_objets = {}
         crafts_filtrés.each do |craft|
             materiaux_non_vides = craft.materials.select { |_, quantite| quantite.to_i > 0 }
@@ -297,7 +369,6 @@ class JeuController < ApplicationController
             @points_exp_actuels = 0
             @points_exp_prochain_niveau = 0
         end
-        @personnage = Personnage.find_by(id: session[:personnage_id])
     end
 
     def objetEquipe
@@ -410,7 +481,6 @@ class JeuController < ApplicationController
             Narrationpnj.create(count: "1", user_id: session[:user_id])
             end
         
-            # Vérifier et mettre à jour la progression de la quête de fabrication
             mise_a_jour_progression_fabrication(objet_id, user_id)
             redirect_to jeu_play_path, notice: "L'objet a été crafté avec succès."
         else
@@ -456,6 +526,94 @@ class JeuController < ApplicationController
 
     end
 
+    def acheterObjet
+        quantite = params[:quantite].to_i
+        objet_id = params[:objet_id]
+        argent = params[:argent].to_i
+        user_id = session[:user_id]
+        personnage = Personnage.find_by(id: session[:personnage_id])
+
+        quete_id_fabrication = 5
+        progression_quete = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: quete_id_fabrication)
+        progression_quete.progression ||= "0"
+        progression_actuelle = progression_quete.progression.to_i
+        
+        if personnage.argent.to_i >= argent
+            personnage.argent = personnage.argent.to_i - argent
+            
+            for i in 1..quantite do
+                Inventaire.create(objet_id: objet_id, user_id: user_id)
+                
+                if progression_actuelle < 3
+                    progression_actuelle += 1
+                end
+            end
+        
+            progression_quete.progression = progression_actuelle.to_s
+            if progression_actuelle >= 3
+                progression_quete.accomplie = "true"
+            end
+
+            progression_quete.save
+    
+            if personnage.save
+                flash[:success] = "Achat réussi."
+                redirect_to jeu_valdara_path
+            else
+                flash[:error] = "Une erreur est survenue lors de l'enregistrement."
+                redirect_to jeu_valdara_path
+            end
+        else
+            flash[:error] = "Vous n'avez pas assez d'argent pour cet achat."
+            redirect_to jeu_valdara_path
+        end
+    end
+      
+    def vendreObjet
+        quantite = params[:quantite].to_i
+        objet_id = params[:objet_id]
+        argent = params[:argent].to_i
+        user_id = session[:user_id]
+        personnage = Personnage.find_by(id: session[:personnage_id])
+
+
+        quete_id_fabrication = 6
+        progression_quete = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: quete_id_fabrication)
+        progression_quete.progression ||= "0"
+        progression_actuelle = progression_quete.progression.to_i
+    
+        if Inventaire.where(objet_id: objet_id, user_id: user_id).count >= quantite
+            personnage.argent = personnage.argent.to_i + argent
+    
+            quantite.times do
+                inventaire = Inventaire.find_by(objet_id: objet_id, user_id: user_id)
+                inventaire.destroy if inventaire
+
+                if progression_actuelle < 5
+                    progression_actuelle += 1
+                end
+            end
+    
+            progression_quete.progression = progression_actuelle.to_s
+            if progression_actuelle >= 5
+                progression_quete.accomplie = "true"
+            end
+
+            progression_quete.save
+
+            if personnage.save
+                flash[:success] = "Vente réussie."
+                redirect_to jeu_valdara_path
+            else
+                flash[:error] = "Une erreur est survenue lors de l'enregistrement."
+                redirect_to jeu_valdara_path
+            end
+        else
+            flash[:error] = "Vous n'avez pas assez d'objets à vendre."
+            redirect_to jeu_valdara_path
+        end
+    end
+    
 
     def combat
         @personnage = Personnage.find_by(user_id: session[:user_id])
@@ -524,22 +682,19 @@ class JeuController < ApplicationController
         if narration && narration.count == "4"
             narration.update(count: "5", user_id: session[:user_id])
         end
-        
+
         if peut_ajouter_objets?(session[:user_id], @pnj.reward_items)
             ajouter_items(@pnj.reward_items)
         end
         ajouter_money(@pnj.earn_money)
         ajouter_experiences(@pnj.earn_xp)
-        progression = session[:progression]
-
-        redirect_to send("jeu_#{progression}_path")
     end
     
     def ajouter_items(items)
         return if items.blank?
-        
+
         user_id = session[:user_id]
-    
+
         items.split(',').each do |item_with_quantity|
             item_parts = item_with_quantity.split('@')
             item_id = item_parts[0].to_i
@@ -595,6 +750,10 @@ class JeuController < ApplicationController
         end
     
         @experience.save
+
+        progression = session[:progression]
+
+        redirect_to send("jeu_#{progression}_path")
     end
     
     def mettre_a_jour_stats_personnage(personnage, niveau)
@@ -634,11 +793,9 @@ class JeuController < ApplicationController
         capacite_sac_a_dos = @personnage.sac_a_dos.to_i
         @inventaire = Inventaire.where(user_id: user_id)
         
-        # Calculer l'espace occupé et l'espace disponible dans le sac
         espace_occupe = calculer_espace_occupe(@inventaire)
         espace_disponible = capacite_sac_a_dos - espace_occupe
     
-        # Calculer l'espace nécessaire pour les nouveaux objets
         espace_necessaire = items.split(',').sum do |item_with_quantity|
             item_parts = item_with_quantity.split('@')
             item_id = item_parts[0].to_i
@@ -647,15 +804,13 @@ class JeuController < ApplicationController
             objet = Objet.find(item_id)
             next 0 unless objet
     
-            # Si l'objet peut être stacké et qu'il existe déjà dans l'inventaire, pas besoin de plus d'espace
             if objet.stack.to_i > 1 && @inventaire.exists?(objet_id: item_id)
                 0
             else
-                quantity # Espace nécessaire si l'objet ne peut pas être stacké ou n'existe pas encore
+                quantity
             end
         end
     
-        # Vérifier si l'espace nécessaire est disponible
         espace_necessaire <= espace_disponible
     end
     
@@ -664,7 +819,6 @@ class JeuController < ApplicationController
             objet = Objet.find(objet_id)
             next 0 unless objet
     
-            # Si l'objet peut être stacké, il occupe moins d'espace
             if objet.stack.to_i > 1
                 (count.to_f / objet.stack.to_i).ceil
             else
@@ -673,24 +827,37 @@ class JeuController < ApplicationController
         end
     end
     
-      
     def mise_a_jour_progression_fabrication(objet_id, user_id)
         nom_objet = Objet.find(objet_id).nom
+        objets_a_verifier1 = ["Casque léger amélioré", "Armure légère amélioré"]
+        objets_a_verifier2 = ["Lame légère amélioré", "Épée légère amélioré", "Sceptre magique amélioré"]
+        if objets_a_verifier1.include?(nom_objet)
+            quete_id_fabrication = 1
+            
+            progression_quete = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: quete_id_fabrication)
+            progression_quete.progression ||= "0,0"
+            casque_progression, armure_progression = progression_quete.progression.split(',').map(&:to_i)
+            
+            casque_progression = 1 if nom_objet == "Casque léger amélioré"
+            armure_progression = 1 if nom_objet == "Armure légère amélioré"
+            
+            progression_totale = casque_progression + armure_progression
+            progression_quete.progression = "#{casque_progression},#{armure_progression}"
+            progression_quete.accomplie = "true" if progression_totale >= 2
+            progression_quete.save
 
-        # Quête spécifique pour la fabrication du casque et de l'armure atypique
-        quete_id_fabrication = 1 # Assurez-vous que cet ID est correct
-      
-        progression_quete = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: quete_id_fabrication)
-        progression_quete.progression ||= "0,0"  # Initialise avec "0,0" si nil
-        casque_progression, armure_progression = progression_quete.progression.split(',').map(&:to_i)
-      
-        casque_progression = 1 if nom_objet == "Casque léger amélioré"
-        armure_progression = 1 if nom_objet == "Armure légère amélioré"
-      
-        progression_totale = casque_progression + armure_progression
-        progression_quete.progression = "#{casque_progression},#{armure_progression}"
-        progression_quete.accomplie = "true" if progression_totale >= 2
-        progression_quete.save
+        elsif objets_a_verifier2.include?(nom_objet)
+            quete_id_fabrication = 3
+
+            progression_quete = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: quete_id_fabrication)
+            progression_quete.progression ||= "0"
+
+            if progression_quete.progression.to_i < 1
+                progression_quete.progression = "1"
+                progression_quete.accomplie = "true"
+                progression_quete.save
+            end
+        end
     end
 
 end
