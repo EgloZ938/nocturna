@@ -68,28 +68,11 @@ class JeuController < ApplicationController
             { quete: quete, progression: progression_actuelle, accomplie: accomplie }
         end
       
-        personnage_xp = Personnage.find_by(id: session[:personnage_id])
-
-        niveau_actuel = personnage_xp.exp_joueur.to_i
-        progression_niveau = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: 2)
-        objectif_niveau = Quete.find_by(id: 2).objectif.to_i
-        
-        if niveau_actuel >= objectif_niveau
-          progression_niveau.progression = objectif_niveau.to_s
-          progression_niveau.accomplie = "true"
-        else
-          progression_niveau.progression = niveau_actuel.to_s
-          progression_niveau.accomplie = "false"
-        end
-        
-        progression_niveau.save
-
-
         quetes_zone = Quetezone.where(zone: "lumina").pluck(:quete_id)
         toutes_quetes_accomplies = Progressionquete.where(quete_id: quetes_zone, user_id: session[:user_id], accomplie: "true").count == quetes_zone.count
       
         @afficher_fleche = toutes_quetes_accomplies
-    end      
+    end
     
     def valdara
         session[:progression] = "valdara"
@@ -113,20 +96,6 @@ class JeuController < ApplicationController
             accomplie = progression_quete ? progression_quete.accomplie : false
             { quete: quete, progression: progression_actuelle, accomplie: accomplie }
         end
-
-        niveau_actuel = @personnage.exp_joueur.to_i
-        progression_niveau = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: 4)
-        objectif_niveau = Quete.find_by(id: 4).objectif.to_i
-        
-        if niveau_actuel >= objectif_niveau
-          progression_niveau.progression = objectif_niveau.to_s
-          progression_niveau.accomplie = "true"
-        else
-          progression_niveau.progression = niveau_actuel.to_s
-          progression_niveau.accomplie = "false"
-        end
-        
-        progression_niveau.save
 
         quetes_zone = Quetezone.where(zone: "valdara").pluck(:quete_id)
         toutes_quetes_accomplies = Progressionquete.where(quete_id: quetes_zone, user_id: session[:user_id], accomplie: "true").count == quetes_zone.count
@@ -180,18 +149,6 @@ class JeuController < ApplicationController
         end.compact
     end
     
-    def acheterObjet
-        objet_id = params[:objet_id]
-        quantite = params[:quantite]
-
-
-    end
-
-    def vendreObjet
-        objet_id = params[:objet_id]
-        quantite = params[:quantite]
-    end
-
     def commun
         @user = User.find_by(id: session[:user_id])
         @personnage = Personnage.find_by(id: session[:personnage_id])
@@ -533,6 +490,12 @@ class JeuController < ApplicationController
         user_id = session[:user_id]
         personnage = Personnage.find_by(id: session[:personnage_id])
 
+        unless peut_ajouter_objets?(user_id, "#{objet_id}@#{quantite}")
+            flash[:error] = "Pas assez de place dans le sac à dos."
+            redirect_to jeu_valdara_path
+            return
+        end
+
         quete_id_fabrication = 5
         progression_quete = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: quete_id_fabrication)
         progression_quete.progression ||= "0"
@@ -572,7 +535,7 @@ class JeuController < ApplicationController
     def vendreObjet
         quantite = params[:quantite].to_i
         objet_id = params[:objet_id]
-        argent = params[:argent].to_i
+        argent = params[:total_vente].to_i
         user_id = session[:user_id]
         personnage = Personnage.find_by(id: session[:personnage_id])
 
@@ -626,7 +589,7 @@ class JeuController < ApplicationController
         @pv_final = @personnage.pv.to_i + @stats.pv.to_i
         @force_final = @personnage.force.to_i + @stats.force.to_i
         @vitesse_final = @personnage.vitesse.to_i + @stats.vitesse.to_i
-        @exp_joueur_final = @personnage.exp_joueur.to_i + @stats.exp_joueur.to_i
+        @exp_joueur_final = @stats.exp_joueur.to_i
     
         narration = Narrationpnj.find_by(user_id: session[:user_id])
     
@@ -655,25 +618,20 @@ class JeuController < ApplicationController
     def requestCheck
         @pnj = Pnj.find_by(id: params[:pnj_id])
         @request = Request.find_by(pnj_id: @pnj.id)
-        
-        if @request.bonne_reponse == params[:id_reponse]
-            @resolue = Requestresolue.find_by(id_request: @request.id, id_user: session[:user_id])
-            if @resolue
-                Requestresolue.update(id_request: @request.id, id_user: session[:user_id], resolue: "true")
-            else
-                Requestresolue.create(id_request: @request.id, id_user: session[:user_id], resolue: "true")
-            end
-        else
-            @resolue = Requestresolue.find_by(id_request: @request.id, id_user: session[:user_id])
-            if @resolue
-                Requestresolue.update(id_request: @request.id, id_user: session[:user_id], resolue: "false")
-            else
-                Requestresolue.create(id_request: @request.id, id_user: session[:user_id], resolue: "false")
-            end
-        end
-
+    
+        # Vérifiez si la réponse est correcte
+        reponse_correcte = @request.bonne_reponse == params[:id_reponse]
+    
+        # Trouver ou initialiser l'objet Requestresolue
+        @resolue = Requestresolue.find_or_initialize_by(id_request: @request.id, id_user: session[:user_id])
+    
+        # Mettre à jour et sauvegarder l'attribut resolue
+        @resolue.resolue = reponse_correcte ? "true" : "false"
+        @resolue.save
+    
         redirect_to jeu_combat_path(pnj_id: @pnj.id)
     end
+    
 
     def recompenses
         @pnj = Pnj.find_by(id: params[:id])
@@ -688,6 +646,10 @@ class JeuController < ApplicationController
         end
         ajouter_money(@pnj.earn_money)
         ajouter_experiences(@pnj.earn_xp)
+
+        progression = session[:progression]
+
+        redirect_to send("jeu_#{progression}_path")
     end
     
     def ajouter_items(items)
@@ -715,11 +677,21 @@ class JeuController < ApplicationController
     def ajouter_experiences(points_gagnes)
         @personnage = Personnage.find_by(user_id: session[:user_id])
         @experience = Experience.find_or_create_by(user_id: session[:user_id])
-        
+        stats_xp = Statsobetsequipe.find_by(user_id: session[:user_id])
+
+        xp_orbe = stats_xp.exp_joueur.to_i
+
         points_gagnes = points_gagnes.to_i
+
+        if xp_orbe != 0
+            bonus = (points_gagnes * xp_orbe) / 100.0
+            points_gagnes += bonus
+        end
+        
         @experience.points += points_gagnes
     
         current_level = @personnage.exp_joueur.to_i
+
         while @experience.points >= points_requis_pour_niveau(current_level + 1)
             current_level += 1
             @personnage.update(exp_joueur: current_level.to_s)
@@ -751,9 +723,7 @@ class JeuController < ApplicationController
     
         @experience.save
 
-        progression = session[:progression]
-
-        redirect_to send("jeu_#{progression}_path")
+        mettre_a_jour_exp_personnage
     end
     
     def mettre_a_jour_stats_personnage(personnage, niveau)
@@ -860,4 +830,19 @@ class JeuController < ApplicationController
         end
     end
 
+    def mettre_a_jour_exp_personnage
+        mise_a_jour_progression_quete(2)
+        mise_a_jour_progression_quete(4)
+    end
+    
+    def mise_a_jour_progression_quete(quete_id)
+        niveau_actuel = @personnage.exp_joueur.to_i
+        progression_niveau = Progressionquete.find_or_initialize_by(user_id: session[:user_id], quete_id: quete_id)
+        objectif_niveau = Quete.find_by(id: quete_id).objectif.to_i
+        
+        progression_niveau.progression = [niveau_actuel, objectif_niveau].min.to_s
+        progression_niveau.accomplie = (niveau_actuel >= objectif_niveau).to_s
+        
+        progression_niveau.save
+    end
 end

@@ -123,7 +123,7 @@
                                 <div class="case maj caseUtilisé" id="marche <%= objet.id %>" style="background-image: url(<%= objet.image %>);" data-toggle="tooltip" data-html="true" data-placement="right" title="<div class='title'><h4 class='maj'><%= objet.nom %></h4><h3 class='<%= objet.rarete %> rarete maj'><%= objet.rarete %></h3><h5 class='maj'><%= objet.description %></h5><h4 class='<%= classeData %> data'><%= objet.data %></h4></div>"></div>
                                 <div class="menuContextuel dropdown-menu menuMarche" data-id="marche <%= objet.id %>">
                                     <div>
-                                        <% valeur = objet.nom.start_with?("Orbe") ? 15000 : objet.data.split(":").last.strip.to_i %>
+                                        <% valeur = objet.nom.start_with?("Orbe") ? 30000 : objet.data.split(":").last.strip.to_i %>
                                         <% noms_pieces_or = ["Pièce d'or", "Sac de pièces d'or", "Gros sac de pièces d'or"] %>
                                         <% if noms_pieces_or.include?(objet.nom) || objet.rarete == "légendaire" %>
                                             <% prix_vente = valeur %>
@@ -148,6 +148,7 @@
                                                 <%= f.number_field :quantite, min: 1, max: max_vente, value: 1, id: "quantite_vente_#{objet.id}", class: 'quantite-vente' %>
                                                 <%= f.hidden_field :objet_id, value: objet.id %>
                                                 <%= f.hidden_field :argent, value: prix_vente, id: "argent_vente_#{objet.id}" %>
+                                                <%= f.hidden_field :total_vente, value: prix_vente, id: "total_vente_#{objet.id}" %> <!-- Champ caché pour le montant total -->
                                                 <%= f.submit "Vendre pour #{prix_vente} écus", id: "submit_vente_#{objet.id}" %>
                                             <% end %>
                                         <% end %>
@@ -164,6 +165,11 @@
     </div>
 </div>
 
+<% if @afficher_fleche %>
+    <div class="fleche-container fleche-haut" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Se rendre les Terres de Brumelune">
+        <img class="fleche-img fleche-animate" src="/images/fleche-direction.jpg" id="fleche-direction-terre">
+    </div>
+<% end %>
 
 <div class="fleche-container fleche-bas" data-toggle="tooltip" data-html="true" data-placement="top" title="Se rendre à la Vallée des Murmures">
     <img class="fleche-img fleche-animate" src="/images/fleche-direction.jpg" id="fleche-direction-vallee">

@@ -64,7 +64,6 @@ else {
         document.getElementById("marche-icon").addEventListener("click", () =>{
             effet.play();
             document.getElementById("marche").style.display = "flex";
-            console.log("tg")
         })
     }
 

@@ -35,6 +35,14 @@ document.getElementById("fleche-direction-vallee").addEventListener("click", () 
     location.href = "/jeu/vallee";
 })
 
+let terres = document.getElementById("fleche-direction-terre");
+if(terres != null){
+    terres.addEventListener("click", () =>{
+        localStorage.setItem("village-anim", "true");
+        location.href = "/jeu/terre";
+    })
+}
+
 document.querySelectorAll('.quantite-achat').forEach(item => {
     item.addEventListener('input', function() {
         let objetId = this.id.split('_').pop();
@@ -49,8 +57,9 @@ document.querySelectorAll('.quantite-vente').forEach(item => {
     item.addEventListener('input', function() {
         let objetId = this.id.split('_').pop();
         let quantite = parseInt(this.value);
-        let prixVenteUnitaire = parseInt(document.getElementById("argent_vente_" + objetId).value); // Ce prix reste constant
+        let prixVenteUnitaire = parseInt(document.getElementById("argent_vente_" + objetId).value); // Prix unitaire
         let nouveauPrix = quantite * prixVenteUnitaire;
         document.getElementById("submit_vente_" + objetId).value = `Vendre pour ${nouveauPrix} écus`;
+        document.getElementById("total_vente_" + objetId).value = `${nouveauPrix}`; // Mise à jour du champ caché pour le montant total
     });
 });
