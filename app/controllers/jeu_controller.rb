@@ -35,6 +35,8 @@ class JeuController < ApplicationController
         session[:progression] = "lumina"
         commun
       
+        mettre_a_jour_exp_personnage
+
         pnjzones = Pnjzone.where(zone: "lumina")
         @pnjs = pnjzones.map do |pnjzone|
             pnj = Pnj.find(pnjzone.pnj_id)
@@ -74,9 +76,57 @@ class JeuController < ApplicationController
         @afficher_fleche = toutes_quetes_accomplies
     end
     
+    def sylverun
+        
+        session[:progression] = "sylverun"
+        commun
+
+        mettre_a_jour_exp_personnage
+
+        pnjzones = Pnjzone.where(zone: "sylverun")
+        @pnjs = pnjzones.map do |pnjzone|
+            pnj = Pnj.find(pnjzone.pnj_id)
+            reward_items = get_reward_items(pnj.reward_items)
+            if peut_ajouter_objets?(session[:user_id], pnj.reward_items)
+            ajouter_objet = false
+            else
+            ajouter_objet = true
+            end
+            [pnj.avatar, pnj.name, pnj.pv, pnj.vitesse, pnj.force, pnj.earn_xp, pnj.earn_money, reward_items, pnj.id, ajouter_objet]
+        end
+      
+        zone_actuelle = 'sylverun'
+        quetes_zone = Quetezone.where(zone: zone_actuelle).pluck(:quete_id)
+        quetes = Quete.where(id: quetes_zone)
+        user_id = session[:user_id]
+        
+        @progressions_quetes = quetes.map do |quete|
+            progression_quete = Progressionquete.find_by(user_id: user_id, quete_id: quete.id)
+            
+            if quete.id == 7
+                # Logique pour la quête de fabrication
+                casque_progression, armure_progression, arme_progression = progression_quete&.progression&.split(',')&.map(&:to_i) || [0, 0, 0]
+                progression_actuelle = casque_progression + armure_progression + arme_progression
+            else
+                # Logique pour les autres quêtes
+                progression_actuelle = progression_quete ? progression_quete.progression.to_i : 0
+            end
+            
+            accomplie = progression_quete ? progression_quete.accomplie : false
+            { quete: quete, progression: progression_actuelle, accomplie: accomplie }
+        end
+      
+        quetes_zone = Quetezone.where(zone: "sylverun").pluck(:quete_id)
+        toutes_quetes_accomplies = Progressionquete.where(quete_id: quetes_zone, user_id: session[:user_id], accomplie: "true").count == quetes_zone.count
+      
+        @afficher_fleche = toutes_quetes_accomplies
+    end
+
     def valdara
         session[:progression] = "valdara"
         commun
+
+        mettre_a_jour_exp_personnage
 
         zone_actuelle = 'valdara'
         quetes_zone = Quetezone.where(zone: zone_actuelle).pluck(:quete_id)
@@ -132,6 +182,40 @@ class JeuController < ApplicationController
             ajouter_objet = false
             else
             ajouter_objet = true
+            end
+            [pnj.avatar, pnj.name, pnj.pv, pnj.vitesse, pnj.force, pnj.earn_xp, pnj.earn_money, reward_items, pnj.id, ajouter_objet]
+        end
+    end
+
+    def terre
+        session[:progression] = "terre"
+        commun
+
+        pnjzones = Pnjzone.where(zone: "terre")
+        @pnjs = pnjzones.map do |pnjzone|
+            pnj = Pnj.find(pnjzone.pnj_id)
+            reward_items = get_reward_items(pnj.reward_items)
+            if peut_ajouter_objets?(session[:user_id], pnj.reward_items)
+                ajouter_objet = false
+            else
+                ajouter_objet = true
+            end
+            [pnj.avatar, pnj.name, pnj.pv, pnj.vitesse, pnj.force, pnj.earn_xp, pnj.earn_money, reward_items, pnj.id, ajouter_objet]
+        end
+    end
+
+    def grotte
+        session[:progression] = "grotte"
+        commun
+
+        pnjzones = Pnjzone.where(zone: "grotte")
+        @pnjs = pnjzones.map do |pnjzone|
+            pnj = Pnj.find(pnjzone.pnj_id)
+            reward_items = get_reward_items(pnj.reward_items)
+            if peut_ajouter_objets?(session[:user_id], pnj.reward_items)
+                ajouter_objet = false
+            else
+                ajouter_objet = true
             end
             [pnj.avatar, pnj.name, pnj.pv, pnj.vitesse, pnj.force, pnj.earn_xp, pnj.earn_money, reward_items, pnj.id, ajouter_objet]
         end
@@ -801,6 +885,8 @@ class JeuController < ApplicationController
         nom_objet = Objet.find(objet_id).nom
         objets_a_verifier1 = ["Casque léger amélioré", "Armure légère amélioré"]
         objets_a_verifier2 = ["Lame légère amélioré", "Épée légère amélioré", "Sceptre magique amélioré"]
+        objets_a_verifier3 = ["Casque lourd", "Armure lourde", "Lame lourde", "Épée lourde", "Sceptre lourd"]
+
         if objets_a_verifier1.include?(nom_objet)
             quete_id_fabrication = 1
             
@@ -827,12 +913,31 @@ class JeuController < ApplicationController
                 progression_quete.accomplie = "true"
                 progression_quete.save
             end
+        elsif objets_a_verifier3.include?(nom_objet)
+            quete_id_fabrication = 7
+
+            progression_quete = Progressionquete.find_or_initialize_by(user_id: user_id, quete_id: quete_id_fabrication)
+            progression_quete.progression ||= "0,0,0"
+            casque_progression, armure_progression, arme_progression = progression_quete.progression.split(',').map(&:to_i)
+
+            casque_progression = 1 if nom_objet == "Casque lourd"
+            armure_progression = 1 if nom_objet == "Armure lourde"
+            arme_progression = 1 if nom_objet == "Lame lourde"
+            arme_progression = 1 if nom_objet == "Épée lourde"
+            arme_progression = 1 if nom_objet == "Sceptre lourd"
+
+            progression_totale = casque_progression + armure_progression + arme_progression
+            progression_quete.progression = "#{casque_progression},#{armure_progression},#{arme_progression}"
+            progression_quete.accomplie = "true" if progression_totale >= 3
+            progression_quete.save
         end
+
     end
 
     def mettre_a_jour_exp_personnage
         mise_a_jour_progression_quete(2)
         mise_a_jour_progression_quete(4)
+        mise_a_jour_progression_quete(8)
     end
     
     def mise_a_jour_progression_quete(quete_id)

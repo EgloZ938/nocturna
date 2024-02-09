@@ -3,7 +3,7 @@
 
 <style>
     body{
-        background: url('/images/bg-vallee.jpg');
+        background: url('/images/bg-lumina.jpg');
         background-size: cover;
     }
 </style>
@@ -25,25 +25,27 @@
 <img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
 <img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
 
-<img id="sac-a-dos" src="/images/sac_a_dos.jpg">
+<% if @narration %>
+    <img id="sac-a-dos" src="/images/sac_a_dos.jpg">
+<% end %>
 
-<img id="icon-pnj" src="/images/pnj.jpg">
+<img id="craft" src="/images/craft.jpg">
+<img id="icon-pnj" src="/images/pnj.jpg" class="img-disabled">
+<img id="quete" src="/images/quete.jpg">
 
 <div id="village-intro" class="village-intro">
     <div class="text-container">
-        <h1 class="village-name">Vallée des murmures</h1>
-        <p class="village-description">Un lieu mystérieux où les échos du passé se mêlent aux murmures du vent, dévoilant peu à peu les secrets enfouis de Nocturna.</p>
+        <h1 class="village-name">Sylverun</h1>
+        <p class="village-description">Sylverun, un éclat d'espoir scintillant dans l'ombre de Nocturna, un refuge paisible baigné d'une aura de mystère et de renouveau.</p>
     </div>
 </div>
 
-
-<div class="full-screen-container" id="pnjs-combat">
-    <div class="container">
-        <h1>Guerrier des Murmures</h1>
-        <%= render partial: "pnjs", locals: {
-            pnjs: @pnjs
-        } %>
-    </div>
+<div id="etable" class="flex">
+    <%= render partial: "craft", locals: {
+        materiaux_et_objets: @materiaux_et_objets,
+        objets_craftables: @objets_craftables,
+        quantites_totales: @quantites_totales
+    } %>
 </div>
 
 <div id="inventaire">
@@ -57,6 +59,16 @@
     </div>
 </div>
 
+<div class="full-screen-container" id="quetes-menu">
+    <div class="container">
+        <h1>Quêtes à réaliser à Sylverun</h1>
+        <%= render partial: "quetes", locals: {
+            progressions_quetes: @progressions_quetes
+        } %>
+    </div>
+</div>
+
+
 <div id="options">
     <%= render partial: "options", locals: {
         personnage: @personnage,
@@ -69,21 +81,23 @@
 </div>
 
 
-<div class="fleche-container fleche-bas" data-toggle="tooltip" data-html="true" data-placement="top" title="Se rendre à Lumina">
-    <img class="fleche-img fleche-animate" src="/images/fleche-direction.jpg" id="fleche-direction-lumina">
-</div>
+<% if @afficher_fleche %>
+    <div class="fleche-container fleche-haut" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Se rendre à la Grotte de l'Écho Perdu">
+        <img class="fleche-img fleche-animate" src="/images/fleche-direction.jpg" id="fleche-direction-grotte">
+    </div>
+<% end %>
 
-<div class="fleche-container fleche-haut" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Se rendre à Valdara">
-    <img class="fleche-img fleche-animate" src="/images/fleche-direction.jpg" id="fleche-direction-valdara">
+<div class="fleche-container fleche-bas" data-toggle="tooltip" data-html="true" data-placement="top" title="Se rendre aux Terres de Brumelune">
+    <img class="fleche-img fleche-animate" src="/images/fleche-direction.jpg" id="fleche-direction-terre">
 </div>
 
 <script type="text/javascript">
-    let music = new Audio('/mp3/vallee.mp3');
+    let music = new Audio('/mp3/first-town.mp3');
     let effet = new Audio('/mp3/effet_click.mp3');
     let typeSound = new Audio('/mp3/text-sound.mp3');
 </script>
 <script src='/javascript/commun.js'></script>
-<script src="/javascript/vallee.js"></script>
+<script src="/javascript/sylverun.js"></script>
 
 <script>
     $(document).ready(function() {

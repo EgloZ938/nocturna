@@ -64,6 +64,9 @@ Rails.application.routes.draw do
   get 'jeu/valdara'
   get 'jeu/acheterObjet'
   get 'jeu/vendreObjet'
+  get 'jeu/terre'
+  get 'jeu/sylverun'
+  get 'jeu/grotte'
 
 
   post 'jeu/acheterObjet'

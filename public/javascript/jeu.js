@@ -49,7 +49,7 @@ if (continueIndicator != null) {
             n++;
             setTimeout(function () {
                 typeWriter(text, n);
-            }, 20);
+            }, 10);
         } else {
             typeSound.pause();
             typeSound.currentTime = 0;

@@ -3,7 +3,7 @@
 
 <style>
     body{
-        background: url('/images/bg-vallee.jpg');
+        background: url('/images/bg-grotte.jpg');
         background-size: cover;
     }
 </style>
@@ -31,15 +31,15 @@
 
 <div id="village-intro" class="village-intro">
     <div class="text-container">
-        <h1 class="village-name">Vallée des murmures</h1>
-        <p class="village-description">Un lieu mystérieux où les échos du passé se mêlent aux murmures du vent, dévoilant peu à peu les secrets enfouis de Nocturna.</p>
+        <h1 class="village-name">Grotte de l'Écho Perdu</h1>
+        <p class="village-description">Un sanctuaire secret où résonnent les échos du passé, la Grotte de l'Écho Perdu est un passage oublié, enveloppé dans le voile de mystères ancestraux et de récits inouïs.</p>
     </div>
 </div>
 
 
 <div class="full-screen-container" id="pnjs-combat">
     <div class="container">
-        <h1>Guerrier des Murmures</h1>
+        <h1>Gardiens de la Grotte de l'écho perdu</h1>
         <%= render partial: "pnjs", locals: {
             pnjs: @pnjs
         } %>
@@ -68,13 +68,8 @@
     } %>
 </div>
 
-
-<div class="fleche-container fleche-bas" data-toggle="tooltip" data-html="true" data-placement="top" title="Se rendre à Lumina">
-    <img class="fleche-img fleche-animate" src="/images/fleche-direction.jpg" id="fleche-direction-lumina">
-</div>
-
-<div class="fleche-container fleche-haut" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Se rendre à Valdara">
-    <img class="fleche-img fleche-animate" src="/images/fleche-direction.jpg" id="fleche-direction-valdara">
+<div class="fleche-container fleche-bas" data-toggle="tooltip" data-html="true" data-placement="top" title="Se rendre à Sylverun">
+    <img class="fleche-img fleche-animate" src="/images/fleche-direction.jpg" id="fleche-direction-sylverun">
 </div>
 
 <script type="text/javascript">
@@ -83,7 +78,7 @@
     let typeSound = new Audio('/mp3/text-sound.mp3');
 </script>
 <script src='/javascript/commun.js'></script>
-<script src="/javascript/vallee.js"></script>
+<script src="/javascript/grotte.js"></script>
 
 <script>
     $(document).ready(function() {
