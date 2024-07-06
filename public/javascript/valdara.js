@@ -47,11 +47,14 @@ document.querySelectorAll('.quantite-achat').forEach(item => {
     item.addEventListener('input', function() {
         let objetId = this.id.split('_').pop();
         let quantite = parseInt(this.value);
-        let valeurUnitaire = parseInt(document.getElementById("argent_achat_" + objetId).value);
-        let nouveauPrix = quantite * valeurUnitaire;
+        let prixUnitaireElement = document.getElementById("prix_unitaire_" + objetId);
+        let prixUnitaire = parseInt(prixUnitaireElement.getAttribute('data-prix-unitaire'));
+        let nouveauPrix = quantite * prixUnitaire;
         document.getElementById("submit_achat_" + objetId).value = `Acheter pour ${nouveauPrix} écus`;
+        document.getElementById("argent_achat_" + objetId).value = nouveauPrix; // Mise à jour du champ caché pour le montant total
     });
 });
+
 
 document.querySelectorAll('.quantite-vente').forEach(item => {
     item.addEventListener('input', function() {

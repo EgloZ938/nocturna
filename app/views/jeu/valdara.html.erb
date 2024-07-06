@@ -139,6 +139,7 @@
                                                 <%= f.number_field :quantite, min: 1, max: max_achat, value: 1, id: "quantite_achat_#{objet.id}", class: 'quantite-achat' %>
                                                 <%= f.hidden_field :objet_id, value: objet.id %>
                                                 <%= f.hidden_field :argent, value: valeur, id: "argent_achat_#{objet.id}" %>
+                                                <%= f.hidden_field :prix_unitaire, value: valeur, id: "prix_unitaire_#{objet.id}", class: 'prix-unitaire', 'data-prix-unitaire' => valeur %>
                                                 <%= f.submit "Acheter pour #{valeur} écus", id: "submit_achat_#{objet.id}" %>
                                             <% end %>
                                         <% end %>

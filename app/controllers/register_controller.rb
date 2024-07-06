@@ -20,6 +20,7 @@ class RegisterController < ApplicationController
    def destroy
       session[:user_id] = nil
       session[:personnage_id] = nil
+      session[:progression] = nil
       redirect_to register_connexion_path, notice: "logged out"
     end
 
