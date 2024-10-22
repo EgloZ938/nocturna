@@ -1,0 +1,66 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore the default SQLite database.
+db/*.sqlite3
+db/*.sqlite3-journal
+db/*.sqlite3-*  # If using ActiveRecord migration timestamps
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/pidfile
+/pids/*
+!/pids/.keep
+
+# Ignore uploaded files in development.
+/storage/*
+!/storage/.keep
+
+# Ignore cache files.
+/tmp/cache/*
+/tmp/pids/*
+/tmp/sessions/*
+/tmp/sockets/*
+
+# Ignore byebug command history file.
+.byebug_history
+
+# Ignore application-specific secrets and environment settings.
+/config/master.key
+/config/credentials.yml.enc
+
+# Ignore Yarn & Node modules.
+/node_modules
+/yarn-error.log
+
+# Ignore dotenv files.
+/.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore compiled assets.
+/public/assets
+/public/packs
+/public/packs-test
+/node_modules/
+.byebug_history
+
+# Ignore Spring files.
+/spring/*.pid
+
+# Ignore Capistrano stuff.
+/capybara-*.html
+.ruby-version
+
+# Ignore Docker files (if applicable)
+docker-compose.yml
+Dockerfile
