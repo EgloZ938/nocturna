@@ -1,7 +1,9 @@
 <%= stylesheet_link_tag('gamemaster') %>
 <%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<div class="container">
-    <h1>L'inventaire est déjà plein</h1>
-    <%= link_to 'Retour', gamemaster_index_path %>
-</div>
+<%if @gamemaster %>
+    <div class="container">
+        <h1>L'inventaire est déjà plein</h1>
+        <%= link_to 'Retour', gamemaster_index_path %>
+    </div>
+<% end %>

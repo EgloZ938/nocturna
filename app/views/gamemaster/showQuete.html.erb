@@ -1,21 +1,24 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<div class="container">
-    <table>
-        <tr>
-            <th>Titre</th>
-            <th>Description</th>
-            <th>Récompenses</th>
-            <th>Objectif</th>
-        </tr>
+<%if @gamemaster %>
+    <div class="container">
+        <table>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Récompenses</th>
+                <th>Objectif</th>
+            </tr>
 
-        <tr>
-            <td><%= @quete.titre %></td>
-            <td><%= @quete.description %></td>
-            <td><%= @quete.recompenses %></td>
-            <td><%= @quete.objectif %></td>
-        </tr>
-    </table>
+            <tr>
+                <td><%= @quete.titre %></td>
+                <td><%= @quete.description %></td>
+                <td><%= @quete.recompenses %></td>
+                <td><%= @quete.objectif %></td>
+            </tr>
+        </table>
 
-    <%= link_to 'Retour', gamemaster_quete_path %>
-</div>
+        <%= link_to 'Retour', gamemaster_quete_path %>
+    </div>
+<% end %>

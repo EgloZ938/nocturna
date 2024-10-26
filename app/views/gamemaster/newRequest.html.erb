@@ -1,35 +1,38 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<h1>tkt</h1>
-<%= form_with model: @request, url: gamemaster_createRequest_path do |form| %>
-  <div>
-    <%= form.label :question %><br>
-    <%= form.text_field :question %>
-  </div>
-  <div>
-    <%= form.label :reponse1 %><br>
-    <%= form.text_field :reponse1 %>
-  </div>
-  <div>
-    <%= form.label :reponse2 %><br>
-    <%= form.text_field :reponse2 %>
-  </div>
-  <div>
-    <%= form.label :reponse3 %><br>
-    <%= form.text_field :reponse3 %>
-  </div>
-  <div>
-    <%= form.label :reponse4 %><br>
-    <%= form.text_field :reponse4 %>
-  </div>
-    <%= form.label :bonne_reponse %><br>
-    <%= form.text_field :bonne_reponse %>
-  </div>
-  <div>
-    <%= form.label :pnj_id %><br>
-    <%= form.text_field :pnj_id %>
-  </div>
-  <p>
-    <%= form.submit "submit" %>
-  </p>
+<%if @gamemaster %>
+  <h1>tkt</h1>
+  <%= form_with model: @request, url: gamemaster_createRequest_path do |form| %>
+    <div>
+      <%= form.label :question %><br>
+      <%= form.text_field :question %>
+    </div>
+    <div>
+      <%= form.label :reponse1 %><br>
+      <%= form.text_field :reponse1 %>
+    </div>
+    <div>
+      <%= form.label :reponse2 %><br>
+      <%= form.text_field :reponse2 %>
+    </div>
+    <div>
+      <%= form.label :reponse3 %><br>
+      <%= form.text_field :reponse3 %>
+    </div>
+    <div>
+      <%= form.label :reponse4 %><br>
+      <%= form.text_field :reponse4 %>
+    </div>
+      <%= form.label :bonne_reponse %><br>
+      <%= form.text_field :bonne_reponse %>
+    </div>
+    <div>
+      <%= form.label :pnj_id %><br>
+      <%= form.text_field :pnj_id %>
+    </div>
+    <p>
+      <%= form.submit "submit" %>
+    </p>
+  <% end %>
 <% end %>

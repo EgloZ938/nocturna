@@ -1,36 +1,38 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<div class="container">
+<%if @gamemaster %>
+    <div class="container">
+        <table>
+            <tr>
+                <th></th>
+                <th>Pseudo</th>
+                <% if @pnj %>
+                    <th>Pv</th>
+                    <th>Force</th>
+                    <th>Vitesse</th>
+                    <th>gagne xp</th>
+                    <th>gagne argent</th>
+                    <th>loot</th>
+                <% end %>
+            </tr>
 
-    <table>
-        <tr>
-            <th></th>
-            <th>Pseudo</th>
-            <% if @pnj %>
-                <th>Pv</th>
-                <th>Force</th>
-                <th>Vitesse</th>
-                <th>gagne xp</th>
-                <th>gagne argent</th>
-                <th>loot</th>
-            <% end %>
-        </tr>
-
-        <tr>
-            <% if @pnj %>
-                <td><img src="<%= @pnj.avatar %>"></td>
-            <% else %>
-                <td><img src="/images/no_avatar.jpg"></td>
-            <% end %>
-            <td><%= @pnj.name %></td>
-            <% if @pnj %>
-                <td><%= @pnj.pv %></td>
-                <td><%= @pnj.force %></td>
-                <td><%= @pnj.vitesse %></td>
-                <td><%= @pnj.earn_xp %></td>
-                <td><%= @pnj.earn_money %></td>
-                <td><%= @pnj.reward_items %></td>
-            <% end %>
-        </tr>
-    </table>
+            <tr>
+                <% if @pnj %>
+                    <td><img src="<%= @pnj.avatar %>"></td>
+                <% else %>
+                    <td><img src="/images/no_avatar.jpg"></td>
+                <% end %>
+                <td><%= @pnj.name %></td>
+                <% if @pnj %>
+                    <td><%= @pnj.pv %></td>
+                    <td><%= @pnj.force %></td>
+                    <td><%= @pnj.vitesse %></td>
+                    <td><%= @pnj.earn_xp %></td>
+                    <td><%= @pnj.earn_money %></td>
+                    <td><%= @pnj.reward_items %></td>
+                <% end %>
+            </tr>
+        </table>
     </div>
+<% end %>

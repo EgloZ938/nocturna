@@ -1,6 +1,8 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<div class="container">
+<%if @gamemaster %>
+    <div class="container">
         <h1>Gestion des objets</h1>
         <table>
             <tr>
@@ -27,3 +29,4 @@
         </table>
         <%= link_to 'Créer un nouvel ITEM', gamemaster_newItem_path %>
     </div>
+<% end %>

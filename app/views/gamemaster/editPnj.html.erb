@@ -1,39 +1,42 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<h1>tkt</h1>
-<%= form_with model: @pnj, url: gamemaster_updatePnj_path do |form| %>
-  <div>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-  </div>
-  <div>
-    <%= form.label :avatar %><br>
-    <%= form.text_field :avatar %>
-  </div>
-  <div>
-    <%= form.label :pv %><br>
-    <%= form.text_field :pv %>
-  </div>
-  <div>
-    <%= form.label :vitesse %><br>
-    <%= form.text_field :vitesse %>
-  </div>
-    <%= form.label :force %><br>
-    <%= form.text_field :force %>
-  </div>
-  <div>
-    <%= form.label :earn_xp %><br>
-    <%= form.text_field :earn_xp %>
-  </div>
-  <div>
-    <%= form.label :earn_money %><br>
-    <%= form.text_field :earn_money %>
-  </div>
-  <div>
-    <%= form.label :reward_items %><br>
-    <%= form.text_field :reward_items %>
-  </div>
-  <p>
-    <%= form.submit "submit" %>
-  </p>
+<%if @gamemaster %>
+  <h1>tkt</h1>
+  <%= form_with model: @pnj, url: gamemaster_updatePnj_path do |form| %>
+    <div>
+      <%= form.label :name %><br>
+      <%= form.text_field :name %>
+    </div>
+    <div>
+      <%= form.label :avatar %><br>
+      <%= form.text_field :avatar %>
+    </div>
+    <div>
+      <%= form.label :pv %><br>
+      <%= form.text_field :pv %>
+    </div>
+    <div>
+      <%= form.label :vitesse %><br>
+      <%= form.text_field :vitesse %>
+    </div>
+      <%= form.label :force %><br>
+      <%= form.text_field :force %>
+    </div>
+    <div>
+      <%= form.label :earn_xp %><br>
+      <%= form.text_field :earn_xp %>
+    </div>
+    <div>
+      <%= form.label :earn_money %><br>
+      <%= form.text_field :earn_money %>
+    </div>
+    <div>
+      <%= form.label :reward_items %><br>
+      <%= form.text_field :reward_items %>
+    </div>
+    <p>
+      <%= form.submit "submit" %>
+    </p>
+  <% end %>
 <% end %>

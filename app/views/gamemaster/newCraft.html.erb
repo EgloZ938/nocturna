@@ -1,18 +1,20 @@
 <%= stylesheet_link_tag('register') %>
 <%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<%= form_with model: @craft, url: gamemaster_createCraft_path, method: :post do |form| %>
-  <%= form.label :objet_id, 'ID de l\'Objet à Créer :' %>
-  <%= form.text_field :objet_id %><br><br>
+<%if @gamemaster %>
+  <%= form_with model: @craft, url: gamemaster_createCraft_path, method: :post do |form| %>
+    <%= form.label :objet_id, 'ID de l\'Objet à Créer :' %>
+    <%= form.text_field :objet_id %><br><br>
 
-  <%= form.label :materials, 'Matériaux :' %><br>
-  <% ['Acier', 'Argent', 'Bois', 'Bronze', 'Crystal de dragon', 'Cuir', 'Essence de dragon', 'Fer', 'Or', 'Poussière d\'étoiles', 'Tissu'].each do |material| %>
-    <%= form.label "materials[#{material}]", material %>
-    <%= form.text_field "materials[#{material}]" %><br>
-  <% end %><br>
+    <%= form.label :materials, 'Matériaux :' %><br>
+    <% ['Acier', 'Argent', 'Bois', 'Bronze', 'Crystal de dragon', 'Cuir', 'Essence de dragon', 'Fer', 'Or', 'Poussière d\'étoiles', 'Tissu'].each do |material| %>
+      <%= form.label "materials[#{material}]", material %>
+      <%= form.text_field "materials[#{material}]" %><br>
+    <% end %><br>
 
-  <%= form.label :quantite, 'Quantité de l\'Objet Produit :' %>
-  <%= form.text_field :quantite %><br><br>
+    <%= form.label :quantite, 'Quantité de l\'Objet Produit :' %>
+    <%= form.text_field :quantite %><br><br>
 
-  <%= form.submit 'Créer Craft' %>
+    <%= form.submit 'Créer Craft' %>
+  <% end %>
 <% end %>

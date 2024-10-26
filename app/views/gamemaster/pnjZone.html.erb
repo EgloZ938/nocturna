@@ -1,26 +1,29 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<div class="container">
-    <h1>Gestion des PNJ zones</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>pnj ID</th>
-            <th>zone</th>
-            <th colspan="2">Interaction</th>
-        </tr>
-
-        <% @pnjzones.each do |pnj| %>
+<%if @gamemaster %>
+    <div class="container">
+        <h1>Gestion des PNJ zones</h1>
+        <table>
             <tr>
-                <td><%= pnj.id %></td>
-                <td><%= pnj.pnj_id %></td>
-                <td><%= pnj.zone %></td>
-                <td><%= link_to 'Modifier', gamemaster_editPnjZone_path(id: pnj.id) %></td>
-                <td><%= link_to 'Supprimer', gamemaster_destroyPnjZone_path(id: pnj.id),
-                        method: :delete,
-                        data: { confirm: "En faisant ça vous allez supprimer l'utilisateur et le pnj lié avec. Êtes vous sûr ?" } %></td>
+                <th>ID</th>
+                <th>pnj ID</th>
+                <th>zone</th>
+                <th colspan="2">Interaction</th>
             </tr>
-        <% end %>
-    </table>
-    <%= link_to 'Créer un nouveau PNJ ZONE', gamemaster_newPnjZone_path %>
-</div>
+
+            <% @pnjzones.each do |pnj| %>
+                <tr>
+                    <td><%= pnj.id %></td>
+                    <td><%= pnj.pnj_id %></td>
+                    <td><%= pnj.zone %></td>
+                    <td><%= link_to 'Modifier', gamemaster_editPnjZone_path(id: pnj.id) %></td>
+                    <td><%= link_to 'Supprimer', gamemaster_destroyPnjZone_path(id: pnj.id),
+                            method: :delete,
+                            data: { confirm: "En faisant ça vous allez supprimer l'utilisateur et le pnj lié avec. Êtes vous sûr ?" } %></td>
+                </tr>
+            <% end %>
+        </table>
+        <%= link_to 'Créer un nouveau PNJ ZONE', gamemaster_newPnjZone_path %>
+    </div>
+<% end %>

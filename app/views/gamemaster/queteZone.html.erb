@@ -1,26 +1,29 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<div class="container">
-    <h1>Gestion des QUÊTEZONES</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>quête id</th>
-            <th>zone</th>
-            <th colspan="2">Interaction</th>
-        </tr>
-
-        <% @quetezones.each do |quetezone| %>
+<%if @gamemaster %>
+    <div class="container">
+        <h1>Gestion des QUÊTEZONES</h1>
+        <table>
             <tr>
-                <td><%= quetezone.id %></td>
-                <td><%= quetezone.quete_id %></td>
-                <td><%= quetezone.zone %></td>
-                <td><%= link_to 'Modifier', gamemaster_editQueteZone_path(id: quetezone.id) %></td>
-                <td><%= link_to 'Supprimer', gamemaster_destroyQueteZone_path(id: quetezone.id),
-                        method: :delete,
-                        data: { confirm: "En faisant ça vous allez supprimer la quête zone. Êtes vous sûr ?" } %></td>
+                <th>ID</th>
+                <th>quête id</th>
+                <th>zone</th>
+                <th colspan="2">Interaction</th>
             </tr>
-        <% end %>
-    </table>
-    <%= link_to 'Créer une nouvelle quête zone', gamemaster_newQueteZone_path %>
-</div>
+
+            <% @quetezones.each do |quetezone| %>
+                <tr>
+                    <td><%= quetezone.id %></td>
+                    <td><%= quetezone.quete_id %></td>
+                    <td><%= quetezone.zone %></td>
+                    <td><%= link_to 'Modifier', gamemaster_editQueteZone_path(id: quetezone.id) %></td>
+                    <td><%= link_to 'Supprimer', gamemaster_destroyQueteZone_path(id: quetezone.id),
+                            method: :delete,
+                            data: { confirm: "En faisant ça vous allez supprimer la quête zone. Êtes vous sûr ?" } %></td>
+                </tr>
+            <% end %>
+        </table>
+        <%= link_to 'Créer une nouvelle quête zone', gamemaster_newQueteZone_path %>
+    </div>
+<% end %>

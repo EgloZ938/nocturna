@@ -1,28 +1,29 @@
 <%= stylesheet_link_tag('register') %>
 <%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<% if @gamemaster %>
-    <div class="container menu">
+<%if @gamemaster %>
+    <% if @gamemaster %>
+        <div class="container menu">
 
-        <img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
-        <img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
+            <img id="status-volume-on" src="/images/volume_on.png" class="volume_icon status-volume">
+            <img id="status-volume-off" src="/images/volume_off.png" class="volume_icon status-volume">
 
-        <%= form_with model: @gamemaster, url: gamemaster_create_path do |form| %>
-            <div class="form-container">
-                <label for="gamemaster_name">Pseudo</label>
-                <input type="text" name="gamemaster[name]" id="gamemaster_name" class="input focus">
-            </div>
-            <div class="form-container">
-                <label for="gamemaster_password">Mot de passe</label>
-                <input type="password" name="gamemaster[password]" id="gamemaster_password" class="input focus">
-            </div>
-            <div class="flex justify-content">
-                <input type="submit" name="commit" value="Créer un user Gamemaster" data-disable-with="Créer un user Gamemaster">
-            </div>
-        <% end %>
-    </div>
-<% else %>
-    <%  %>
+            <%= form_with model: @gamemaster, url: gamemaster_create_path do |form| %>
+                <div class="form-container">
+                    <label for="gamemaster_name">Pseudo</label>
+                    <input type="text" name="gamemaster[name]" id="gamemaster_name" class="input focus">
+                </div>
+                <div class="form-container">
+                    <label for="gamemaster_password">Mot de passe</label>
+                    <input type="password" name="gamemaster[password]" id="gamemaster_password" class="input focus">
+                </div>
+                <div class="flex justify-content">
+                    <input type="submit" name="commit" value="Créer un user Gamemaster" data-disable-with="Créer un user Gamemaster">
+                </div>
+            <% end %>
+        </div>
+    <% else %>
+        <%  %>
+    <% end %>
+    <script src="/javascript/gamemaster.js"></script>
 <% end %>
-<script src="/javascript/gamemaster.js">
-</script>

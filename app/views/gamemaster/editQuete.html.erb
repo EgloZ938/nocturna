@@ -1,24 +1,27 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<h1>tkt</h1>
-<%= form_with model: @quete, url: gamemaster_updateQuete_path do |form| %>
-<div>
-    <%= form.label :titre %><br>
-    <%= form.text_field :titre %>
-</div>
-<div>
-    <%= form.label :description %><br>
-    <%= form.text_field :description %>
-</div>
+<%if @gamemaster %>
+    <h1>tkt</h1>
+    <%= form_with model: @quete, url: gamemaster_updateQuete_path do |form| %>
     <div>
-    <%= form.label :recompenses %><br>
-    <%= form.text_field :recompenses %>
-</div>
-<div>
-    <%= form.label :objectif %><br>
-    <%= form.text_field :objectif %>
-</div>
-<p>
-    <%= form.submit "submit" %>
-</p>
+        <%= form.label :titre %><br>
+        <%= form.text_field :titre %>
+    </div>
+    <div>
+        <%= form.label :description %><br>
+        <%= form.text_field :description %>
+    </div>
+        <div>
+        <%= form.label :recompenses %><br>
+        <%= form.text_field :recompenses %>
+    </div>
+    <div>
+        <%= form.label :objectif %><br>
+        <%= form.text_field :objectif %>
+    </div>
+    <p>
+        <%= form.submit "submit" %>
+    </p>
+    <% end %>
 <% end %>

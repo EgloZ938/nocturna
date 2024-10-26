@@ -1,28 +1,29 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<div class="container">
-
-    <table>
-        <tr>
-            <th>question</th>
-            <% if @request %>
-                <th>reponse1</th>
-                <th>reponse2</th>
-                <th>reponse3</th>
-                <th>reponse4</th>
-                <th>bonne réponse</th>
-            <% end %>
-        </tr>
-
-        <tr>
-            <td><%= @request.question %></td>
-            <% if @request %>
-                <td><%= @request.reponse1 %></td>
-                <td class="classe"><%= @request.reponse2 %></td>
-            <td><%= @request.reponse3 %></td>
-                <td><%= @request.reponse4 %></td>
-                <td><%= @request.bonne_reponse %></td>
-            <% end %>
-        </tr>
-    </table>
+<%if @gamemaster %>
+    <div class="container">
+        <table>
+            <tr>
+                <th>question</th>
+                <% if @request %>
+                    <th>reponse1</th>
+                    <th>reponse2</th>
+                    <th>reponse3</th>
+                    <th>reponse4</th>
+                    <th>bonne réponse</th>
+                <% end %>
+            </tr>
+            <tr>
+                <td><%= @request.question %></td>
+                <% if @request %>
+                    <td><%= @request.reponse1 %></td>
+                    <td class="classe"><%= @request.reponse2 %></td>
+                <td><%= @request.reponse3 %></td>
+                    <td><%= @request.reponse4 %></td>
+                    <td><%= @request.bonne_reponse %></td>
+                <% end %>
+            </tr>
+        </table>
     </div>
+<% end %>

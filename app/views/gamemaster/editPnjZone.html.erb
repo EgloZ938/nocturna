@@ -1,16 +1,19 @@
 <%= stylesheet_link_tag('gamemaster') %>
+<%= favicon_link_tag asset_path('zyro-image.png') %>
 
-<h1>tkt</h1>
-<%= form_with model: @pnjzone, url: gamemaster_updatePnjZone_path do |form| %>
-  <div>
-    <%= form.label :pnj_id %><br>
-    <%= form.text_field :pnj_id %>
-  </div>
-  <div>
-    <%= form.label :zone %><br>
-    <%= form.text_field :zone %>
-  </div>
-  <p>
-    <%= form.submit "submit" %>
-  </p>
+<%if @gamemaster %>
+  <h1>tkt</h1>
+  <%= form_with model: @pnjzone, url: gamemaster_updatePnjZone_path do |form| %>
+    <div>
+      <%= form.label :pnj_id %><br>
+      <%= form.text_field :pnj_id %>
+    </div>
+    <div>
+      <%= form.label :zone %><br>
+      <%= form.text_field :zone %>
+    </div>
+    <p>
+      <%= form.submit "submit" %>
+    </p>
+  <% end %>
 <% end %>
