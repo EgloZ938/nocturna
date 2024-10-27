@@ -72,7 +72,7 @@ Après une cinématique 🎥, partez à l'aventure à travers les villages 🏘�
 ## 🔍 Découvrez-en plus !
 Il y a encore **beaucoup à découvrir** dans **Nocturna Online**, alors plongez dans l'aventure et explorez tout ce que le jeu a à offrir 🗝️ !
 
-➡️ **Commencez votre aventure ici** : [Nocturna Online sur GitHub](https://github.com/EgloZ938/nocturna)
+➡️ **Commencez votre aventure ici** : [Nocturna Online](https://nocturna.egloz.com/)
 
 ---
 
